@@ -1,0 +1,18 @@
+
+section#new-stack-center-main
+  form#auth-new-stack-form(method="POST", action="/0/auth/workspace/stack/new/") 
+      h3 new stack
+      p stacks are a great way to organise your work. Simply choose a name, give it a description and get right into working.
+      
+      .form-group-stack
+        h2 give it a name
+        input.stack-new-field.form-control(name='stackname', placeholder='', required='true')
+
+      .form-group-stack
+        h2 give it a description
+        input.stack-new-field.form-control(name='stackdesc', placeholder='', required='true')
+          
+        input(type='hidden', name='stackID', value=data_id)
+      
+      input#auth-new-stack-submit( type='submit', value='get creating' )
+        

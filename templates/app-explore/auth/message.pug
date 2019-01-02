@@ -1,0 +1,4 @@
+div.messages
+  each type in Object.keys(messages)
+    each message in messages[type]
+      h2(class="alert alert-"+type)  #{message} 

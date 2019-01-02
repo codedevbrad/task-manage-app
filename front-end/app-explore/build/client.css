@@ -1,0 +1,124 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,600);
+
+* {-webkit-font-smoothing: antialiased;}
+
+h1, h2, h3, h4, a, li, p, input, label {
+  font-family: 'Montserrat', sans-serif; font-weight: 600; letter-spacing: 0.03em; font-size: 0.86em;
+}
+
+
+/* -- html content -- */
+
+html, body { padding: 0; margin: 0;  width: 100%;  color: black;   }
+
+html    {  height: 100%;  }
+body    {  min-height: 100%; height: 100%; }
+
+a       { text-decoration: none; color: black; }
+a:hover { text-decoration: none; }
+
+textarea, select, input, button { outline: none; }
+
+
+/* --- main app --- */
+
+body#main-app-body { background: #fdfeff;      }
+#main-app          { width:100%; height: 100%; }
+
+
+/* --- header --- */
+
+#main-app > header { width: 100%; height: 70px; background: white; border-bottom: 1px solid #ECECEB; }
+#main-app > header > #header-align-center { width: 75%; height: 100%; margin: 0 auto; }
+
+/* === left === */
+section#app-header   { height: 100%; float: left; }
+/* == middle == */
+section#app-links    { height: 100%; overflow: hidden; display: flex; justify-content: flex-end; align-items: center; }
+/*==  right === */
+section#auth-section { height: 100%; float: right; }
+
+
+/* --  left: title  -- */
+
+section#app-header > ul#app-title { display: flex;  justify-content: center; align-items: center; height: 100%; }
+
+section#app-header > ul > li      { align-items: center; font-size: 1.4em; cursor: pointer; margin-bottom: 5px; }
+
+#app-header > ul > li > img#title-img {
+  width: 25px; height: 25px;  margin-right: 5px; position: relative;  top: 4px;
+}
+
+/* -- middle: links -- */
+
+section.header-place-2#app-links > ul      { margin-right: 30px; }
+section.header-place-2#app-links > ul > li { display: inline-block; margin: 0 10px; padding: 10px; cursor: pointer; }
+
+
+
+/* -- right: social -- */
+
+section.header-place-3#auth-section      { display: inline-block; height: 100%; float: right; }
+
+section.header-place-3#auth-section > ul { display: flex; align-items: center; height: 100%; padding-right: 15px; }
+
+section.header-place-3#auth-section > ul > li { margin: 0; padding: 8px; }
+
+section.header-place-3#auth-section > ul > li > a {
+  box-shadow: 2px 1px 8px 0px rgba(185, 185, 185, 0.49);
+  border-radius: 5px; padding: 12px 30px;
+}
+
+li#auth-btn-blue  > a {  background-color: #57a2ff; color: white; }
+
+
+
+/* =========  signup styles ========= */
+
+#app-auth-contain {
+  width: 75%; height: 100%; float: none; display: block; margin: 0 auto;
+}
+
+/* ===== get started  ===== */
+
+#auth-flex-middle.signup  { width: 100%; height: 100%; display: flex;  justify-content: center;  }
+
+#app-signup-center        { width: 60%; min-height: 100px; margin-top: 100px; }
+
+#app-signup-center > h2   { padding: 10px; font-size: 2.5em; letter-spacing: 0; }
+
+form#auth-signup-form     { width: 50%; padding-left: 10px; }
+
+form#auth-signup-form  > .form-group > label, form#auth-signup-form  > .form-group > input {
+  display: block; width: 100%; font-weight: 400; margin-bottom: 10px;
+}
+
+ form#auth-signup-form  > .form-group > label  { padding: 10px 10px 10px 0; }
+ form#auth-signup-form  > .form-group > input  { padding: 15px; border: 1px solid #e2e2e2; }
+
+ form#auth-signup-form  > .form-group > input::placeholder { color: grey; }
+
+#auth-signup-enter {
+  background: none; outline: none;     box-shadow: 2px 1px 8px 0px rgba(185, 185, 185, 0.49);
+  border-radius: 5px;  padding: 15px 30px; background-color: #57a2ff;  color: white;
+  border: none; margin-top: 20px; cursor: pointer;
+}
+
+
+/* ===== login ===== */
+
+#auth-flex-middle.login {
+  width: 100%; height: 100%; display: flex;  justify-content: center;
+  align-items: center;
+}
+
+
+/* --- error messages  --- */
+
+div#auth-err-messages   { width: 100%;  }
+
+div.messages > h2.alert {
+      border-radius: 6px; color: black; padding: 20px 10px;
+      font-weight: 400;   background: #ffe7e7;
+      margin-top: 25px;   font-size: 0.73em;
+}

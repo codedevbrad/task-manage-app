@@ -1,0 +1,36 @@
+
+extends ../layout
+
+block content 
+    
+    section#auth-flex-middle.signup
+      section#app-signup-center
+        h2 Signup to slackr
+        section#auth-signup-options
+        form#auth-signup-form(method="POST", action="/user/auth/register")
+          
+          .form-group  
+            label Username
+            input#auth-username.form-control(name='username', placeholder='eg: devcoffee', required='true')
+            div.error
+              
+          .form-group
+            
+            label are you a leader or member ?
+            input(type='radio', name='leader', value='leader')
+            |  Leader
+            br
+            input(type='radio', name='member', value='member')
+            |  Member
+              
+          .form-group  
+            label email address
+            input#auth-email.form-control(name='email', placeholder='eg: devcoffee@gmail.com', required='true')
+            div.error
+                    
+          .form-group  
+            label Password
+            input#auth-pass.form-control(name='password', type='password', placeholder='eg: 12345', required='true')
+            div.error
+                      
+          input#auth-signup-enter.btn.btn-primary(type="submit", value="sign me up") 

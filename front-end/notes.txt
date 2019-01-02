@@ -1,0 +1,9 @@
+
+setting up dropdowns
+
+- .dropdown class for dropdown parent.
+
+- .menu-target class for dropdown select.
+
+li.dropdown
+  ul.menu-target

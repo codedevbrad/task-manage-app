@@ -1,0 +1,24 @@
+
+
+.stack-grid { width: 100%; height: auto; padding: 10px 0px 10px 0;  }
+
+div#stack-left-grid-name      { margin-top: 20px; padding-bottom: 0; }
+
+div#stack-left-grid-name > h3 { font-size: 1.5em; display: inline-block; }
+div#stack-left-grid-name > a  { display: inline-block; float: right;  border-radius: 20px; border: 1px solid #dedede;
+                                padding: 10px 25px; font-weight: 400; color: black; margin-top: 15px; font-size: 0.75em;
+}
+
+
+div#stack-left-grid-links     {  }
+
+div#stack-left-grid-links > ul          { padding-bottom: 5px;   border-bottom: 1px solid #efefef; }
+
+div#stack-left-grid-links > ul > li     { display: inline-block; margin: 10px 30px 10px 0;  }
+
+div#stack-left-grid-links > ul > li > a { padding: 10px; font-weight: 400; padding-left: 0;
+                                          font-size: 0.88em; cursor: pointer; color: #868181;
+                                        }
+
+
+div#stack-left-grid-content  { width: 100%; height: 90%; background: #f5faff; margin-top: 10px; }

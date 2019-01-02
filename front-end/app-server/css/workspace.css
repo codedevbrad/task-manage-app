@@ -1,0 +1,119 @@
+
+/* --- single workspace ---- */
+
+div#workspace-single { width: 100%; height: 100%;  }
+
+section.header-place-3#app-space-title > li > svg {
+  position: relative; top: 3px; font-size: 1.3em; width: 25px; cursor: pointer;
+}
+section.header-place-3#app-space-title > li { position: absolute; cursor: pointer; }
+
+section.header-place-3#app-space-title > .dropdown > ul.dropdown-open {
+    top: 45px;
+    box-shadow: 1px 1px 9px 0px rgb(212, 212, 212);
+}
+
+.workspace-grid-box { width: 100%; height: auto; }
+
+
+ /* workspace name */
+
+ div#workspaces-left-grid-name       { padding-top: 20px; }
+ div#workspaces-left-grid-name > h2  { font-size: 1.5em; display: inline-block; }
+
+
+ div#workspaces-left-grid-name > h3  { font-size: 0.77em;
+
+    display: inline-block;
+    float: right;
+    margin-right: 20px;
+    cursor: pointer;
+    padding: 13px 26px; border: 1px solid #d8d8d8; display: inline-block;
+    border-radius: 5px; color: #464646; font-weight: 400;
+  }
+
+
+/* workspace stacks  */
+
+div#workspaces-left-grid-stacks { width: 100%; overflow: hidden; padding-bottom: 20px;  }
+
+div#workspaces-left-grid-stacks > div.stack  {
+  width: 270px; height: 210px; float: left; margin: 15px 20px; margin-left: 0;
+  padding: 20px; border-radius: 7px;
+}
+
+.color-1 { background: #dff0fe; }
+.color-2 { background: #f4e9f6; }
+.color-3 { background: #d2ffee; }
+.color-4 { background: #ffe1e1; }
+.color-5 { background: #ffe7f4; }
+.color-6 { background: #ddedfb; }
+.color-7 { background: #b6ffef; }
+.color-8 { background: #e0c8ff; }
+
+div.stack >  div.stack-position  { width: 100%; height: 100%; position: relative;   justify-content: center;
+  align-items: center; display: flex; }
+
+a.stack-inner-center { display: block; }
+
+div.stack-position > a.stack-inner-center      { text-align: center; }
+
+div.stack-position > a.stack-inner-center > h2 { font-size: 4em; }
+div.stack-position > a.stack-inner-center > h3 { font-size: 1em; }
+
+
+/* workspace stacks  */
+
+div#workspaces-left-grid-currentStack       { border-top: 1px solid #E0E0E1; margin-bottom: 110px; }
+
+div#workspaces-left-grid-currentStack > h2  { font-size: 1.5em; display: inline-block; padding: 10px 0; }
+
+div#workspaces-left-grid-currentStack > ul  { width: 50%;  }
+
+div#workspaces-left-grid-currentStack > ul > li {
+  margin: 10px 0; padding: 10px 0; font-weight: 400; font-size: 0.8em; border-bottom: 1px solid #d8d8d8;
+}
+
+
+
+
+
+
+
+
+
+
+/* ---- creating a new stack ---- */
+
+div#workspace-new-stack-popup { display: none; }
+
+div#workspace-new-stack-popup.newstack-show {
+   display: block; background: white;  z-index: 9999; height: 100%;
+   margin: 0 auto; position: absolute; top: 0; left: 0;
+   right: 0; display: flex; justify-content: center;
+}
+
+section#new-stack-center-main  { margin-top: 50px; width: 100%; height: auto; }
+
+form#auth-new-stack-form       { width: 60%; margin: 0 auto;  }
+
+form#auth-new-stack-form  > h3 { font-size: 2.1em; letter-spacing: -0.035em; }
+form#auth-new-stack-form  > p  { width: 70%; margin-top: 10px; font-weight: 400; font-size: 0.8em; line-height: 1.7em; word-spacing: 0.03em; }
+
+.form-group-stack       { margin-top: 20px; width: 100%; border-bottom: 1px solid #e6e6e6; }
+.form-group-stack > h2  { margin-bottom: 10px; font-weight: 400; }
+
+.stack-new-field { width: 70%; outline: none; border: none; font-size: 0.78em; padding: 15px 10px;
+                   margin-bottom: 30px; display: block; background: #fff5ae; font-weight: 400;
+                 }
+
+#auth-new-stack-submit {
+    outline: none; background: none; display: inline-block; padding: 8px; font-size: 0.9em;
+    color: #4d99f9;  letter-spacing: 0.03em; border: 1px solid #4d99f9;  border-radius: 3px;
+    cursor: pointer; font-weight: 400; margin-top: 30px;
+  }
+
+
+
+
+/* */

@@ -1,0 +1,47 @@
+
+doctype html
+html
+  head
+    meta(charset='UTF-8')
+    title slackr.io | #{title}
+    link(rel='stylesheet' href='/main/normalise.css')
+    link(rel='stylesheet' href='/app-explore/build/client.css')
+    link(rel='icon'       href='/main/favicon1.png')
+      
+  body(id='main-app-body')
+    
+    div#main-app
+      
+      header
+        
+        div#header-align-center
+          
+          section.header-place-1#app-header
+            ul#app-title
+              li 
+                img(src='/main/favicon1.png')#title-img
+              li 
+                a(href='/') slackr   
+          section.header-place-3#auth-section
+            ul
+              li.workplace-login 
+                a(href='/login') Login
+              li#auth-btn-blue.get-started
+                a(href='/get-started') Get started
+  
+          section.header-place-2#app-links
+            ul
+              li features
+              li pricing
+              li team
+          
+      //- each page content ...
+      div#app-auth-contain     
+        block content
+
+      //- npm scripts 
+      script(defer='', src='https://use.fontawesome.com/releases/v5.3.1/js/all.js', integrity='sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB', crossorigin='anonymous')
+      script(src='/build/axios/dist/axios.min.js')
+      script(src='/app-explore/build/client.js')
+          
+    

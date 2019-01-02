@@ -1,0 +1,31 @@
+
+extends layout
+
+block content
+  
+  div#workspace-new-stack-popup
+      
+    include new-stack.pug
+    
+  div.workspace-grid-box#workspaces-left-grid-name
+    h2 #{space.stacks.length} stack(s)
+    h3#create-stack-btn create new stack
+  
+  div.workspace-grid-box#workspaces-left-grid-stacks 
+    
+    each stack in space.stacks
+      - var str = stack.stackName.toUpperCase()
+      
+      div.stack(class='color-'+stack.color)
+        div.stack-position
+          a(href='/0/workspace/stack/'+stack._id).stack-inner-center
+            h2=str.charAt(0)
+            h3=stack.stackName
+      
+  div.workspace-grid-box#workspaces-left-grid-currentStack
+    h2 current Stack 
+    ul
+      li need to add nav images
+      li find mockups for content over images 
+      li design ideas
+  

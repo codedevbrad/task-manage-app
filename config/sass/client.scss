@@ -1,0 +1,25 @@
+
+$font-stack:    Helvetica, sans-serif;
+
+$primary-background:  white;
+$secondary-background: grey;
+
+body    { background: $primary-background   }
+section { background: $secondary-background }
+
+nav {
+  ul { margin: 0 auto; padding: 0; }
+  li { display: inline-block; padding: 0; }
+}
+
+%box-shadow {
+  -webkit-box-shadow: 10px 10px 5px 0 rgba(232,232,232,1);
+  -moz-box-shadow: 10px 10px 5px 0 rgba(232,232,232,1);
+  box-shadow: 6px 5px 5px 0 rgb(218, 226, 247);
+  border-radius: 5px;
+}
+
+section > h2 {
+  @extend %box-shadow;
+  color: red; 
+}

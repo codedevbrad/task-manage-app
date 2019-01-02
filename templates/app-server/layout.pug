@@ -1,0 +1,111 @@
+
+doctype html
+html
+  head
+    title slackr.io | #{title}
+    link(rel='stylesheet' href='/main/normalise.css')
+    link(rel='stylesheet' href='/app-server/build/client.css')
+    link(rel='icon'       href='/main/favicon1.png')
+    
+  body(id='app-body', body_data_id=data_id)
+    
+    div#app-wrap
+      
+      header
+        section.header-place-1#app-header
+          ul#app-title
+            li 
+              img(src='/main/favicon1.png')#title-img
+            li slackr  
+        
+        section.header-place-2#user-auth-section
+          
+          ul.menu-target-ul
+            
+            li.user-li#upgrade-acc upgrade
+            
+            li.user-li#icon-1.dropdown
+              i#notification-icon.far.fa-bell
+              
+              ul.menu-target.user-menu
+                li.menu-li notifications
+                li.break-menu  
+                
+            li.user-li#icon-2.dropdown
+              i#other-icon.far.fa-bookmark
+                
+              ul.menu-target.user-menu
+                li.menu-li workspaces
+                li.break-menu   
+ 
+            li.user-auth-name#auth-username.dropdown
+              | hi, #{user.username} 
+              
+              i.auth-dropdown-icon.fa.fa-angle-down.fa              
+                
+              ul.menu-target.user-menu#auth-username-menu
+                li.menu-li 
+                  a Set user status
+                li.menu-li You are currently on slackr's free workplace plan 
+                li.menu-li 
+                  a(href='/0/auth/workspaces/') Switch workspaces
+                li.menu-li 
+                  a profile & Settings
+                li.break-menu
+                li.menu-li.dropdown-menu-highlight
+                  a(href='/0/auth/logout/') Logout  
+                  
+            //- div#profile-img
+            
+        if displaymainlayout         
+          section.header-place-3#app-space-title
+            li.dropdown
+              | # #{space_title} 
+              i.fa.fa-angle-down.fa
+              
+              ul.menu-target
+                li.menu-li add members to workspace
+                li.menu-li rename this workspace
+                li.menu-li remove from workspace
+            
+      if displaymainlayout                       
+        div#app-load
+          section#load-center
+            div#populate-load
+        
+      div#app-content
+        if displaymainlayout
+          section#app-content-main
+            block content
+          aside#app-content-side
+            div#aside-inner
+              div#aside-user-guide
+                h1 Need help navigating ?
+                
+                
+              div#aside-reminders
+                h1 workspace reminders
+                ul
+                  li send mark my newest git commit
+                  li continue my collab app workspace
+                  li random reminder 
+                  li add kara to the team workspace
+              div#aside-channels
+                h1 channels
+                ul
+                  li # trouble with database 
+                    span.channel-loc react apps
+                  li # lunch ideas
+                    span.channel-loc java uni apps
+              div#aside-team 
+                h1 team members
+        else 
+          
+          block content
+        
+    //- npm scripts 
+    script(defer='', src='https://use.fontawesome.com/releases/v5.3.1/js/all.js', integrity='sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB', crossorigin='anonymous')
+    script(src='/build/axios/dist/axios.min.js')
+    script(src='/app-server/build/client.js')
+    
+    
