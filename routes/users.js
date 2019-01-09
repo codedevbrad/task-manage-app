@@ -38,54 +38,99 @@ router.get('/user/auth/username/:id', function(req, res) {
 });
 
 
-// register new user
-router.post('/user/auth/register', function(req, res, next ) {
+// register - step 1 : initial register / creates account ...
 
-    const username  = req.body.username.toLowerCase();
-    const password  = req.body.password;
-    const email     = req.body.email;
+router.post('/user/auth/register/', function(req, res, next) {
+	const username  = req.body.username.toLowerCase();
+	const password  = req.body.password;
+	const email     = req.body.email;
 
-		var errors = false;
+	var errors = false;
 
-    function checkErrors() {
+	function checkErrors() {
 
-			  // check fields
-				req.checkBody('email',    'Email is required').notEmpty();
-				req.checkBody('username', 'Username is required').notEmpty();
-				req.checkBody('password', 'password is required').notEmpty();
-				req.checkBody('email',    'Email is not valid').isEmail();
-				errors = req.validationErrors();
+			// check fields
+			req.checkBody('email',    'Email is required').notEmpty();
+			req.checkBody('username', 'Username is required').notEmpty();
+			req.checkBody('password', 'password is required').notEmpty();
+			req.checkBody('email',    'Email is not valid').isEmail();
+			errors = req.validationErrors();
 
-				return errors;
-	  }
+			return errors;
+	}
 
-	 if (checkErrors())  { res.redirect('/get-started'); }
+ if (checkErrors())  { res.redirect('/get-started'); }
 
-	 if (!checkErrors()) {
+ if (!checkErrors()) {
 
-       var newUser = new User();
-       newUser.email    = email, newUser.username = username, newUser.password  = password,
-       newUser.team     = [],    newUser.notifications = [],  newUser.workspace = []
+		 var newUser = new User();
+		 newUser.email    = email, newUser.username = username, newUser.password  = password,
+		 newUser.team     = [],    newUser.notifications = [],  newUser.workspace = []
 
-     // encypt the plaintext password
-     bcrypt.genSalt(10, function(err, salt) {
-       bcrypt.hash(newUser.password, salt, function(err, hash) {
-         if(err) {  console.log(err) }
+	 // encypt the plaintext password
+	 bcrypt.genSalt(10, function(err, salt) {
+		 bcrypt.hash(newUser.password, salt, function(err, hash) {
+			 if(err) {  console.log(err) }
 
-				 newUser.password = hash;
+			 newUser.password = hash;
 
-         newUser.save(function(err)  {
-           if (err) { console.log(err)   }
-           else     {
-               passport.authenticate('local', {
-                 successRedirect: '/0/auth/workspaces/', failureRedirect: '/get-started'
-               }) (req, res, next)
-            }
-         });
-       });
-     });
+			 newUser.save(function(err)  {
+				 if (err) { console.log(err)   }
+				 else     {
+						 passport.authenticate('local', {
+							 successRedirect: '/user/auth/register/type', failureRedirect: '/get-started'
+						 }) (req, res, next)
+					}
+			 });
+		 });
+	 });
   }
 });
+
+// check
+var checkAuth = function (req, res, next) {
+
+    if   ( req.isAuthenticated()) {  return next(); }
+    else { res.redirect('/');     }
+};
+
+// register - step 2 : choosing the membersip type ...
+
+router.get('/user/auth/register/type', checkAuth, function(req, res) {
+
+		res.render ( 'app-explore/auth/register-type', {
+			title: 'explore our app', bodyId: 'slackr-main-page'
+		});
+});
+
+
+router.post('/user/auth/register/type', checkAuth, function(req, res) {
+	var membership = req.body.membertype;
+
+	res.redirect('/user/auth/register/'+ membership);
+
+});
+
+// register - step 3 : showing the selected user role signup
+
+router.get('/user/auth/register/:id', function(req, res) {
+		res.render ( 'app-explore/auth/register-user', {
+			title: 'explore our app', bodyId: 'slackr-main-page', role: req.params.id
+		});
+});
+
+// register - step 3: member signup to workspace ...
+
+router.post('user/auth/register/member', checkAuth, function ( req, res) {
+		
+});
+
+// register - step 3: leader signup payment options ...
+
+router.post('user/auth/register/leader', checkAuth, function ( req, res) {
+
+});
+
 
 // logout route process
 router.get('/0/auth/logout', function(req, res) {

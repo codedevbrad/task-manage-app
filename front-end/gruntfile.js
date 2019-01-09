@@ -2,22 +2,10 @@
 module.exports = function(grunt) {
 
   // var STATE = 'FRONT';
-  // grunt.registerTask('build', ['concat', 'uglify', 'cssmin'], function () {
-  //
-  //   console.log('concatinated files and minified !!!');
-  // });
-  //
-  // var frontTasks  = ['concat:css2',  'concat:js2', 'uglify:explore', 'cssmin:explore'];
-  // var serverTasks = ['concat:css1', 'concat:js1', 'uglify:server', 'cssmin:explore'];
-  //
-  // if (STATE === 'FRONT') {
-  //   grunt.registerTask('test', ['concat:css2'], function () { console.log('running front-end' ); });
-  // }
-  //
-  // if (STATE === 'SERVER') {
-  //   grunt.registerTask('test', [serverTasks], function () { console.log('running server-end' ); });
-  // }
+  grunt.registerTask('test', function () {
 
+    console.log('concatinated files and minified !!!');
+  });
 
   grunt.initConfig ({
 

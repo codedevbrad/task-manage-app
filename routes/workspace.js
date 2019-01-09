@@ -87,12 +87,9 @@ router.get('/0/workspace/:id/', checkAuth, function(req, res) {
 
 // load stack data ...
 
-router.get('/0/workspace/get/data', checkAuth, function() {
+router.get('/0/workspace/get/data', checkAuth, function(req, res) {
     // get staxks ...
 
-
-
-    //
 });
 
 

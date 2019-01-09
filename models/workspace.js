@@ -24,3 +24,9 @@ var workspaceSchema = mongoose.Schema ({
 });
 
 var Workspaces = module.exports = mongoose.model('workspace', workspaceSchema);
+
+// post request ...
+
+// update request ...
+
+// delete request ...

@@ -35,10 +35,14 @@ section.header-place-3#app-space-title > .dropdown > ul.dropdown-open {
 
 /* workspace stacks  */
 
-div#workspaces-left-grid-stacks { width: 100%; overflow: hidden; padding-bottom: 20px;  }
+div#workspaces-left-grid-stacks {
+    width: 100%;
+    padding-bottom: 20px;
+    overflow-x: scroll;
+    white-space: nowrap;  }
 
 div#workspaces-left-grid-stacks > div.stack  {
-  width: 270px; height: 210px; float: left; margin: 15px 20px; margin-left: 0;
+  width: 270px; height: 210px; display: inline-block; margin: 15px 20px; margin-left: 0;
   padding: 20px; border-radius: 7px;
 }
 

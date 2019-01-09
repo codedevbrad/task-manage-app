@@ -1,0 +1,19 @@
+extends ../layout
+
+block content
+
+    section#auth-flex-middle.signup
+      section#app-signup-center 
+        h2 hey #{user.username}
+        
+        p you're nearly set. what's your role within workspaces.  
+        
+        section#auth-signup-options
+          form#auth-signup-form(method="POST", action="/user/auth/register/type")
+
+            select(id='register-type', name='membertype')
+              option(selected disabled hidden) select your membership type
+              option(value='member') member of a team
+              option(value='leader') leading a team
+
+            input#auth-signup-enter.signup-step2-enter.btn.btn-primary(type="submit", value="next step")

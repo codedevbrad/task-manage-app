@@ -22,7 +22,9 @@ const memberSchema = mongoose.Schema ({
   email:    {  type: String,  required: true },
   username: {  type: String,  required: true },
   password: {  type: String,  required: true },
-  teamRole: {  type: String,  default: 'leader' },
+  teamRole: {  type: String,  default: null  },
+  finished: {  type: String,  default: false },
+
   workspace:     [ workspaceSchema ],
   notifications: [ notificationSchema ],
 

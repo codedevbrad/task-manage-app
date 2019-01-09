@@ -1,0 +1,48 @@
+extends ../layout
+
+block content
+
+    section#auth-flex-middle.signup
+      section#app-signup-center
+      
+        h2 nearly there #{user.username} 
+        
+        if role == "member"
+        
+          p to be assigned to a team, you need to paste the code sent to your email address. 
+          
+          form#auth-signup-form.single-auth-signup-form(method="POST", action="/user/auth/register/member")
+  
+            .form-group 
+              input#auth-username.form-control(name='username', placeholder='eg: workspace:', required='true')
+              div.error
+  
+            input#auth-signup-enter.btn.btn-primary(type="submit", value="join workspace")
+
+        
+        else
+        
+          p to start creating workspaces you first need to choose your plan
+          
+          form#auth-signup-form.membership-plan(method="POST", action="/user/auth/register/member")
+        
+            .columns
+              ul.price
+              
+                li.header Basic
+                li free
+                li 3 workspaces
+                li 5 team members 
+                li.checkbox
+                  input(type='radio', name='basic', value='basic') 
+                  | choose
+            .columns
+              ul.price
+                li.header enterprise
+                li $ 24.99 / year
+                li unlimited workspaces 
+                li 25 team members
+                li.checkbox
+                  input(type='radio', name='premium', value='premium') 
+                  | choose
+            input#auth-signup-enter.btn.btn-primary(type="submit", value="join workspace")

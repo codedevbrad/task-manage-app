@@ -10,11 +10,13 @@
 
 #auth-flex-middle.signup  { width: 100%; height: 100%; display: flex;  justify-content: center;  }
 
-#app-signup-center        { width: 60%; min-height: 100px; margin-top: 100px; }
+#app-signup-center        { width: 60%; min-height: 100px; margin-top: 60px; }
 
-#app-signup-center > h2   { padding: 10px; font-size: 2.5em; letter-spacing: 0; }
+#app-signup-center > h2   { padding: 10px 0; font-size: 2.5em; letter-spacing: 0; }
 
-form#auth-signup-form     { width: 50%; padding-left: 10px; }
+#app-signup-center > p    { font-weight: 400; }
+
+form#auth-signup-form     { width: 65%; }
 
 form#auth-signup-form  > .form-group > label, form#auth-signup-form  > .form-group > input {
   display: block; width: 100%; font-weight: 400; margin-bottom: 10px;
@@ -30,6 +32,34 @@ form#auth-signup-form  > .form-group > label, form#auth-signup-form  > .form-gro
   border-radius: 5px;  padding: 15px 30px; background-color: #57a2ff;  color: white;
   border: none; margin-top: 20px; cursor: pointer;
 }
+
+
+/* ====  get started - type ==== */
+
+#register-type      { padding: 10px 15px; margin: 25px 0; font-weight: 400;
+                      font-size: 0.8em; font-family: 'Montserrat', sans-serif;
+                    }
+
+.signup-step2-enter { display: block; }
+
+
+/* == get started - user type == */
+
+.single-auth-signup-form { margin-top: 25px;  }
+
+.columns     {  float: left; width: 48.5%; margin-right: 5px; margin-top: 20px; }
+
+.price       {  list-style-type: none; border: 1px solid #eee; margin: 0; padding: 0;  }
+
+.price li    {  border-bottom: 1px solid #eee; padding: 20px;  text-align: center; font-weight: 400; font-size: 0.7em; }
+
+.button      {  border: none;  padding: 10px 25px;  text-align: center;
+                text-decoration: none; font-size: 18px;
+             }
+
+form#auth-signup-form.membership-plan { width : 100%;  }
+
+.checkbox > input  { margin-right: 10px; }
 
 
 /* ===== login ===== */
