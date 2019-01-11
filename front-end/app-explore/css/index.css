@@ -3,7 +3,7 @@
 * {-webkit-font-smoothing: antialiased;}
 
 h1, h2, h3, h4, a, li, p, input, label {
-  font-family: 'Montserrat', sans-serif; font-weight: 600; letter-spacing: 0.03em; font-size: 0.86em;
+  font-family: 'Montserrat', sans-serif; font-weight: 600; letter-spacing: 0.03em; font-size: 0.82em;
 }
 
 
@@ -52,7 +52,7 @@ section#app-header > ul > li      { align-items: center; font-size: 1.4em; curso
 /* -- middle: links -- */
 
 section.header-place-2#app-links > ul      { margin-right: 30px; }
-section.header-place-2#app-links > ul > li { display: inline-block; margin: 0 10px; padding: 10px; cursor: pointer; }
+section.header-place-2#app-links > ul > li { font-size: 0.78em; display: inline-block; margin: 0 10px; padding: 10px; cursor: pointer; }
 
 
 

@@ -5,27 +5,32 @@ block content
     section#auth-flex-middle.signup
       section#app-signup-center
       
-        h2 nearly there #{user.username} 
+        h2 almost there
+        
+        
+        section#previous-auth-option
+          input.auth-signup-input-showcase(type='text', name='chosen-username', value=input, disabled)
         
         if role == "member"
         
-          p to be assigned to a team, you need to paste the code sent to your email address. 
+          p to be assigned to a team, you need to paste the workspace code sent to your email address. 
           
           form#auth-signup-form.single-auth-signup-form(method="POST", action="/user/auth/register/member")
   
             .form-group 
-              input#auth-username.form-control(name='username', placeholder='eg: workspace:', required='true')
+              input#auth-username.form-control(name='username', placeholder='eg: 0/workspace/f701eb4fa/user:codedevbrad', required='true')
               div.error
-  
-            input#auth-signup-enter.btn.btn-primary(type="submit", value="join workspace")
-
+              
+            div#auth-pagination
+              a.previous.round(href=prev) 
+                i.fas.fa-angle-left
+              h2.auth-register-step  step 3  
+              input#auth-signup-enter.btn.btn-primary(type="submit", value="join workspace")
         
         else
         
           p to start creating workspaces you first need to choose your plan
           
-          form#auth-signup-form.membership-plan(method="POST", action="/user/auth/register/member")
-        
             .columns
               ul.price
               
@@ -34,8 +39,9 @@ block content
                 li 3 workspaces
                 li 5 team members 
                 li.checkbox
-                  input(type='radio', name='basic', value='basic') 
-                  | choose
+                  form#auth-signup-form.membership-plan(method="POST", action="/user/auth/register/leader")
+                    input#auth-signup-enter.btn.btn-primary(type="submit", value="get started")  
+
             .columns
               ul.price
                 li.header enterprise
@@ -43,6 +49,17 @@ block content
                 li unlimited workspaces 
                 li 25 team members
                 li.checkbox
-                  input(type='radio', name='premium', value='premium') 
-                  | choose
-            input#auth-signup-enter.btn.btn-primary(type="submit", value="join workspace")
+                  form#auth-signup-form.membership-plan(method="POST", action="/user/auth/register/leader")
+                    input#auth-signup-enter.btn.btn-primary(type="submit", value="go enterprise")  
+                    
+            div#auth-pagination
+              a.previous.round(href=prev) 
+                i.fas.fa-angle-left
+                
+              h2.auth-register-step  step 3  
+              a.previous.round#btn-disabled(href='#') 
+                i.fas.fa-angle-right
+
+              
+
+   

@@ -14,7 +14,7 @@ var Stack  = require('../models/stack');
 // check logged / protect routes ...
 var checkAuth = function (req, res, next) {
 
-    if   ( req.isAuthenticated()) {  return next(); }
+    if   ( req.isAuthenticated() && req.user.finished == true ) {  return next(); }
     else { res.redirect('/');     }
 };
 

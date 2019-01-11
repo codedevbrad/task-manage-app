@@ -23,7 +23,7 @@ const memberSchema = mongoose.Schema ({
   username: {  type: String,  required: true },
   password: {  type: String,  required: true },
   teamRole: {  type: String,  default: null  },
-  finished: {  type: String,  default: false },
+  finished: {  type: Boolean, default: false },
 
   workspace:     [ workspaceSchema ],
   notifications: [ notificationSchema ],

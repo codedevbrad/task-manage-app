@@ -23,4 +23,9 @@ block content
             input#auth-pass.form-control(name='password', type='password', placeholder='eg: 12345', required='true')
             div.error
 
-          input#auth-signup-enter.btn.btn-primary(type="submit", value="sign me up")
+          div#auth-pagination
+            a.previous.round#btn-disabled(href=prev) 
+              i.fas.fa-angle-left
+              
+            h2.auth-register-step step 1  
+            input#auth-signup-enter(type="submit", value="next step")

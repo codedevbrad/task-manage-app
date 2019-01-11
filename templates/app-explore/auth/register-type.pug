@@ -4,16 +4,29 @@ block content
 
     section#auth-flex-middle.signup
       section#app-signup-center 
-        h2 hey #{user.username}
+      
+        h2 workspace role        
         
-        p you're nearly set. what's your role within workspaces.  
+        section#previous-auth-option
+          input.auth-signup-input-showcase(type='text', name='chosen-username', value=input, disabled)
+      
+        p you're nearly set. You can lead a team or be assigned to a space as member. 
+        br
+        p what's your role within workspaces ?  
         
         section#auth-signup-options
+           
           form#auth-signup-form(method="POST", action="/user/auth/register/type")
 
-            select(id='register-type', name='membertype')
-              option(selected disabled hidden) select your membership type
+            select(id='register-type', name='membertype' required)
+              option(selected disabled hidden value='') select your membership type
               option(value='member') member of a team
               option(value='leader') leading a team
 
-            input#auth-signup-enter.signup-step2-enter.btn.btn-primary(type="submit", value="next step")
+            div#auth-pagination
+              a.previous.round#btn-disabled(href=prev) 
+                i.fas.fa-angle-left
+                
+              h2.auth-register-step  step 2 / 3  
+              
+              input#auth-signup-enter(type="submit", value="next step")

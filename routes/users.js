@@ -87,24 +87,24 @@ router.post('/user/auth/register/', function(req, res, next) {
   }
 });
 
-// check
-var checkAuth = function (req, res, next) {
 
-    if   ( req.isAuthenticated()) {  return next(); }
-    else { res.redirect('/');     }
+// check
+var registerAuth = function (req, res, next) {
+
+    return next();
 };
 
 // register - step 2 : choosing the membersip type ...
 
-router.get('/user/auth/register/type', checkAuth, function(req, res) {
+router.get('/user/auth/register/type', registerAuth, function(req, res) {
 
 		res.render ( 'app-explore/auth/register-type', {
-			title: 'explore our app', bodyId: 'slackr-main-page'
+			title: 'explore our app', bodyId: 'slackr-main-page', prev: '#', input: req.user.username
 		});
 });
 
 
-router.post('/user/auth/register/type', checkAuth, function(req, res) {
+router.post('/user/auth/register/type', registerAuth, function(req, res) {
 	var membership = req.body.membertype;
 
 	res.redirect('/user/auth/register/'+ membership);
@@ -115,20 +115,33 @@ router.post('/user/auth/register/type', checkAuth, function(req, res) {
 
 router.get('/user/auth/register/:id', function(req, res) {
 		res.render ( 'app-explore/auth/register-user', {
-			title: 'explore our app', bodyId: 'slackr-main-page', role: req.params.id
+			title: 'explore our app', bodyId: 'slackr-main-page', role: req.params.id, prev: '/user/auth/register/type',
+			input: req.user.username
 		});
 });
 
 // register - step 3: member signup to workspace ...
 
-router.post('user/auth/register/member', checkAuth, function ( req, res) {
-		
+router.post('/user/auth/register/member', registerAuth, function ( req, res) {
+
 });
 
 // register - step 3: leader signup payment options ...
 
-router.post('user/auth/register/leader', checkAuth, function ( req, res) {
+router.post('/user/auth/register/leader', registerAuth, function ( req, res) {
 
+	const userId = { _id: req.user.id };
+
+	User.findById( userId, function (err, user) {
+
+		if (!err) {
+			user.finished = true;
+			console.log( user );
+			user.save(function (err) {
+				if(!err) { res.redirect('/0/auth/workspaces'); }
+			});
+		}
+	});
 });
 
 

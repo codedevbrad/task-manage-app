@@ -23,16 +23,19 @@ html
               li 
                 a(href='/') slackr   
           section.header-place-3#auth-section
-            ul
-              li.workplace-login 
-                a(href='/login') Login
-              li#auth-btn-blue.get-started
-                a(href='/get-started') Get started
-  
+            if !user
+              ul
+                li.workplace-login 
+                  a(href='/login') Login
+                li#auth-btn-blue.get-started
+                  a(href='/get-started') Get started
+            else
+                ul
+                  li nearly there
           section.header-place-2#app-links
             ul
               li product
-              li why slackr.com
+              li why slackr.io
               li pricing
           
       //- each page content ...
