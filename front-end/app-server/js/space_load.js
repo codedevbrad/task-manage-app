@@ -8,15 +8,13 @@ if (load) {
   (function () {
     addPhrasesToLoad ( phrases, function() {
 
-      firstMethod().then(secondMethod).then(thirdMethod).then(finished);
-
+        firstMethod().then(secondMethod).then(thirdMethod).then(finished);
     });
   })();
-
 }
 
-
 function addPhrasesToLoad( phrases, gettingdata ) {
+
   var loadHTML = document.getElementById('populate-load');
 
   for (var i = 0; i < phrases.length; i++) {
@@ -28,21 +26,13 @@ function addPhrasesToLoad( phrases, gettingdata ) {
     loadHTML.appendChild(div);
   };
   gettingdata();
-
 }
 
-function getData() {
-  axios.get('/0/workspace/get/data').then(function (response) {
-      console.log(response);
-  }).catch(function (error) { });
-}
+function getData( url ) {
 
-
-
-function checkErrors(resolve, reject, stage) {
-    var error = false;
-    if (!error) { resolve(); animation(stage) }
-    else        { reject('error: somethings wrong');      }
+  return axios.get( url ).then(function (response) {
+      return response;
+  });
 }
 
 function animation (currEl) {
@@ -51,54 +41,92 @@ function animation (currEl) {
 
      var tick = current.getElementsByClassName('load-left')[0];
 
-     tick.innerHTML = ' <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>';
+     tick.innerHTML = '<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>';
 
      current.classList.add('load-in-view');
-
 }
 
-var delay = 1100;
+function displayData( response ) {
+  console.log(response.data);
+}
+
+var delay = 700;
 
 function firstMethod () {
-   var promise = new Promise(function(resolve, reject){
-      setTimeout(function() {
-        var stage = 0;
-        checkErrors( resolve, reject, stage);
-      }, delay);
+   var promise = new Promise(function(resolve, reject) {
+
+      var stage = 0;
+      // ajax request
+      getData('/0/workspace/get/data/').then(function (response) {
+
+          displayData(response);
+
+          setTimeout(function() {
+
+            resolve(); animation(stage);
+          }, delay);
+
+      }).catch(function (error) {
+          reject('error: somethings wrong');
+      });
    });
    return promise;
 };
 
-
 function secondMethod (someStuff) {
    var promise = new Promise(function(resolve, reject){
-      setTimeout(function() {
-        var stage = 1;
-        checkErrors( resolve, reject, stage);
-      }, delay);
+
+     var stage = 1;
+     // ajax request
+     getData('/0/workspace/get/data/').then(function (response) {
+
+       displayData(response);
+
+
+       setTimeout(function() {
+
+         resolve(); animation(stage);
+       }, delay);
+
+     }).catch(function (error) {
+         reject('error: somethings wrong');
+     });
    });
    return promise;
 };
 
 function thirdMethod (someStuff) {
    var promise = new Promise(function(resolve, reject){
-      setTimeout(function() {
-        var stage = 2;
-        checkErrors( resolve, reject, stage);
-      }, delay);
+
+     var stage = 2;
+     // ajax request
+     getData('/0/workspace/get/data/').then(function (response) {
+
+     displayData(response);
+
+     setTimeout(function() {
+       resolve(); animation(stage);
+     }, delay);
+
+     }).catch(function (error) {
+         reject('error: somethings wrong');
+     });
    });
    return promise;
 };
 
+
 function finished(somestuff) {
-  var promise = new Promise(function(resolve, reject){
+  var promise = new Promise(function(resolve, reject) {
+
+   setTimeout(function() {
+     var stage = 3;
+     resolve(); animation(stage);
+
      setTimeout(function() {
-       var stage = 3;
-       checkErrors( resolve, reject, stage);
-       setTimeout(function() {
-         load.style.display = 'none';
-       }, 2100);
-     }, delay);
+       load.style.display = 'none';
+     }, 2100);
+   }, delay);
   });
   return promise;
 }

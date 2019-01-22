@@ -1,24 +1,33 @@
 
-console.log('workspace working ');
+console.log('workspace and stack working ');
 
-function Createnewstack(el) {
+function CreatenewContent(el) {
 
-    console.log('test');
+    console.log(el.target);
 
     var togglenewstack = document.getElementById('workspace-new-stack-popup');
     togglenewstack.classList.toggle('newstack-show');
-
-    // var stacknewbox = document.createElement('div');
-    //
-    // var value = document.getElementById('newstack-name').value;
-    // var desc  = document.getElementById('newstack-desc').value;
-    // var spaceID = document.getElementsByTagName('body')[0].getAttribute('body_data_id');
-    //
-    // axios.post('/0/auth/workspace/stack/new', { stackname: value, spaceID: spaceID })
-    // .then(function  (res) { })
-    // .catch(function (error) { console.log(error) });
 }
 
-var newstack = document.getElementById('create-stack-btn');
+// ------ workspace ----- //
 
-if (newstack) { newstack.addEventListener('click', Createnewstack); }
+var newstack = document.getElementById('create-stack-btn');
+if (newstack) { newstack.addEventListener('click', CreatenewContent); }
+
+
+// ------- stacks ------- //
+
+// add event listener to creating a new imagw upload ...
+
+var newImage = document.getElementById('create-stack-image');
+if (newImage) { newImage.addEventListener('click', CreatenewContent); }
+
+// upload image ...
+
+var loadFile = function(event) {
+   var output = document.getElementById('image-names');
+   var li = document.createElement('li');
+   li.classList.add('image-preview-item');
+   li.innerHTML = event.target.files[0].name;
+   output.appendChild(li);
+ };

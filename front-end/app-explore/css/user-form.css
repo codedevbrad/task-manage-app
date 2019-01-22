@@ -9,9 +9,11 @@
 section#previous-auth-option { width: 100%; margin-bottom: 15px;  }
 
 .auth-signup-input-showcase {
-    padding: 15px; border: 1px solid #e2e2e2; background: #fff; color: #bfbdbd; font-weight: 400; cursor: pointer;
+    padding: 15px; border: 1px solid #e2e2e2; background: #f9f9f9; color: #bfbdbd; font-weight: 400; cursor: pointer;
+    width: 65%;
 }
 
+#auth-option-change {  height: 100%; background: #f1f1f1; margin-left: 20px;  display: inline-block; }
 
 /* ===== get started  ===== */
 

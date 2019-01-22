@@ -1,9 +1,25 @@
 
 extends layout
-
+ 
 block content
+  
+  div#workspace-new-stack-popup
+   
+      include new-content/new-stack-img.pug 
+
   div.stack-grid#stack-left-grid-name
-    h3 pinterest clone
-    a(href='/') view your workspace 
+  
+    div.stack-name-flex#grid-name-title
+      h3=title
+    div.stack-name-flex#grid-namw-workspace
+    
+    div.stack-name-flex#grid-name-image-upload   
+        h2#create-stack-image + new board
       
   div.stack-grid#stack-left-grid-content
+  
+ 
+      
+      
+    
+  

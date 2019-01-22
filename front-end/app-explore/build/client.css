@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Montserrat:400,600);
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
 
 * {-webkit-font-smoothing: antialiased;}
 
@@ -18,6 +18,15 @@ a       { text-decoration: none; color: black; }
 a:hover { text-decoration: none; }
 
 textarea, select, input, button { outline: none; }
+
+
+/* ---- blue button ---- */
+
+.btn-blue {
+  box-shadow: 2px 1px 8px 0px rgba(185, 185, 185, 0.49);
+  border-radius: 5px; padding: 12px 30px; 
+  background-color: #57a2ff; color: white;
+}
 
 
 /* --- main app --- */
@@ -69,7 +78,7 @@ section.header-place-3#auth-section > ul > li > a {
   border-radius: 5px; padding: 12px 30px;
 }
 
-li#auth-btn-blue  > a {  background-color: #57a2ff; color: white; }
+li#auth-btn-blue  > a { background-color: #57a2ff; color: white; }
 
 
 
@@ -82,9 +91,11 @@ li#auth-btn-blue  > a {  background-color: #57a2ff; color: white; }
 section#previous-auth-option { width: 100%; margin-bottom: 15px;  }
 
 .auth-signup-input-showcase {
-    padding: 15px; border: 1px solid #e2e2e2; background: #fff; color: #bfbdbd; font-weight: 400; cursor: pointer;
+    padding: 15px; border: 1px solid #e2e2e2; background: #f9f9f9; color: #bfbdbd; font-weight: 400; cursor: pointer;
+    width: 65%;
 }
 
+#auth-option-change {  height: 100%; background: #f1f1f1; margin-left: 20px;  display: inline-block; }
 
 /* ===== get started  ===== */
 
@@ -177,3 +188,19 @@ div.messages > h2.alert {
       font-weight: 400;   background: #ffe7e7;
       margin-top: 25px;   font-size: 0.73em;
 }
+
+
+
+/* --- homepage --- */
+
+.app-fit-layout { width: 100%; height: auto; }
+
+section#app-home-section-welcome {
+  height: auto; padding: 25px; text-align: center;
+}
+
+section#app-home-section-welcome  h1 {  font-size: 2.3em; font-weight: 700; letter-spacing: 0.01em; }
+
+section#app-home-section-welcome  p  {  color: #4b4949; font-weight: 400; margin-top: 5px; }
+
+section#app-section-welcome-input      {  padding: 10px; margin-top: 10px;  } 

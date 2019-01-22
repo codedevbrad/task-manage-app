@@ -8,8 +8,9 @@ const mongoose   = require('mongoose');
 const expressValidator = require('express-validator');
 const flash   = require('connect-flash');
 const session = require('express-session');
-
 const passport = require('passport');
+
+const methodOverride = require('method-override');
 
 
 // db initialize
@@ -31,6 +32,9 @@ db.on('error', function(err) { console.log(err);
 const app    = express();
 const server = require('http').createServer(app);
 
+// image upload
+app.use(methodOverride('_method'));
+
 app.use('/main',         express.static(path.join(__dirname, 'front-end/')));
 
 
@@ -40,7 +44,6 @@ app.use('/build',        express.static(path.join(__dirname, 'front-end/node_mod
 
 // initialize server app
 app.use('/app-server',  express.static(path.join(__dirname, 'front-end/app-server')));
-
 
 
 // bring in pug
@@ -59,7 +62,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // express session
 
 app.use(session ({
-  secret: 'keyboard cat', resave: true, saveUninitialized: true
+  secret: 'keyboard cat',
+  cookie: { maxAge: 960000,  _expires : 500000 },
+  resave: true, saveUninitialized: true, rolling: true
 }));
 
 
@@ -89,11 +94,8 @@ app.use(passport.initialize()); app.use(passport.session());
 
 // pass user to all routes ...
 app.get('*', function (req, res, next) {
-  res.locals.user = req.user || null;
-
-  next();
+  res.locals.user = req.user || null;  next();
 });
-
 
 
 // app-explore routes

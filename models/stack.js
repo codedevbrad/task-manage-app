@@ -6,6 +6,7 @@ var stackSchema = mongoose.Schema ({
     desc:    { type: String },
     ownerId: { type: String },
     spaceID: { type: String },
+    color:   { type: String }
 
 });
 

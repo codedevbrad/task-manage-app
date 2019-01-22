@@ -3,9 +3,7 @@ const mongoose = require('mongoose');
 
 var stackSchema = mongoose.Schema ({
 
-    stackID:   { type: String },
-    stackName: { type: String },
-    color:     { type: String }
+    stackID:   { type: String }
 });
 
 // each users category schema
@@ -25,7 +23,7 @@ var workspaceSchema = mongoose.Schema ({
 
 var Workspaces = module.exports = mongoose.model('workspace', workspaceSchema);
 
-// post request ...
+// post request   ...
 
 // update request ...
 

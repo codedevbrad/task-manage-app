@@ -1,0 +1,17 @@
+
+section#new-stack-center-main
+  form#auth-new-stack-form(method="POST", action="/0/stack/" + data_id + '/new', enctype="multipart/form-data") 
+      h3 add your inspired images
+      p you need a way of organising designs and mocking a plan. boards are great way to be inspired.
+      
+      div#stack-new-image-selection
+        div#image-upload-visual 
+          p Drag up to 5 photos here or browse
+        input#images-upload-select.file-hidden(type='file', name='file', onchange="loadFile(event)")
+    
+        ul#image-names
+    
+      input#image-upload-btn(type='submit', value='publish your photos')
+      
+ 
+      

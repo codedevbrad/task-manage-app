@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Montserrat:400,600);
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
 
 * {-webkit-font-smoothing: antialiased;}
 
@@ -18,6 +18,15 @@ a       { text-decoration: none; color: black; }
 a:hover { text-decoration: none; }
 
 textarea, select, input, button { outline: none; }
+
+
+/* ---- blue button ---- */
+
+.btn-blue {
+  box-shadow: 2px 1px 8px 0px rgba(185, 185, 185, 0.49);
+  border-radius: 5px; padding: 12px 30px; 
+  background-color: #57a2ff; color: white;
+}
 
 
 /* --- main app --- */
@@ -69,4 +78,4 @@ section.header-place-3#auth-section > ul > li > a {
   border-radius: 5px; padding: 12px 30px;
 }
 
-li#auth-btn-blue  > a {  background-color: #57a2ff; color: white; }
+li#auth-btn-blue  > a { background-color: #57a2ff; color: white; }

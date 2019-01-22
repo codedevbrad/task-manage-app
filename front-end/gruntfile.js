@@ -23,7 +23,7 @@ module.exports = function(grunt) {
 
       // explore app
       css2: {
-        src: ['app-explore/css/index.css', 'app-explore/css/user-form.css'],
+        src: ['app-explore/css/index.css', 'app-explore/css/user-form.css', 'app-explore/css/pages.css'],
         dest: 'app-explore/build/client.css',
       },
       js2: {
