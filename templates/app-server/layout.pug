@@ -33,7 +33,6 @@ html
  
             li.user-auth-name#auth-username.dropdown
               | hi, #{user.username} 
-              
               i.auth-dropdown-icon.fa.fa-angle-down.fa              
                 
               ul.menu-target.user-menu#auth-username-menu
@@ -60,47 +59,36 @@ html
                 li.menu-li add members to workspace
                 li.menu-li rename this workspace
                 li.menu-li remove from workspace
-            
+      
       if displaymainlayout                       
         div#app-load
           section#load-center
             div#populate-load
-        
+      
       div#app-content
+        //- display main content with aside ..
         if displaymainlayout
           section#app-content-main
-          
+            
+            div.newcontent-new-popup#aside-member-new
+              include new-content/new-members.pug  
+            
             block content
             
           aside#app-content-side
-            div#aside-inner
-                
-              div#aside-reminders
-                h1 workspace reminders
-                ul
-                  li send mark my newest git commit
-                  li continue my collab app workspace
-                  li random reminder 
-                  li add kara to the team workspace
-              div#aside-channels
-                h1 channels
-                ul
-                  li # trouble with database 
-                    span.channel-loc react apps
-                  li # lunch ideas
-                    span.channel-loc java uni apps
-              div#aside-team 
-                h1 team members
+            include layout-includes/aside.pug                    
+            
+        //- else display content without aside .. 
         else 
-          
           block content
           
       footer
-        h2 test
-          
-    //- npm scripts 
-    script(defer='', src='https://use.fontawesome.com/releases/v5.3.1/js/all.js', integrity='sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB', crossorigin='anonymous')
-    script(src='/build/axios/dist/axios.min.js')
-    script(src='/app-server/build/client.js')
-    
-    
+        include layout-includes/footer.pug
+        
+    block scripts      
+      //- npm scripts 
+      script(defer='', src='https://use.fontawesome.com/releases/v5.3.1/js/all.js', integrity='sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB', crossorigin='anonymous')
+      script(src='/build/axios/dist/axios.min.js')
+      script(src='/app-server/build/client.js')
+      
+      

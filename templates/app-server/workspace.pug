@@ -1,17 +1,14 @@
 
 extends layout
- 
 
 block content
 
-
-  div#workspace-new-stack-popup
-   
+  div.newcontent-new-popup#stack-new
       include new-content/new-stack.pug 
   
   div.workspace-grid-box#workspaces-left-grid-name
     h2 #{ stacks.length } stack(s)
-    h3#create-stack-btn create new stack
+    h3#create-stack-btn(data-content-new='stack-new') create new stack
   
   div.workspace-grid-box#workspaces-left-grid-stacks 
     

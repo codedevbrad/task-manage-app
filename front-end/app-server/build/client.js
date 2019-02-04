@@ -15,10 +15,29 @@ function dropme (el) {
 
   var el     = el.target;
   var target = el.getElementsByClassName('menu-target')[0];
-  
-  target.classList.toggle('dropdown-open');
 
+  target.classList.toggle('dropdown-open');
 };
+
+
+/* -- open / close content -- */
+
+function CreatenewContent(el) {
+
+    console.log(el.target);
+
+    var idFind = el.target.getAttribute("data-content-new");
+    var target = document.getElementById(idFind);
+
+    target.classList.add('newcontent-show');
+
+    var close = target.getElementsByClassName('new-contentclose-btn')[0];
+
+    close.addEventListener('click', function() {
+      var remove = document.getElementById(idFind);
+      remove.classList.remove('newcontent-show');
+    });
+}
 
 
 console.log('app-load');
@@ -26,6 +45,13 @@ var load = document.getElementById('app-load');
 if (load) {
 
   var phrases = [ 'fetching needed data', 'generating workspace members', 'grabbing your channels', 'grab a coffee and get working'];
+
+  // var phrases = [
+  //                { phrase: 'fetching needed data' },
+  //                { phrase: 'generating workspace members',  url: '/0/workspace/get/data/' },
+  //                { phrase: 'grabbing your channels',        url: '/0/workspace/get/data/' },
+  //                { phrase: 'grab a coffee and get working', url: '/0/workspace/get/data/' }
+  //               ]
 
   (function () {
     addPhrasesToLoad ( phrases, function() {
@@ -72,19 +98,20 @@ function displayData( response ) {
   console.log(response.data);
 }
 
-var delay = 700;
+var delay = 200;
+
+// get needed left side content
 
 function firstMethod () {
    var promise = new Promise(function(resolve, reject) {
 
       var stage = 0;
       // ajax request
-      getData('/0/workspace/get/data/').then(function (response) {
+      getData('/0/workspace/get/data/1').then(function (response) {
 
           displayData(response);
 
           setTimeout(function() {
-
             resolve(); animation(stage);
           }, delay);
 
@@ -95,18 +122,18 @@ function firstMethod () {
    return promise;
 };
 
+// get workspace content
+
 function secondMethod (someStuff) {
    var promise = new Promise(function(resolve, reject){
 
      var stage = 1;
      // ajax request
-     getData('/0/workspace/get/data/').then(function (response) {
+     getData('/0/workspace/get/data/2').then(function (response) {
 
        displayData(response);
 
-
        setTimeout(function() {
-
          resolve(); animation(stage);
        }, delay);
 
@@ -117,12 +144,14 @@ function secondMethod (someStuff) {
    return promise;
 };
 
+// grabbing your channels
+
 function thirdMethod (someStuff) {
    var promise = new Promise(function(resolve, reject){
 
      var stage = 2;
      // ajax request
-     getData('/0/workspace/get/data/').then(function (response) {
+     getData('/0/workspace/get/data/2').then(function (response) {
 
      displayData(response);
 
@@ -235,19 +264,11 @@ function submitreq() {
 
 console.log('workspace and stack working ');
 
-function CreatenewContent(el) {
-
-    console.log(el.target);
-
-    var togglenewstack = document.getElementById('workspace-new-stack-popup');
-    togglenewstack.classList.toggle('newstack-show');
-}
 
 // ------ workspace ----- //
 
 var newstack = document.getElementById('create-stack-btn');
 if (newstack) { newstack.addEventListener('click', CreatenewContent); }
-
 
 // ------- stacks ------- //
 
@@ -255,6 +276,29 @@ if (newstack) { newstack.addEventListener('click', CreatenewContent); }
 
 var newImage = document.getElementById('create-stack-image');
 if (newImage) { newImage.addEventListener('click', CreatenewContent); }
+
+// get images
+
+(function () {
+    axios.get('/0/workspace/get/stack/images').then(function (res) {
+
+      var images = res.data;
+      // get content to append to ...
+      var parent = document.getElementById('stack-left-grid-content');
+
+      for (var i = 0; i < images.length; i++) {
+
+            var img = document.createElement( 'img' );
+            img.classList.add( 'stack-img' );
+            img.src ='/image/' + images[i].filename;
+            parent.appendChild( img );
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+})();
+
 
 // upload image ...
 
@@ -265,3 +309,9 @@ var loadFile = function(event) {
    li.innerHTML = event.target.files[0].name;
    output.appendChild(li);
  };
+
+
+/* --- team members --- */
+
+var newstack = document.getElementById('aside-add-member-btn');
+newstack.addEventListener('click', CreatenewContent );

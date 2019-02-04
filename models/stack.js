@@ -7,7 +7,6 @@ var stackSchema = mongoose.Schema ({
     ownerId: { type: String },
     spaceID: { type: String },
     color:   { type: String }
-
 });
 
 var Stack = module.exports = mongoose.model('stack', stackSchema);

@@ -8,11 +8,10 @@ const workspaceSchema = mongoose.Schema ({
 
 });
 
-
 // request schema
 const notificationSchema = mongoose.Schema ({
 
- seen: { type: Boolean, default: false }
+ seen:  { type: Boolean, default: false }
 
 });
 

@@ -1,0 +1,12 @@
+
+
+// loading data
+
+var phrases = [ 'fetching needed data',
+                'generating workspace members',
+                'grabbing your channels',
+                'grab a coffee and get working'
+              ];
+
+
+// stage 1 - logic to use

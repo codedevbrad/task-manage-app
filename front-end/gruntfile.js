@@ -11,14 +11,14 @@ module.exports = function(grunt) {
 
     // combine files into a 1 production file ...
     concat: {
-
+      
       // server app
       css1: {
-        src: [ 'app-server/css/layout.css', 'modules/modules.css', 'app-server/css/workspaces.css', 'app-server/css/workspace.css', 'app-server/css/stack.css'],
+        src: [ 'app-server/css/layout.css', 'modules/modules.css', 'app-server/css/workspaces.css', 'app-server/css/workspace.css', 'app-server/css/stack.css', 'app-server/css/channels.css'],
         dest: 'app-server/build/client.css',
       },
       js1: {
-        src: [ 'modules/modules.js', 'app-server/js/space_load.js', 'app-server/js/workspaces.js', 'app-server/js/workspace.js'], dest: 'app-server/build/client.js',
+        src: [ 'modules/modules.js', 'app-server/js/space_load.js', 'app-server/js/workspaces.js', 'app-server/js/workspace.js', 'app-server/js/space_aside.js'], dest: 'app-server/build/client.js',
       },
 
       // explore app

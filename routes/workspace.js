@@ -25,6 +25,9 @@ var Space  = require('../models/workspace');
 var Stack  = require('../models/stack');
 var Image  = require('../models/image');
 
+
+router.use(methodOverride('_method'));
+
 // check logged / protect routes ...
 var checkAuth = function (req, res, next) {
 
@@ -33,8 +36,9 @@ var checkAuth = function (req, res, next) {
 };
 
 // mongoLabs connection
-const mongoURI = 'mongodb://brad:Surferdude20@ds119685.mlab.com:19685/task-app';
-const conn = mongoose.createConnection(mongoURI);
+
+const mlabconfig   = require('../config/mlab-db');
+const conn = mongoose.createConnection(mlabconfig.database);
 
 // check for db err
 conn.on('error', function(err) { console.log(err); });
@@ -51,20 +55,21 @@ conn.once('open', () => {
 
 // Create storage engine
 const storage = new GridFsStorage({
-  url: mongoURI,
+  url: mlabconfig.database,
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {
         if (err) {  return reject(err);  }
         const filename = buf.toString('hex') + path.extname(file.originalname);
-        const fileInfo = {
-          filename: filename,  bucketName: 'uploads'
-        };
+        const fileInfo = {  filename: filename,  bucketName: 'uploads'  };
         resolve(fileInfo);
       });
     });
   }
 });
+
+const upload = multer({ storage });
+
 
 // workspace route
 
@@ -116,7 +121,7 @@ router.get('/0/workspace/:id/', checkAuth, function(req, res) {
 
     var stackArr = workspace.stacks;
 
-    stackArr.forEach(function( stack ) {
+    stackArr.forEach(function( stack , index ) {
       stackIds.push( stack.stackID );
     });
 
@@ -141,16 +146,29 @@ router.get('/0/workspace/:id/', checkAuth, function(req, res) {
     });
   })
   .catch(function(err) { console.log(err); });
+
+});
+
+// --- get requests for content --- //
+
+// stack page - get images
+router.get('/0/workspace/get/stack/images', checkAuth, function(req, res) {
+  gfs.files.find().toArray((err, files) => {
+
+        if (!files || files.length === 0) {  }
+        else {
+          files.map(file => {
+            if ( file.contentType === 'image/jpeg' ||  file.contentType === 'image/png' ) { file.isImage = true; }
+            else { file.isImage = false;  }
+          });
+          // render content
+          res.send( files );
+        }
+  });
 });
 
 
-
-// load stack data ...
-
-router.get('/0/workspace/get/data/', checkAuth, function(req, res) {
-   res.send( 'getting data' );
-});
-
+// --- stack routes -- -//
 
 // create new stack ...
 
@@ -208,52 +226,33 @@ router.get('/0/workspace/stack/:id', checkAuth, function(req, res) {
     var promise = Stack.findOne( stackId ).exec();
 
     promise.then(function ( stack ) {
+        // render stack ..
+        res.render(dirname + 'stack', {
 
-      // render stack ..
-      res.render(dirname + 'stack', {
+            title:       stack.name,
+            space_title: stack.name,
+            data_id:     stack.id,
 
-          title:       stack.name,
-          space_title: stack.name,
-          data_id:     stack.id,
+            // images: images,
 
-          space_list:  [
-            { item: 'rename this stack', link: 'stack/rename' },
-            { item: 'remove me from this stack', link: 'stack/delete'}
-          ],
-          displaymainlayout: true
-      });
+            space_list:  [
+              { item: 'rename this stack', link: 'stack/rename' },
+              { item: 'remove me from this stack', link: 'stack/delete'}
+            ],
+            displaymainlayout: true
+        });
+
     })
     .catch(function(err) { console.log('no stack found'); });
 });
 
 
-// get images
-
-router.get('/images', (req, res) => {
-  gfs.files.find().toArray((err, files) => {
-        // Check if files
-        if (!files || files.length === 0) { res.send('no boards created');  }
-        else {
-          var strip = files.map(function( image ){
-            return { image : image["filename"]}
-          });
-          res.send(strip);
-        }
-  });
-});
-
-
 // upload stack image  ...
-
-const upload = multer({ storage });
 
 router.post('/0/stack/:id/new', checkAuth, upload.single('file'), function(req, res) {
   console.log(req.file);
 
-  // get mlabs db and append to that ..
-
   // for now use mongodb ...
-
   var image  = new Image();
   image.imageId = req.file.id;
   image.ownerId = req.user._id;
@@ -264,6 +263,43 @@ router.post('/0/stack/:id/new', checkAuth, upload.single('file'), function(req, 
   });
 });
 
+
+// @route GET /files/:filename
+router.get('/files/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // Check if file
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exists'
+      });
+    }
+    // File exists
+    return res.json(file);
+  });
+});
+
+// @route GET /image/:filename
+router.get('/image/:filename', (req, res) => {
+  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
+    // Check if file
+    if (!file || file.length === 0) {
+      return res.status(404).json({
+        err: 'No file exists'
+      });
+    }
+
+    // Check if image
+    if (file.contentType === 'image/jpeg' || file.contentType === 'image/png') {
+      // Read output to browser
+      const readstream = gfs.createReadStream(file.filename);
+      readstream.pipe(res);
+    } else {
+      res.status(404).json({
+        err: 'Not an image'
+      });
+    }
+  });
+});
 
 
 module.exports = router;

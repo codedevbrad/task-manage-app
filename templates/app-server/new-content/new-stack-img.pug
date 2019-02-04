@@ -1,6 +1,11 @@
 
-section#new-stack-center-main
-  form#auth-new-stack-form(method="POST", action="/0/stack/" + data_id + '/new', enctype="multipart/form-data") 
+section.new-content-center-main
+  
+  div.close-new-content
+    div.new-contentclose-btn
+      i.content-close-btn.far.fa-times-circle.fa-lg
+
+  form.new-content-form(method="POST", action="/0/stack/" + data_id + '/new', enctype="multipart/form-data") 
       h3 add your inspired images
       p you need a way of organising designs and mocking a plan. boards are great way to be inspired.
       

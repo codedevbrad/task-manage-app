@@ -1,0 +1,35 @@
+div#aside-inner
+      
+  div#aside-grid-manage-layout
+    li workspace app
+    li#toggle-content-aside(data-view=true)
+      i.fas.fa-bars 
+    
+  div#aside-reminders
+    section.aside-titlearea
+      h1 reminders          
+    ul
+      li send mark my newest git commit
+      li continue my collab app workspace
+      li add kara to the team workspace
+      
+  div#aside-channels
+    section.aside-titlearea
+      h1 channels
+      div.aside-section-newbtn-push
+        i.fas.fa-plus.aside-section-newbtn
+    ul
+      li
+        a(href='/0/workspace/channel/id') # trouble with database 
+        span.channel-loc react apps
+      li
+        a(href='/0/workspace/channel/id') # lunch ideas
+        span.channel-loc house designs
+        
+  div#aside-team 
+
+    section.aside-titlearea
+      h1 members
+      div.aside-section-newbtn-push#aside-add-member-btn(data-content-new='aside-member-new')
+        i.fas.fa-plus.aside-section-newbtn
+      

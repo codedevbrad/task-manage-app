@@ -1,25 +1,27 @@
-
 extends layout
- 
+
 block content
   
-  div#workspace-new-stack-popup
-   
+  div.newcontent-new-popup#stack-img-new
       include new-content/new-stack-img.pug 
 
   div.stack-grid#stack-left-grid-name
-  
     div.stack-name-flex#grid-name-title
-      h3=title
-    div.stack-name-flex#grid-namw-workspace
-    
+      h3=title 
     div.stack-name-flex#grid-name-image-upload   
-        h2#create-stack-image + new board
+      h2#create-stack-image(data-content-new='stack-img-new') + new board
       
-  div.stack-grid#stack-left-grid-content
-  
- 
-      
-      
+  div.stack-grid#stack-left-grid-content.grid(data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }')
     
-  
+    //- 
+      if images
+      each image in images
+        if image.isImage
+          img.stack-img(src='/image/' + image.filename, alt='')            
+        else 
+          p not an image
+      else
+        p no bords have been created
+      
+block append scripts
+  //- script(src='/build/masonry-layout/dist/masonry.pkgd.min.js')

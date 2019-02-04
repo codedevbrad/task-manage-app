@@ -1,19 +1,11 @@
 
 console.log('workspace and stack working ');
 
-function CreatenewContent(el) {
-
-    console.log(el.target);
-
-    var togglenewstack = document.getElementById('workspace-new-stack-popup');
-    togglenewstack.classList.toggle('newstack-show');
-}
 
 // ------ workspace ----- //
 
 var newstack = document.getElementById('create-stack-btn');
 if (newstack) { newstack.addEventListener('click', CreatenewContent); }
-
 
 // ------- stacks ------- //
 
@@ -21,6 +13,29 @@ if (newstack) { newstack.addEventListener('click', CreatenewContent); }
 
 var newImage = document.getElementById('create-stack-image');
 if (newImage) { newImage.addEventListener('click', CreatenewContent); }
+
+// get images
+
+(function () {
+    axios.get('/0/workspace/get/stack/images').then(function (res) {
+
+      var images = res.data;
+      // get content to append to ...
+      var parent = document.getElementById('stack-left-grid-content');
+
+      for (var i = 0; i < images.length; i++) {
+
+            var img = document.createElement( 'img' );
+            img.classList.add( 'stack-img' );
+            img.src ='/image/' + images[i].filename;
+            parent.appendChild( img );
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+})();
+
 
 // upload image ...
 

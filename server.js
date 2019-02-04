@@ -102,7 +102,6 @@ app.get('*', function (req, res, next) {
 
   var explore = require('./routes/app-explore'); app.use('/', explore);
 
-
 // app-server routes ...
 
   // workspace route ...
@@ -110,6 +109,9 @@ app.get('*', function (req, res, next) {
 
   // users route ...
   var users   = require('./routes/users');  app.use('/', users);
+
+  // aside
+  var sidebar = require('./routes/side-app'); app.use('/', sidebar);
 
 
 // start server ...

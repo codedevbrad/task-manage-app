@@ -2,8 +2,7 @@
 const mongoose = require('mongoose');
 
 var stackSchema = mongoose.Schema ({
-
-    stackID:   { type: String }
+    stackID: { type: String }
 });
 
 // each users category schema
@@ -16,15 +15,8 @@ var workspaceSchema = mongoose.Schema ({
     spaceID: { type: String },
 
     stacks:   [ stackSchema ],
-    channels: [ ],
-    members:  [ ]
-
+    members:  [ ],
+    channels: [ ]
 });
 
-var Workspaces = module.exports = mongoose.model('workspace', workspaceSchema);
-
-// post request   ...
-
-// update request ...
-
-// delete request ...
+var Workspaces = module.exports = mongoose.model('workspace', workspaceSchema );

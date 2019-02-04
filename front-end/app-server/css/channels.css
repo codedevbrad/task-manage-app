@@ -1,0 +1,37 @@
+
+/* --- workspace content --- */
+
+div#workspace-channel          { width: 90%; height: 400px; max-height: 400px; padding: 15px 0;
+                                 font-size: 0.85em;
+                               }
+
+div#workspace-channel > h1         { font-size: 1.7em;   }
+
+section.wc-top-wrap-flow           { display: flex; padding-bottom: 10px; }
+
+.wc-top-wrap-flow > .wc-grid-top   { margin-right: 10px;  flex: 1;
+                                     display: flex; justify-content: space-between;
+                                   }
+
+section.wc-members.wc-grid-top > ul > li { padding: 8px 25px; margin-bottom: 10px; background: #fff4f4; }
+
+section.wc-description.wc-grid-top { display: block; }
+
+.wc-description.wc-grid-top > p    { line-height: 1.5; display: block; padding: 20px 10px; font-style: italic; }
+
+
+section.wc-messages  { width: 100%; margin: 0 auto;
+                       display: block; border-top: 1px solid #e6e6e6;
+                     }
+section.wc-messages > div     { padding: 10px 0; border-bottom: 1px solid #e6e6e6; }
+section.wc-messages > div > p { font-weight: 400; padding: 10px 0; }
+
+section > form#channel-message-form  { width: 100%; }
+
+form#channel-message-form > textarea { width: 100%; border: none; outline: none; padding: 10px;
+                                       background: #fff2f2; margin-top: 20px;
+                                     }
+
+input#channel-submit-msg-btn         {  background: yellow; outline: none; padding: 10px 30px;
+                                        border: none; margin-top: 10px;
+                                     }

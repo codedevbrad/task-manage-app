@@ -5,6 +5,13 @@ if (load) {
 
   var phrases = [ 'fetching needed data', 'generating workspace members', 'grabbing your channels', 'grab a coffee and get working'];
 
+  // var phrases = [
+  //                { phrase: 'fetching needed data' },
+  //                { phrase: 'generating workspace members',  url: '/0/workspace/get/data/' },
+  //                { phrase: 'grabbing your channels',        url: '/0/workspace/get/data/' },
+  //                { phrase: 'grab a coffee and get working', url: '/0/workspace/get/data/' }
+  //               ]
+
   (function () {
     addPhrasesToLoad ( phrases, function() {
 
@@ -50,19 +57,20 @@ function displayData( response ) {
   console.log(response.data);
 }
 
-var delay = 700;
+var delay = 200;
+
+// get needed left side content
 
 function firstMethod () {
    var promise = new Promise(function(resolve, reject) {
 
       var stage = 0;
       // ajax request
-      getData('/0/workspace/get/data/').then(function (response) {
+      getData('/0/workspace/get/data/1').then(function (response) {
 
           displayData(response);
 
           setTimeout(function() {
-
             resolve(); animation(stage);
           }, delay);
 
@@ -73,18 +81,18 @@ function firstMethod () {
    return promise;
 };
 
+// get workspace content
+
 function secondMethod (someStuff) {
    var promise = new Promise(function(resolve, reject){
 
      var stage = 1;
      // ajax request
-     getData('/0/workspace/get/data/').then(function (response) {
+     getData('/0/workspace/get/data/2').then(function (response) {
 
        displayData(response);
 
-
        setTimeout(function() {
-
          resolve(); animation(stage);
        }, delay);
 
@@ -95,12 +103,14 @@ function secondMethod (someStuff) {
    return promise;
 };
 
+// grabbing your channels
+
 function thirdMethod (someStuff) {
    var promise = new Promise(function(resolve, reject){
 
      var stage = 2;
      // ajax request
-     getData('/0/workspace/get/data/').then(function (response) {
+     getData('/0/workspace/get/data/2').then(function (response) {
 
      displayData(response);
 
