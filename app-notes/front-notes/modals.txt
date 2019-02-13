@@ -1,0 +1,5 @@
+
+div.newcontent-new-popup#stack-img-new
+    include new-content/new-stack-img.pug
+    
+h2#create-stack-image.btn-design(data-content-new='stack-img-new')

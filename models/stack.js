@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+
 var stackSchema = mongoose.Schema ({
 
     name:    { type: String },

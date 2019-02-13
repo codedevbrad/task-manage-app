@@ -6,7 +6,7 @@ block content
     section#app-signup-center
       h2 Login to slackr
       section#auth-signup-options
-      form#auth-signup-form(method="POST", action="/user/auth/login")
+      form.auth-signup-form(method="POST", action="/user/auth/login")
         
         .form-group  
           label Username
@@ -19,6 +19,6 @@ block content
           div#auth-err-messages
            != messages('app-explore/auth/message', locals)
                              
-        input#auth-signup-enter.btn.btn-primary(type="submit", value="login") 
+        input.auth-signup-enter.btn.btn-primary(type="submit", value="login") 
            
  

@@ -20,31 +20,13 @@ if (submitWorkspace) {
   submitWorkspace.addEventListener('click', submitreq);
 }
 
-function dataID() {
-  var ID = '';
-  var letter = ("abcdefghijklmnopqrstuvwxyz").split("");
-
-  for (var i = 0; i < 24; i ++) {
-    if (Math.round((Math.random() * 1)) == 0) {
-      ID += Math.floor((Math.random() * 9) + 1);
-    }
-    else {
-      var length = letter.length;
-      ID += letter[Math.floor(Math.random()* length)];
-    }
-  }
-  return ID
-}
-
 function submitreq() {
   var name = document.getElementById('workspace-name').value;
   var desc = document.getElementById('workspace-description').value;
-  var ID   = dataID();
-  
+
   axios.post('/0/auth/workspace-new', {
     name: name,
-    description: desc,
-    data_id: ID
+    description: desc
   })
   .then(function (res) {
 
@@ -58,7 +40,7 @@ function submitreq() {
                            '<p>'  + desc + '</p> ' +
                            '</div>' +
                            '<div class=workspace-flex-following>' +
-                           '<a class=workspace-btn join-workspace href=/0/workspace/' + ID + '>' + 'join workspace' + '</span>';
+                           '<a class=workspace-btn join-workspace href=/0/workspace/' + res.data.id + '>' + 'join workspace' + '</span>';
     // do logic
     var none = document.getElementById('no-workspace');
     if (none) { main.removeChild(none); }

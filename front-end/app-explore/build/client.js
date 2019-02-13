@@ -21,13 +21,25 @@ textInput.onkeyup = function (e) {
     }, 400);
 };
 
+
 function axiosrequest(val) {
-  axios.get('/user/auth/username/'+val, {
-  })
-  .then(function (res) {
-    var textInput = document.getElementById('auth-username');
-    textInput.style.borderColor = res.data;
+  axios.post('/user/auth/username/'+val, {
+
+  }).then(function (res) {
+
+      var errorInput = document.getElementById('auth-username');
+      var errorText  = document.getElementById('error-username');
+
+      errorInput.className = '';
+
+      // add needed classes
+      errorInput.classList.add(res.data.class + '-input');
+      errorInput.classList.add( 'form-control' );
+      errorText.innerHTML = '<p class=' + res.data.class + '-text' + '>' + res.data.msg + '</p>';
   })
   .catch(function (error) {
   });
 }
+
+
+//

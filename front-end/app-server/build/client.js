@@ -24,8 +24,6 @@ function dropme (el) {
 
 function CreatenewContent(el) {
 
-    console.log(el.target);
-
     var idFind = el.target.getAttribute("data-content-new");
     var target = document.getElementById(idFind);
 
@@ -44,14 +42,8 @@ console.log('app-load');
 var load = document.getElementById('app-load');
 if (load) {
 
-  var phrases = [ 'fetching needed data', 'generating workspace members', 'grabbing your channels', 'grab a coffee and get working'];
+  var phrases = [ 'fetching needed datas', 'generating workspace members', 'grabbing your channels', 'grab a coffee and get working'  ];
 
-  // var phrases = [
-  //                { phrase: 'fetching needed data' },
-  //                { phrase: 'generating workspace members',  url: '/0/workspace/get/data/' },
-  //                { phrase: 'grabbing your channels',        url: '/0/workspace/get/data/' },
-  //                { phrase: 'grab a coffee and get working', url: '/0/workspace/get/data/' }
-  //               ]
 
   (function () {
     addPhrasesToLoad ( phrases, function() {
@@ -94,9 +86,13 @@ function animation (currEl) {
      current.classList.add('load-in-view');
 }
 
-function displayData( response ) {
-  console.log(response.data);
-}
+// function displayData( response, element, targets ) {
+//
+//   var appemdTo = document.getElementById( element );
+//   var data     = response.data;
+//
+//   console.log( response );
+// }
 
 var delay = 200;
 
@@ -107,10 +103,9 @@ function firstMethod () {
 
       var stage = 0;
       // ajax request
-      getData('/0/workspace/get/data/1').then(function (response) {
+      getData('/0/workspace/get/members').then(function (response) {
 
-          displayData(response);
-
+          // displayData(response);
           setTimeout(function() {
             resolve(); animation(stage);
           }, delay);
@@ -129,9 +124,9 @@ function secondMethod (someStuff) {
 
      var stage = 1;
      // ajax request
-     getData('/0/workspace/get/data/2').then(function (response) {
+     getData('/0/workspace/get/channels').then(function (response) {
 
-       displayData(response);
+       // displayData(response);
 
        setTimeout(function() {
          resolve(); animation(stage);
@@ -151,9 +146,9 @@ function thirdMethod (someStuff) {
 
      var stage = 2;
      // ajax request
-     getData('/0/workspace/get/data/2').then(function (response) {
+     getData('/0/workspace/get/reminders').then(function (response) {
 
-     displayData(response);
+     // displayData(response);
 
      setTimeout(function() {
        resolve(); animation(stage);
@@ -204,31 +199,13 @@ if (submitWorkspace) {
   submitWorkspace.addEventListener('click', submitreq);
 }
 
-function dataID() {
-  var ID = '';
-  var letter = ("abcdefghijklmnopqrstuvwxyz").split("");
-
-  for (var i = 0; i < 24; i ++) {
-    if (Math.round((Math.random() * 1)) == 0) {
-      ID += Math.floor((Math.random() * 9) + 1);
-    }
-    else {
-      var length = letter.length;
-      ID += letter[Math.floor(Math.random()* length)];
-    }
-  }
-  return ID
-}
-
 function submitreq() {
   var name = document.getElementById('workspace-name').value;
   var desc = document.getElementById('workspace-description').value;
-  var ID   = dataID();
-  
+
   axios.post('/0/auth/workspace-new', {
     name: name,
-    description: desc,
-    data_id: ID
+    description: desc
   })
   .then(function (res) {
 
@@ -242,7 +219,7 @@ function submitreq() {
                            '<p>'  + desc + '</p> ' +
                            '</div>' +
                            '<div class=workspace-flex-following>' +
-                           '<a class=workspace-btn join-workspace href=/0/workspace/' + ID + '>' + 'join workspace' + '</span>';
+                           '<a class=workspace-btn join-workspace href=/0/workspace/' + res.data.id + '>' + 'join workspace' + '</span>';
     // do logic
     var none = document.getElementById('no-workspace');
     if (none) { main.removeChild(none); }
@@ -270,9 +247,10 @@ console.log('workspace and stack working ');
 var newstack = document.getElementById('create-stack-btn');
 if (newstack) { newstack.addEventListener('click', CreatenewContent); }
 
+
 // ------- stacks ------- //
 
-// add event listener to creating a new imagw upload ...
+// add event listener to creating a new image upload ...
 
 var newImage = document.getElementById('create-stack-image');
 if (newImage) { newImage.addEventListener('click', CreatenewContent); }
@@ -280,7 +258,12 @@ if (newImage) { newImage.addEventListener('click', CreatenewContent); }
 // get images
 
 (function () {
-    axios.get('/0/workspace/get/stack/images').then(function (res) {
+
+    var space = document.querySelector('body').getAttribute('body_data_id');
+
+    console.log( space );
+
+    axios.get('/0/workspace/stack/images/'+space).then(function (res) {
 
       var images = res.data;
       // get content to append to ...
@@ -314,4 +297,55 @@ var loadFile = function(event) {
 /* --- team members --- */
 
 var newstack = document.getElementById('aside-add-member-btn');
+// expand new members popup
 newstack.addEventListener('click', CreatenewContent );
+// get generated tokens when expanding new members popup
+newstack.addEventListener('click', GetAllTokens);
+
+// get all tokens generated by workspace
+function GetAllTokens() {
+
+    var appendTo = document.getElementById('member-tokens-assigned');
+    var space = document.querySelector('body').getAttribute('body_data_id');
+
+    axios.get('/0/workspace/'+ space + '/getAllTokens').then(function ( res ) {
+
+        var tokens = res.data;
+
+        console.log(tokens);
+
+        tokens.forEach(function( generated, index) {
+              var html = document.createElement('div');
+              html.classList.add('token-generated');
+
+              generated.claimed ? html.classList.add('token-used') : html.classList.add('token-free');
+              html.innerHTML = '<p>' + generated.token  + '</p>';
+
+              appendTo.appendChild(html);
+        });
+    })
+    .catch(function (error) {  console.log(error) });
+}
+
+// generate a single token on clicking generate token btn
+function generateToken( el ) {
+
+      var space = document.querySelector('body').getAttribute('body_data_id');
+
+      axios.get('/0/workspace/'+ space + '/genToken').then(function ( res ) {
+
+            var generated = res.data;
+
+            // add new key to content
+            var appendTo = document.getElementById('member-tokens-assigned');
+
+            var html = document.createElement('div');
+            html.classList.add('token-generated');
+
+            generated.claimed ? html.classList.add('token-used') : html.classList.add('token-free');
+            html.innerHTML = '<p>' + generated.token  + '</p>';
+
+            appendTo.appendChild(html);
+      })
+      .catch(function (error) { console.log(error); });
+}

@@ -25,19 +25,19 @@ section#previous-auth-option { width: 100%; margin-bottom: 15px;  }
 
 #app-signup-center > p    { font-weight: 400; }
 
-form#auth-signup-form     { width: 65%; }
+form.auth-signup-form     { width: 65%; }
 
-form#auth-signup-form  > .form-group > label, form#auth-signup-form  > .form-group > input {
+form.auth-signup-form  > .form-group > label, form.auth-signup-form  > .form-group > input {
   display: block; width: 100%; font-weight: 400; margin-bottom: 10px;
 }
 
- form#auth-signup-form  > .form-group > label  { padding: 10px 10px 10px 0; }
- form#auth-signup-form  > .form-group > input  { padding: 15px; border: 1px solid #e2e2e2; }
+ form > .form-group > label  { padding: 10px 10px 10px 0; }
+ form > .form-group > input  { padding: 15px; border: 1px solid #e2e2e2; }
 
- form#auth-signup-form  > .form-group > input::placeholder { color: grey; }
+ form.auth-signup-form  > .form-group > input::placeholder { color: grey; }
 
-#auth-signup-enter {
-  background: none; outline: none;     box-shadow: 2px 1px 8px 0px rgba(185, 185, 185, 0.49);
+.auth-signup-enter {
+  background: none; outline: none;  margin-left: 5px;  box-shadow: 2px 1px 8px 0px rgba(185, 185, 185, 0.49);
   border-radius: 5px;  padding: 15px 30px; background-color: #57a2ff;  color: white;
   border: none; margin-top: 20px; cursor: pointer;
 }

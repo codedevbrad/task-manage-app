@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 var vitalChanneldata = mongoose.Schema ({
 
     name:   { type: String },
-    leader: { type: String }
+    space:  { type: String }
 });
 
 var chatSchemma = mongoose.Schema ({
@@ -17,9 +17,9 @@ var chatSchemma = mongoose.Schema ({
 
 var channelSchema = mongoose.Schema ({
 
-    vitalData: [ vitalChanneldata ],
-    members:   [  ],
-    chatData:  [ chatSchemma ]
+    vitalData:     [ vitalChanneldata ],
+    joinedMembers: [ ],
+    chatData:      [ chatSchemma ]
 });
 
 var ChatBubble = module.exports = mongoose.model('chatBubble', channelSchema );

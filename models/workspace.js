@@ -11,12 +11,13 @@ var workspaceSchema = mongoose.Schema ({
 
     name:    { type: String },
     desc:    { type: String },
+
     ownerId: { type: String },
-    spaceID: { type: String },
+    members:  [ ],
 
     stacks:   [ stackSchema ],
-    members:  [ ],
     channels: [ ]
+
 });
 
 var Workspaces = module.exports = mongoose.model('workspace', workspaceSchema );

@@ -17,12 +17,12 @@ block content
         
         section#auth-signup-options
            
-          form#auth-signup-form(method="POST", action="/user/auth/register/type")
+          form.auth-signup-form(method="POST", action="/user/auth/register/type")
 
             select(id='register-type', name='membertype' required)
               option(selected disabled hidden value='') select your membership type
-              option(value='member') member of a team
-              option(value='leader') leading a team
+              option(name="roleType", value=0) member of a team
+              option(name="roleType", value=1) leading a team
 
             div#auth-pagination
               a.previous.round#btn-disabled(href=prev) 
@@ -30,4 +30,4 @@ block content
                 
               h2.auth-register-step  step 2 / 3  
               
-              input#auth-signup-enter(type="submit", value="next step")
+              input.auth-signup-enter(type="submit", value="next step")

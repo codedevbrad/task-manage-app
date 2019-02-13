@@ -3,14 +3,8 @@ console.log('app-load');
 var load = document.getElementById('app-load');
 if (load) {
 
-  var phrases = [ 'fetching needed data', 'generating workspace members', 'grabbing your channels', 'grab a coffee and get working'];
+  var phrases = [ 'fetching needed datas', 'generating workspace members', 'grabbing your channels', 'grab a coffee and get working'  ];
 
-  // var phrases = [
-  //                { phrase: 'fetching needed data' },
-  //                { phrase: 'generating workspace members',  url: '/0/workspace/get/data/' },
-  //                { phrase: 'grabbing your channels',        url: '/0/workspace/get/data/' },
-  //                { phrase: 'grab a coffee and get working', url: '/0/workspace/get/data/' }
-  //               ]
 
   (function () {
     addPhrasesToLoad ( phrases, function() {
@@ -53,9 +47,13 @@ function animation (currEl) {
      current.classList.add('load-in-view');
 }
 
-function displayData( response ) {
-  console.log(response.data);
-}
+// function displayData( response, element, targets ) {
+//
+//   var appemdTo = document.getElementById( element );
+//   var data     = response.data;
+//
+//   console.log( response );
+// }
 
 var delay = 200;
 
@@ -66,10 +64,9 @@ function firstMethod () {
 
       var stage = 0;
       // ajax request
-      getData('/0/workspace/get/data/1').then(function (response) {
+      getData('/0/workspace/get/members').then(function (response) {
 
-          displayData(response);
-
+          // displayData(response);
           setTimeout(function() {
             resolve(); animation(stage);
           }, delay);
@@ -88,9 +85,9 @@ function secondMethod (someStuff) {
 
      var stage = 1;
      // ajax request
-     getData('/0/workspace/get/data/2').then(function (response) {
+     getData('/0/workspace/get/channels').then(function (response) {
 
-       displayData(response);
+       // displayData(response);
 
        setTimeout(function() {
          resolve(); animation(stage);
@@ -110,9 +107,9 @@ function thirdMethod (someStuff) {
 
      var stage = 2;
      // ajax request
-     getData('/0/workspace/get/data/2').then(function (response) {
+     getData('/0/workspace/get/reminders').then(function (response) {
 
-     displayData(response);
+     // displayData(response);
 
      setTimeout(function() {
        resolve(); animation(stage);

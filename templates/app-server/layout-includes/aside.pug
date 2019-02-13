@@ -4,15 +4,26 @@ div#aside-inner
     li workspace app
     li#toggle-content-aside(data-view=true)
       i.fas.fa-bars 
-    
-  div#aside-reminders
+
+  div#aside-team 
+
     section.aside-titlearea
-      h1 reminders          
+      h1 members
+      div.aside-section-newbtn-push#aside-add-member-btn(data-content-new='aside-member-new')
+        i.fas.fa-plus.aside-section-newbtn
     ul
-      li send mark my newest git commit
-      li continue my collab app workspace
-      li add kara to the team workspace
-      
+      li
+        span.member-icon.member-islogged
+        p zach greski
+        span.channel-loc app designer
+      li 
+        span.member-icon.member-islogged
+        p joe graham
+        span.channel-loc front-end dev
+      li 
+        span.member-icon
+        p kate haskey
+        span.channel-loc server-dev
   div#aside-channels
     section.aside-titlearea
       h1 channels
@@ -21,15 +32,21 @@ div#aside-inner
     ul
       li
         a(href='/0/workspace/channel/id') # trouble with database 
-        span.channel-loc react apps
+        span.channel-loc question
       li
         a(href='/0/workspace/channel/id') # lunch ideas
-        span.channel-loc house designs
+        span.channel-loc random
+      li
+        a(href='/0/workspace/channel/id') # design thoughts
+        span.channel-loc stack
+          
         
-  div#aside-team 
-
+        
+  div#aside-reminders
     section.aside-titlearea
-      h1 members
-      div.aside-section-newbtn-push#aside-add-member-btn(data-content-new='aside-member-new')
-        i.fas.fa-plus.aside-section-newbtn
+      h1 reminders          
+    ul
+      li send mark my newest git commit
+      li continue my collab app workspace
+      li add kara to the team workspace
       

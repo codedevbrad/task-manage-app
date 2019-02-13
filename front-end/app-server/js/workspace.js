@@ -7,9 +7,10 @@ console.log('workspace and stack working ');
 var newstack = document.getElementById('create-stack-btn');
 if (newstack) { newstack.addEventListener('click', CreatenewContent); }
 
+
 // ------- stacks ------- //
 
-// add event listener to creating a new imagw upload ...
+// add event listener to creating a new image upload ...
 
 var newImage = document.getElementById('create-stack-image');
 if (newImage) { newImage.addEventListener('click', CreatenewContent); }
@@ -17,7 +18,12 @@ if (newImage) { newImage.addEventListener('click', CreatenewContent); }
 // get images
 
 (function () {
-    axios.get('/0/workspace/get/stack/images').then(function (res) {
+
+    var space = document.querySelector('body').getAttribute('body_data_id');
+
+    console.log( space );
+
+    axios.get('/0/workspace/stack/images/'+space).then(function (res) {
 
       var images = res.data;
       // get content to append to ...

@@ -24,6 +24,7 @@ var User   = require('../models/user');
 var Space  = require('../models/workspace');
 var Stack  = require('../models/stack');
 var Image  = require('../models/image');
+var Tokens = require('../models/token');
 
 
 router.use(methodOverride('_method'));
@@ -75,18 +76,61 @@ const upload = multer({ storage });
 
 router.get('/0/auth/workspaces', checkAuth, function(req, res) {
 
-  // promise based user search ...
-  var promise = Space.find( { ownerId: req.user._id }).exec();
+      var query = { userId: req.user.id };
 
-  promise.then(function(workspaces) {
+      // search user id against ownerId / else search user id against member array
+      var promise = Space.find( { members: query }).exec();
 
-    res.render(dirname + 'my-workspaces', {
-        title: 'workspaces',
-        spaces: workspaces,
-        displaymainlayout: false
-    });
-  })
-  .catch(function(err) {  console.log(err);  });
+      promise.then(function( workspaces) {
+
+             console.log( workspaces );
+
+              res.render(dirname + 'my-workspaces', {
+                  title: 'workspaces',
+                  spaces: workspaces,
+                  displaymainlayout: false
+              });
+
+      })
+      .catch(function(err) {  console.log(err);  });
+});
+
+
+// get workspace tokens ...
+
+router.get('/0/workspace/:space/getAllTokens', checkAuth, function(req, res) {
+
+    var space = { space: req.params.space };
+
+    // promise based user search ...
+    var promise = Tokens.find( space ).exec();
+
+    promise.then(function( tokens ) {
+        console.log( tokens );
+        res.send( tokens );
+    })
+    .catch(function(err) {  console.log(err);  });
+});
+
+
+// generate token for workspace ...
+
+router.get('/0/workspace/:space/genToken', checkAuth, function(req, res) {
+
+      var space = req.params.space;
+
+      crypto.randomBytes(16, (err, buf) => {
+          if (!err) {
+
+              var token = new Tokens();
+              token.space = space;
+              token.token = buf.toString('hex');
+
+              token.save(function( err, key ) {
+                  res.send( key );
+              });
+          }
+      });
 });
 
 
@@ -94,15 +138,20 @@ router.get('/0/auth/workspaces', checkAuth, function(req, res) {
 
 router.post('/0/auth/workspace-new', checkAuth, function(req, res) {
 
-  var name = req.body.name;
-  var desc = req.body.description;
-  var id   = req.body.data_id;
+    var name = req.body.name;
+    var desc = req.body.description;
 
-  var space = new Space ({
-    name: name, desc: desc, ownerId: req.user._id, spaceID: id
-  });
+    var space = new Space ({
+      name: name, desc: desc, ownerId: req.user._id,  members: []
+    });
 
-  space.save(function(err) { res.end();  });
+    var userId = String(req.user._id);
+
+    space.members.push( { userId: userId } );
+
+    space.save(function( err, space ) {
+      res.send( { id: space._id } ).end();
+    });
 });
 
 
@@ -118,8 +167,9 @@ router.get('/0/workspace/:id/', checkAuth, function(req, res) {
   promise.then(function( workspace ) {
 
     var stackIds = [];
-
     var stackArr = workspace.stacks;
+
+    // get stack id's owned by user ...
 
     stackArr.forEach(function( stack , index ) {
       stackIds.push( stack.stackID );
@@ -143,6 +193,7 @@ router.get('/0/workspace/:id/', checkAuth, function(req, res) {
                 ],
             });
         }
+        else { console.log( err ); }
     });
   })
   .catch(function(err) { console.log(err); });
@@ -152,21 +203,37 @@ router.get('/0/workspace/:id/', checkAuth, function(req, res) {
 // --- get requests for content --- //
 
 // stack page - get images
-router.get('/0/workspace/get/stack/images', checkAuth, function(req, res) {
-  gfs.files.find().toArray((err, files) => {
+router.get('/0/workspace/stack/images/:id', checkAuth, function(req, res) {
 
-        if (!files || files.length === 0) {  }
-        else {
-          files.map(file => {
-            if ( file.contentType === 'image/jpeg' ||  file.contentType === 'image/png' ) { file.isImage = true; }
-            else { file.isImage = false;  }
-          });
-          // render content
-          res.send( files );
-        }
-  });
+  var stackQuery = req.params.id;
+
+  // query image db for images containing stack id.
+  var promise = Image.find( { StackId: stackQuery } ).exec();
+
+  promise.then(function( images ) {
+
+    if (images.length > 0) {
+
+      var imgIds = [];
+
+      images.forEach(function( img , index ) {
+        imgIds.push( img.imageId );
+      });
+
+      gfs.files.find( { filename: {$in: imgIds }} ).toArray((err, files) => {
+          if (!files || files.length === 0) {  }
+          else {
+               files.map(file => {
+                 if ( file.contentType === 'image/jpeg' ||  file.contentType === 'image/png' ) { file.isImage = true; }
+                 else { file.isImage = false;  }
+               });
+               // render content
+               res.send( files );
+          }
+      });
+    }
+  }).catch(function(err) { console.log(err); });
 });
-
 
 // --- stack routes -- -//
 
@@ -233,8 +300,6 @@ router.get('/0/workspace/stack/:id', checkAuth, function(req, res) {
             space_title: stack.name,
             data_id:     stack.id,
 
-            // images: images,
-
             space_list:  [
               { item: 'rename this stack', link: 'stack/rename' },
               { item: 'remove me from this stack', link: 'stack/delete'}
@@ -250,17 +315,19 @@ router.get('/0/workspace/stack/:id', checkAuth, function(req, res) {
 // upload stack image  ...
 
 router.post('/0/stack/:id/new', checkAuth, upload.single('file'), function(req, res) {
-  console.log(req.file);
 
-  // for now use mongodb ...
-  var image  = new Image();
-  image.imageId = req.file.id;
-  image.ownerId = req.user._id;
-  image.StackId = req.params.id;
+    var imgId = { _id: req.file.id }
+    var stackId = req.params.id;
 
-  image.save(function( err, image ) {
-    res.redirect('/0/auth/workspaces');
-  });
+    // for now use mongodb ...
+    var image  = new Image();
+    image.imageId = req.file.filename;
+    image.ownerId = req.user._id;
+    image.StackId = req.params.id;
+
+    image.save(function( err, image ) {
+      res.redirect('/0/auth/workspaces');
+    });
 });
 
 

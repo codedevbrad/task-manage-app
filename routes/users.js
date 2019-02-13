@@ -11,32 +11,29 @@ const router   = express.Router();
 
 // models
 var User  = require('../models/user');
-
+var Space = require('../models/workspace');
+var Tokens = require('../models/token');
 
 // login route process
 router.post('/user/auth/login', passport.authenticate('local', {
-		failureRedirect:'/login',
-		failureFlash:' wrong username or password.'
+		failureRedirect: '/login',
+		failureFlash:    'wrong username or password.'
 	}),
   function(req, res) {
   	res.redirect('/0/auth/workspaces');
 });
 
 
-router.get('/user/auth/username/:id', function(req, res) {
+function getUsername ( value ) {
 
-		// promise based user search ...
-		var promise = User.findOne( { username: req.params.id } ).exec();
+		var userId = { username: value };
 
-		promise.then(function(user) {
-			if (!user) { res.send( 'blue'); }
-			else       { res.send( 'red' ); }
-		})
-		.catch(function(err) {
-			console.log(err);
+		return User.findOne( userId, function( err, found ) {
+			 if (err) throw err
+
+			 return true;
 		});
-});
-
+}
 
 // register - step 1 : initial register / creates account ...
 
@@ -45,27 +42,47 @@ router.post('/user/auth/register/', function(req, res, next) {
 	const password  = req.body.password;
 	const email     = req.body.email;
 
-	var errors = false;
+	var errors = [];
 
 	function checkErrors() {
-
 			// check fields
-			req.checkBody('email',    'Email is required').notEmpty();
-			req.checkBody('username', 'Username is required').notEmpty();
-			req.checkBody('password', 'password is required').notEmpty();
-			req.checkBody('email',    'Email is not valid').isEmail();
+			req.checkBody('email', '!empty').notEmpty();
+			req.checkBody('email', '!valid').isEmail();
+
+			req.checkBody('username', '!empty').notEmpty();
+
+			req.checkBody('password', '!empty').notEmpty();
+			req.checkBody('password', '!length').isLength( { min: 4 });
+
 			errors = req.validationErrors();
 
+			// other checks
+ 			if (getUsername( username )) {
+				if (errors === false) { errors = []; }
+				errors.push( { param: 'username', msg: '!taken', value: username });
+			}
 			return errors;
 	}
 
- if (checkErrors())  { res.redirect('/get-started'); }
+ if (checkErrors() )  {
+
+	 	// re render page
+		console.log( errors );
+		var queryAppend = '';
+		for ( var error = 0; error < errors.length; error++) {
+				queryAppend = queryAppend + '&' + errors[error].param + '=' + errors[error].msg;
+		}
+
+		var newUserQuery = queryAppend.slice(1);
+
+	 	res.redirect('/get-started?'+newUserQuery);
+	}
 
  if (!checkErrors()) {
 
-		 var newUser = new User();
-		 newUser.email    = email, newUser.username = username, newUser.password  = password,
-		 newUser.team     = [],    newUser.notifications = [],  newUser.workspace = []
+	 var newUser = new User();
+	 newUser.email    = email, newUser.username = username, newUser.password  = password,
+	 newUser.team     = [],    newUser.notifications = [],  newUser.workspace = []
 
 	 // encypt the plaintext password
 	 bcrypt.genSalt(10, function(err, salt) {
@@ -88,7 +105,26 @@ router.post('/user/auth/register/', function(req, res, next) {
 });
 
 
-// check
+// register - check if username exists ...
+
+router.post('/user/auth/username/:id', function(req, res) {
+
+		// promise based user search ...
+		var promise = User.findOne( { username: req.params.id } ).exec();
+
+		promise.then(function(user) {
+			if (!user) { res.send( {  class: 'success-msg',  msg: 'great username choice'} ); }
+			else       { res.send( {  class: 'error-msg',    msg: 'username is taken, sorry'} ); }
+		})
+		.catch(function(err) {
+			console.log(err);
+		});
+});
+
+// user will be signed in and complete the next 2 stages
+
+
+// middleware idea
 var registerAuth = function (req, res, next) {
 
     return next();
@@ -104,19 +140,32 @@ router.get('/user/auth/register/type', registerAuth, function(req, res) {
 });
 
 
+
 router.post('/user/auth/register/type', registerAuth, function(req, res) {
-	var membership = req.body.membertype;
+		var condition = req.body.membertype;
 
-	res.redirect('/user/auth/register/'+ membership);
+		var teamIsLead = null;
+		var route  = null;
 
+		if (condition == 1) { teamIsLead = true;  route = 'leader';	}
+		else                { teamIsLead = false; route = 'member'; }
+
+		User.findByIdAndUpdate( { _id: req.user.id }, { teamIsLead: teamIsLead }, { new: true }, function( err, user ) {
+				if (user && !err) {
+					res.redirect('/user/auth/register/' + route);
+				}
+				else { console.log( err) };
+		});
 });
+
 
 // register - step 3 : showing the selected user role signup
 
-router.get('/user/auth/register/:id', function(req, res) {
+router.get('/user/auth/register/:id', registerAuth, function(req, res) {
+
 		res.render ( 'app-explore/auth/register-user', {
-			title: 'explore our app', bodyId: 'slackr-main-page', role: req.params.id, prev: '/user/auth/register/type',
-			input: req.user.username
+				title: 'explore our app', bodyId: 'slackr-main-page', role: req.params.id, prev: '/user/auth/register/type',
+				input: req.user.username, memberErr: req.query.error ? true : false, leaderErr: false
 		});
 });
 
@@ -124,7 +173,67 @@ router.get('/user/auth/register/:id', function(req, res) {
 
 router.post('/user/auth/register/member', registerAuth, function ( req, res) {
 
+			// first find the token by matching req token against token model.
+			var tokenId = { token: req.body.token };
+
+	    // promise based user search ...
+	    var promise = Tokens.findOne( tokenId ).exec();
+
+	    promise.then( token => {
+			  	 console.log( 'first ');
+					 console.log( token );
+
+					 if (token && token.claimed === false)  { console.log('is token and claimed'); }
+					 if (!token || token.claimed === true)  { console.log('no token or token claimed'); }
+
+					 if ( token && token.claimed === false ) {
+				   	 console.log( 'token is valid' , token );
+
+							 var userId    = String(req.user._id);
+							 var newMember = { userId: userId };
+
+							 var stackQuery = { _id: token.space }
+
+							 // use found token space id to find workspace and append user to members array ...
+							 return Space.findByIdAndUpdate( stackQuery, { $push: { members: newMember } }, { new: true } );
+				    }
+
+					  if ( !token || token.claimed === true ) {
+						   console.log('no token exists');
+							 res.redirect('/user/auth/register/member?error=true');
+							 return Promise.reject('token is invalid or has been claimed');
+					  }
+	    })
+			.then( space => {
+
+						console.log( 'second' );
+						if (space) { console.log( space ) };
+
+						// // update token to be claimed ...
+						return Tokens.findOneAndUpdate( { token: req.body.token }, { claimed: true }, { new: true } );
+      })
+			.then( token  => {
+
+						console.log( 'third' );
+
+						const userId = { _id: req.user.id };
+
+						User.findByIdAndUpdate( userId, { finished: true }, { new: true}, function (err, user) {
+
+									if (!err && user) {
+										console.log( 'found and updated user', user);
+										res.redirect('/0/auth/workspaces');
+									}
+									else {console.log( err); }
+						});
+			})
+    	.catch(err => {
+      		// res.status(500).json({ error : err });
+					console.log( err );
+
+    	});
 });
+
 
 // register - step 3: leader signup payment options ...
 
@@ -132,15 +241,18 @@ router.post('/user/auth/register/leader', registerAuth, function ( req, res) {
 
 	const userId = { _id: req.user.id };
 
-	User.findById( userId, function (err, user) {
+	User.findByIdAndUpdate( userId, { finished: true }, { new: true}, function (err, user) {
 
-		if (!err) {
-			user.finished = true;
-			console.log( user );
-			user.save(function (err) {
-				if(!err) { res.redirect('/0/auth/workspaces'); }
-			});
-		}
+				if (!err && user) {
+					console.log( 'found and updated user', user);
+				 	res.redirect('/0/auth/workspaces');
+				}
+				else if ( !user) {
+					console.log( 'no user ');
+				}
+				else {
+					console.log( 'what does this catch' );
+				}
 	});
 });
 

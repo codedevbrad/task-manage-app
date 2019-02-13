@@ -4,7 +4,7 @@ block content
 
     section#auth-flex-middle.signup
       section#app-signup-center
-      
+        
         h2 almost there
         
         section#previous-auth-option
@@ -14,17 +14,19 @@ block content
         
           p to be assigned to a team, you need to paste the workspace code sent to your email address. 
           
-          form#auth-signup-form.single-auth-signup-form(method="POST", action="/user/auth/register/member")
+          form.auth-signup-form.single-auth-signup-form(method="POST", action="/user/auth/register/member")
   
-            .form-group 
-              input#auth-username.form-control(name='username', placeholder='eg:  zza13@48596£k@dkvv', required='true')
-              div.error
+            .form-group
+              input#auth-token.form-control(class= memberErr ? 'error-msg-input' : '', name='token', placeholder='eg:  zza13@48596£k@dkvv', required='true')
+            div.error
+              if memberErr
+                p.error-msg-text token is invalid or has been claimed
               
             div#auth-pagination
               a.previous.round(href=prev) 
                 i.fas.fa-angle-left
               h2.auth-register-step  step 3  
-              input#auth-signup-enter.btn.btn-primary(type="submit", value="join workspace")
+              input.auth-signup-enter.btn.btn-primary(type="submit", value="join workspace")
         
         else
         
@@ -38,8 +40,8 @@ block content
                 li 3 workspaces
                 li 5 team members 
                 li.checkbox
-                  form#auth-signup-form.membership-plan(method="POST", action="/user/auth/register/leader")
-                    input#auth-signup-enter.btn.btn-primary(type="submit", value="get started")  
+                  form.auth-signup-form.membership-plan(method="POST", action="/user/auth/register/leader")
+                    input.auth-signup-enter.btn.btn-primary(type="submit", value="get started")  
 
             .columns
               ul.price
@@ -48,8 +50,8 @@ block content
                 li unlimited workspaces 
                 li 25 team members
                 li.checkbox
-                  form#auth-signup-form.membership-plan(method="POST", action="/user/auth/register/leader")
-                    input#auth-signup-enter.btn.btn-primary(type="submit", value="go enterprise")  
+                  form.auth-signup-form.membership-plan(method="POST", action="/user/auth/register/leader")
+                    input.auth-signup-enter.btn.btn-primary(type="submit", value="go enterprise")  
                     
             div#auth-pagination
               a.previous.round(href=prev) 

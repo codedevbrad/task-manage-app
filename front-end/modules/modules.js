@@ -24,8 +24,6 @@ function dropme (el) {
 
 function CreatenewContent(el) {
 
-    console.log(el.target);
-
     var idFind = el.target.getAttribute("data-content-new");
     var target = document.getElementById(idFind);
 

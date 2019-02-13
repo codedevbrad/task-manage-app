@@ -9,8 +9,11 @@ section.new-content-center-main
       h3 add members
       p workspaces can be lonely by yourself. Why not add some members to your space. 
       .form-group-stack
-        h2 produce a token.
-        input.stack-new-field.form-control(name='stackname', placeholder='', required='true')
-        input#create-member-token.stack-new-field.form-control(name='stackname', )
-  div#member-tokens-assigned      
+        div#create-member-token.btn-design(onclick='generateToken()')
+          p generate token ...
+          
+  div#new-members-tokens.new-content-form
+      h3 current tokens to be used
+      p Generated tokens can be claimed by new members wanting to join your workspace. 
+      div#member-tokens-assigned      
   

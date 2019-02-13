@@ -7,7 +7,7 @@ const dirname = 'app-server/';
 
 var Space  = require('../models/workspace');
 var Stack  = require('../models/stack');
-
+var Channel = require('../models/channel');
 
 // check logged / protect routes ...
 var checkAuth = function (req, res, next) {
@@ -16,27 +16,20 @@ var checkAuth = function (req, res, next) {
     else { res.redirect('/'); }
 };
 
-function getWorkspaceData ( request ) {
-
-  var promise = Space.find( request ).exec();
-
-  promise.then(function ( data ) {
-      return true
-  })
-  .catch(function(err) { return false });
-}
 
 // -----  aside loading animation get reqs ----- //
 
 // get channels
-router.get('/0/workspace/get/data/1', checkAuth, function(req, res) {
-   console.log(getWorkspaceData());
-   res.send( 'getting data' );
+router.get('/0/workspace/get/members', checkAuth, function(req, res) {
+    res.send('members');
 });
 
-// get members
-router.get('/0/workspace/get/data/2', checkAuth, function(req, res) {
-   res.send( 'getting data' );
+router.get('/0/workspace/get/channels', checkAuth, function(req, res) {
+    res.send('channels');
+});
+
+router.get('/0/workspace/get/reminders', checkAuth, function(req, res) {
+    res.send('reminders');
 });
 
 

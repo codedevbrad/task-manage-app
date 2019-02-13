@@ -23,12 +23,18 @@ svg     { pointer-events: none; }
 
 .btn-point {  cursor: pointer;  }
 
+.btn-design { text-align: center; padding: 10px 45px; font-weight: 400;
+              color: black; font-size: 0.75em; cursor: pointer;
+              background:#ffff70; display: inline-block;
+              outline: none; border: none;
+}
+
 
 /* --- main app widths --- */
 
 div#app-wrap > header, div#app-content, div#app-load, footer { width: 82%; margin: 0 auto; }
 
-section#app-content-main { width: 75%; height: 100%; float: left; padding-right: 25px; position: relative; }
+section#app-content-main { width: 75%; min-height: 100%; float: left; padding-right: 25px; position: relative; }
 
 aside#app-content-side   { width: 25%; height: 100%; float: right;  padding-top: 15px;}
 
@@ -45,13 +51,9 @@ div#app-load {
 section#load-center { width: 380px; margin-top: 20px; }
 
 section#load-center > div > div {
-  margin-top: 30px; font-weight: 400;
-  -webkit-box-shadow: 3px 0px 20px 4px rgb(241, 240, 240);
-  -moz-box-shadow: 3px 0px 20px 4px rgb(241, 240, 240);
-  box-shadow: 3px 0px 20px 4px rgb(241, 240, 240);
-  padding: 25px;  border-radius: 5px; font-size: 0.75em;
-  color: #d6d1d1;
-  width: 100%; overflow: hidden;
+  margin-top: 30px; font-weight: 400;  -webkit-box-shadow: 3px 0px 20px 4px rgb(241, 240, 240);
+  -moz-box-shadow: 3px 0px 20px 4px rgb(241, 240, 240);  box-shadow: 3px 0px 20px 4px rgb(241, 240, 240);
+  padding: 25px;  border-radius: 5px; font-size: 0.75em;  color: #d6d1d1;  width: 100%; overflow: hidden;
 }
 
 section#load-center > div > div.load-in-view { color: black; }
@@ -62,32 +64,21 @@ div.load-right > h2 { font-size: 0.95em; font-weight: 400; padding-top: 13px; }
 
 
 .checkmark {
-  width: 35px; height: 35px; border-radius: 50%; display: inline-block;
-  stroke-width: 2; stroke: #fff; stroke-miterlimit: 10;
-  box-shadow: inset 0px 0px 0px #4d99f8; animation: fill 0.4s ease-in-out 0.4s
-  forwards, scale 0.3s ease-in-out 0.9s both;
+  width: 35px; height: 35px; border-radius: 50%; display: inline-block; stroke-width: 2; stroke: #fff; stroke-miterlimit: 10;
+  box-shadow: inset 0px 0px 0px #4d99f8; animation: fill 0.4s ease-in-out 0.4s forwards, scale 0.3s ease-in-out 0.9s both;
 }
 
 .checkmark__circle {
-  stroke-dasharray: 166; stroke-dashoffset: 166; stroke-width: 2;
-  stroke-miterlimit: 10; stroke: #4d99f8; fill: none;
+  stroke-dasharray: 166; stroke-dashoffset: 166; stroke-width: 2;  stroke-miterlimit: 10; stroke: #4d99f8; fill: none;
   animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
 }
 .checkmark__check {
-  transform-origin: 50% 50%; stroke-dasharray: 48; stroke-dashoffset: 48;
-  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+  transform-origin: 50% 50%; stroke-dasharray: 48; stroke-dashoffset: 48; animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
 }
 
-@keyframes stroke {
-  100% { stroke-dashoffset: 0; }
-}
-@keyframes scale {
-  0%, 100% { transform: none; }
-  50%      { transform: scale3d(1.1, 1.1, 1);  }
-}
-@keyframes fill {
-  100% {  box-shadow: inset 0px 0px 0px 30px #4d99f8; }
-}
+@keyframes stroke {  100% { stroke-dashoffset: 0; } }
+@keyframes scale  {  0%, 100% { transform: none; }  50% { transform: scale3d(1.1, 1.1, 1);  } }
+@keyframes fill   { 100% {  box-shadow: inset 0px 0px 0px 30px #4d99f8; } }
 
 
 /* --- main app  --- */
@@ -164,13 +155,14 @@ section#user-auth-section > ul > #upgrade-acc {
     bottom: 2px; box-shadow: 3px 3px 20px 2px rgba(185, 185, 185, 0.49);
 }
 
+
 /* ---  app content --- */
 
-div#app-wrap > div#app-content { height: 100%; display: block; overflow: auto; padding-bottom: 40px; }
+div#app-wrap > div#app-content { height: 100%;  overflow: auto; padding-bottom: 40px; display: flex; }
 
 /* --- aside content --- */
 
-div#aside-inner > div { margin-bottom: 10px;  border: 1px solid #efefef;  padding-bottom: 35px; }
+div#aside-inner > div { margin-bottom: 10px;  border: 1px solid #efefef;  padding-bottom: 20px; }
 
 div#aside-inner > div#aside-reminders { width: 100%; background: #ffffc4; padding-bottom: 35px; }
 
@@ -179,14 +171,19 @@ div#aside-inner > div > section.aside-titlearea  { padding: 10px;  }
 div#aside-inner > div > section.aside-titlearea  > h1  { display: inline-block; font-size: 0.72em; font-weight: 400;  }
 
 div#aside-inner > div > section.aside-titlearea  > div { display: inline-block; float: right; padding-right: 10px;
-                                                         font-size: 0.8em; cursor: pointer;
+                                                         font-size: 0.8em; cursor: pointer; padding: 5px 10px 0 5px;
                                                        }
 
-div#aside-inner > div  > ul > li { font-size: 0.65em; font-weight: 400; margin: 18px 10px; }
+div#aside-inner > div  > ul > li     { font-size: 0.65em; font-weight: 400; margin: 18px 10px; }
+div#aside-inner > div  > ul > li > p { display: inline-block; }
 
-div#aside-inner > div  > ul > li > .channel-loc {
+div > ul > li > .channel-loc {
     padding: 5px 10px; margin: 5px; background: #ffcece; border-radius: 3px;
 }
+
+div > ul > li > .member-icon     { margin: 5px;  background: #d2e6ff;  border-radius: 50%;  padding: 2px 8px;}
+
+div > ul > li > .member-islogged { background: #4d99f9; }
 
 
 /* aside content view  */
@@ -202,6 +199,18 @@ div > li#toggle-content-aside        { justify-content: flex-end; text-align: ri
 
 div > li#toggle-content-aside > svg  { font-size: 1.3em; cursor: pointer; }
 
+/* ==== add members === */
+
+div#create-member-token { margin-bottom: 20px; }
+
+div#new-members-tokens.new-content-form > h3 { font-size: 1em; padding-top: 10px; }
+
+div#member-tokens-assigned           { margin-top: 20px; }
+div#member-tokens-assigned > div > p { padding: 10px 10px; margin: 5px 0; font-size: 0.72em;
+                                       font-weight: 400;
+                                     }
+
+div#member-tokens-assigned > div:nth-child(odd) { background: #ffe1e1; }
 
 /* ==== app channels === */
 

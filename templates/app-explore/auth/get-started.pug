@@ -6,26 +6,32 @@ block content
     section#auth-flex-middle.signup
       section#app-signup-center
         h2 Signup to slackr 
-        form#auth-signup-form(method="POST", action="/user/auth/register")
+        form.auth-signup-form(method="POST", action="/user/auth/register")
 
           .form-group
             label Username
-            input#auth-username.form-control(name='username', placeholder='eg: devcoffee', required='true')
-            div.error
-
+            input#auth-username.form-control(class= usernameError ? 'error-msg-input' : '', name='username', placeholder='eg: devcoffee', required='true')
+            div.error#error-username
+              if usernameError
+                p.error-msg-text username has been taken
+                
           .form-group
             label email address
-            input#auth-email.form-control(name='email', placeholder='eg: devcoffee@gmail.com', required='true')
-            div.error
+            input#auth-email.form-control(class= emailError ? 'error-msg-input' : '', name='email', placeholder='eg: devcoffee@gmail.com', required='true')
+            div.error#error-email
+              if emailError
+                p.error-msg-text please enter a valid email.
 
           .form-group
             label Password
-            input#auth-pass.form-control(name='password', type='password', placeholder='eg: 12345', required='true')
-            div.error
+            input#auth-pass.form-control(class= passError ? 'error-msg-input' : '', name='password', type='password', placeholder='eg: 12345', required='true')
+            div.error#error-pass
+              if passError
+                p.error-msg-text please enter a password that more than 4 characters long. 
 
           div#auth-pagination
             a.previous.round#btn-disabled(href=prev) 
               i.fas.fa-angle-left
               
             h2.auth-register-step step 1  
-            input#auth-signup-enter(type="submit", value="next step")
+            input.auth-signup-enter(type="submit", value="next step")

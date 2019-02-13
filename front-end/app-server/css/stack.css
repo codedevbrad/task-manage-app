@@ -12,10 +12,7 @@ div#grid-name-title >  h3       { width: 100%; text-align: left; font-size: 1.3e
 
 div#grid-name-image-upload      { width: 100%; justify-content: flex-end; }
 
-div#grid-name-image-upload > h2 { text-align: center; width: 65%;
-                                 padding: 10px 45px; font-weight: 400; color: black; font-size: 0.75em; cursor: pointer;
-                                 background: #ffff70; display: inline-block;
-                                }
+
 
 /* --- stack upload --- */
 
@@ -35,11 +32,10 @@ ul#image-names                 { width: 100%; height: auto; margin-bottom: 20px;
 
 ul#image-names > li.image-preview-item  { display: inline-block; font-weight: 400; padding: 8px 20px; background: #ffff70; margin: 5px 10px; }
 
-input#image-upload-btn         { cursor: pointer; font-weight: 400; margin-top: 15px; padding: 8px 20px; outline: none; background: #ffff70; border: none; }
+input#image-upload-btn        { margin-top: 30px; }
 
 
 div#stack-left-grid-content   { width: 100%; height: 90%; padding: 25px 0; }
-
 
 div#stack-left-grid-content > img  { width:350px; height: auto; display: inline-block; vertical-align: top;
                                      border-radius: 10px; border: 1px solid #e3dbdb; margin: 10px;
