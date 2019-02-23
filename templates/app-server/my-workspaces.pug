@@ -8,14 +8,16 @@ block content
   div#my-workspaces
     section#workspaces-center
       section#workspaces-title-area
-        h2 workspaces
-        span.workspace-btn add workspace
-        
-      section.flex-each-workspace.workspace-new
-        div.workspace-flex-main#workspace-new
-          input#workspace-name.form-control(name='name', placeholder='name your workspace .', required)
-          textarea#workspace-description.form-control(name='description', placeholder='tag your workspace with a description and purpose .', required)
-          div#workspace-enter.workspace-btn create workspace
+        h2 workspaces    
+        if spaceIsLead
+          span.workspace-btn add workspace
+          
+      if spaceIsLead  
+        section.flex-each-workspace.workspace-new
+          div.workspace-flex-main#workspace-new
+            input#workspace-name.form-control(name='name', placeholder='name your workspace .', required)
+            textarea#workspace-description.form-control(name='description', placeholder='tag your workspace with a description and purpose .', required)
+            div#workspace-enter.workspace-btn create workspace
           
       if spaces.length == 0
         section.flex-each-workspace#no-workspace

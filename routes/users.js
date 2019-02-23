@@ -26,25 +26,24 @@ router.post('/user/auth/login', passport.authenticate('local', {
 
 function getUsername ( value ) {
 
-		var userId = { username: value };
-
-		return User.findOne( userId, function( err, found ) {
-			 if (err) throw err
-
-			 return true;
-		});
-}
+	  	return User.findOne( { username: value } );
+};
 
 // register - step 1 : initial register / creates account ...
 
 router.post('/user/auth/register/', function(req, res, next) {
+
+	// get body id's
+
 	const username  = req.body.username.toLowerCase();
 	const password  = req.body.password;
 	const email     = req.body.email;
 
-	var errors = [];
+  // search user Id mongoose > pass user
+	var promise = User.findOne( { username: username }).exec();
 
-	function checkErrors() {
+	promise.then( user => {
+			var errors = [];
 			// check fields
 			req.checkBody('email', '!empty').notEmpty();
 			req.checkBody('email', '!valid').isEmail();
@@ -56,52 +55,60 @@ router.post('/user/auth/register/', function(req, res, next) {
 
 			errors = req.validationErrors();
 
-			// other checks
- 			if (getUsername( username )) {
-				if (errors === false) { errors = []; }
-				errors.push( { param: 'username', msg: '!taken', value: username });
+		  if (user) {
+				  if (!errors) { errors = [] }
+					errors.push( { param: 'username', msg: '!taken', value: username });
 			}
+
 			return errors;
-	}
 
- if (checkErrors() )  {
+	})
+	// test results and send to appropriate routes ...
+	.then( errors => {
 
-	 	// re render page
-		console.log( errors );
-		var queryAppend = '';
-		for ( var error = 0; error < errors.length; error++) {
-				queryAppend = queryAppend + '&' + errors[error].param + '=' + errors[error].msg;
-		}
+		  console.log( errors );
 
-		var newUserQuery = queryAppend.slice(1);
+			if (errors) {
+							var queryAppend = '';
+							for ( var error = 0; error < errors.length; error++) {
+									queryAppend = queryAppend + '&' + errors[error].param + '=' + errors[error].msg;
+							}
+							var newUserQuery = queryAppend.slice(1);
 
-	 	res.redirect('/get-started?'+newUserQuery);
-	}
+							res.redirect('/get-started?'+newUserQuery);
+						  return Promise.reject( 'errors occured', errors );
+			}
+			else {	return true;	}
+	})
 
- if (!checkErrors()) {
+	.then( result => {
 
-	 var newUser = new User();
-	 newUser.email    = email, newUser.username = username, newUser.password  = password,
-	 newUser.team     = [],    newUser.notifications = [],  newUser.workspace = []
+				console.log( result );
 
-	 // encypt the plaintext password
-	 bcrypt.genSalt(10, function(err, salt) {
-		 bcrypt.hash(newUser.password, salt, function(err, hash) {
-			 if(err) {  console.log(err) }
+				var newUser = new User();
+			  newUser.email    = email, newUser.username = username, newUser.password  = password,
+			  newUser.team     = [],    newUser.notifications = [],  newUser.workspace = []
 
-			 newUser.password = hash;
+			  // encypt the plaintext password
+			  bcrypt.genSalt(10, function(err, salt) {
+			 	 bcrypt.hash(newUser.password, salt, function(err, hash) {
+			 		 if(err) {  console.log(err) }
 
-			 newUser.save(function(err)  {
-				 if (err) { console.log(err)   }
-				 else     {
-						 passport.authenticate('local', {
-							 successRedirect: '/user/auth/register/type', failureRedirect: '/get-started'
-						 }) (req, res, next)
-					}
-			 });
-		 });
-	 });
-  }
+			 		 newUser.password = hash;
+
+			 		 newUser.save(function(err)  {
+			 			 if (err) { console.log(err)   }
+			 			 else     {
+			 					 passport.authenticate('local', {
+			 						 successRedirect: '/user/auth/register/type', failureRedirect: '/get-started'
+			 					 }) (req, res, next)
+			 				}
+			 		 });
+			 	 });
+			  });
+	})
+	.catch(err => {	console.log( err );	});
+
 });
 
 
@@ -116,9 +123,7 @@ router.post('/user/auth/username/:id', function(req, res) {
 			if (!user) { res.send( {  class: 'success-msg',  msg: 'great username choice'} ); }
 			else       { res.send( {  class: 'error-msg',    msg: 'username is taken, sorry'} ); }
 		})
-		.catch(function(err) {
-			console.log(err);
-		});
+		.catch(function(err) { console.log(err);	});
 });
 
 // user will be signed in and complete the next 2 stages
@@ -176,6 +181,8 @@ router.post('/user/auth/register/member', registerAuth, function ( req, res) {
 			// first find the token by matching req token against token model.
 			var tokenId = { token: req.body.token };
 
+			var role_type = req.body.role_type;
+
 	    // promise based user search ...
 	    var promise = Tokens.findOne( tokenId ).exec();
 
@@ -187,10 +194,10 @@ router.post('/user/auth/register/member', registerAuth, function ( req, res) {
 					 if (!token || token.claimed === true)  { console.log('no token or token claimed'); }
 
 					 if ( token && token.claimed === false ) {
-				   	 console.log( 'token is valid' , token );
+				   	   console.log( 'token is valid' , token );
 
-							 var userId    = String(req.user._id);
-							 var newMember = { userId: userId };
+							 var userId     = String(req.user._id);
+							 var newMember  = { userId: userId , space_role: role_type };
 
 							 var stackQuery = { _id: token.space }
 
@@ -230,7 +237,6 @@ router.post('/user/auth/register/member', registerAuth, function ( req, res) {
     	.catch(err => {
       		// res.status(500).json({ error : err });
 					console.log( err );
-
     	});
 });
 

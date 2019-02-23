@@ -11,11 +11,17 @@ block content
           input.auth-signup-input-showcase(type='text', name='chosen-username', value=input, disabled)
         
         if role == "member"
-        
-          p to be assigned to a team, you need to paste the workspace code sent to your email address. 
           
           form.auth-signup-form.single-auth-signup-form(method="POST", action="/user/auth/register/member")
-  
+          
+            h3 what's your role as a member
+            p if you know the type of space you're joining, then assigning a role should be easy. An example for a dev space might be 'server-side dev'.
+            
+            .form-group
+              input#auth-token.form-control( name='role_type', placeholder='eg: server-dev', required='true')
+              
+            h3 awesome, now join an existing team space
+            p to be assigned to a team, you need to paste the workspace code sent to your email address. 
             .form-group
               input#auth-token.form-control(class= memberErr ? 'error-msg-input' : '', name='token', placeholder='eg:  zza13@48596£k@dkvv', required='true')
             div.error

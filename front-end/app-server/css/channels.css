@@ -26,10 +26,11 @@ section.wc-messages  { width: 100%; margin: 0 auto;
 section.wc-messages > div     { padding: 10px 0; border-bottom: 1px solid #e6e6e6; }
 section.wc-messages > div > p { font-weight: 400; padding: 10px 0; }
 
-section > form#channel-message-form  { width: 100%; }
+section > form#channel-message-form  { width: 100%; padding: 10px;}
 
-form#channel-message-form > textarea { width: 100%; border: none; outline: none; padding: 10px;
-                                       background: #fff2f2; margin-top: 20px;
+form#channel-message-form > textarea { width: 100%; border: none; outline:  none; padding: 10px;
+                                       background: white; margin-top: 20px; border-radius: 9px;
+                                       box-shadow: 0px 0px 16px 3px #e0dddd;
                                      }
 
 input#channel-submit-msg-btn         {  background: yellow; outline: none; padding: 10px 30px;

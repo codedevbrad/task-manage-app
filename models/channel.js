@@ -1,25 +1,32 @@
 
 const mongoose = require('mongoose');
 
-var vitalChanneldata = mongoose.Schema ({
+// channel important
 
-    name:   { type: String },
-    space:  { type: String }
+var dataSchema = mongoose.Schema ({
+    channelName:   { type: String , required: true },
+    channelTag:    { type: String , requires: true },
 });
+
+// chat messages ...
 
 var chatSchemma = mongoose.Schema ({
 
-    user: { type: String },
-    msg:  { type: String }
+    user:   { type: String  },
+    msg:    { type: String  },
+    posted: { type: String  }
 });
 
-// each users category schema
+// each users category schema ...
 
 var channelSchema = mongoose.Schema ({
 
-    vitalData:     [ vitalChanneldata ],
+    channelData:   [ dataSchema ],
+
+    channelName:   { type: String , required: true },
+    channelTag:    { type: String , requires: true },
     joinedMembers: [ ],
     chatData:      [ chatSchemma ]
 });
 
-var ChatBubble = module.exports = mongoose.model('chatBubble', channelSchema );
+var Channel = module.exports = mongoose.model('channel', channelSchema );

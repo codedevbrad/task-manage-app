@@ -22,6 +22,7 @@ html
                 img(src='/main/favicon2.png')#title-img
               li 
                 a(href='/') slackr   
+                
           section.header-place-3#auth-section
             if !user
               ul
@@ -33,9 +34,22 @@ html
                 ul
                   li nearly there
           section.header-place-2#app-links
-            ul
-              li product
-              li why slackr.io
+            ul.menu-target-ul
+              li.dropdown
+                | our platform
+                i.fa.fa-angle-down.fa              
+                ul.menu-target.user-menu
+                  li.menu-li test
+                  li.menu-li You are currently on slackr's free workplace plan 
+                  li.menu-li test 
+
+              li.dropdown
+                | why slackr
+                i.fa.fa-angle-down.fa              
+                ul.menu-target.user-menu
+                  li.menu-li test
+                  li.menu-li You are currently on slackr's free workplace plan 
+                  li.menu-li test 
               li pricing
           
       //- each page content ...

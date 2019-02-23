@@ -12,16 +12,6 @@ block content
       h2#create-stack-image.btn-design(data-content-new='stack-img-new') + new board
       
   div.stack-grid#stack-left-grid-content.grid
-    
-    //- 
-      if images
-      each image in images
-        if image.isImage
-          img.stack-img(src='/image/' + image.filename, alt='')            
-        else 
-          p not an image
-      else
-        p no bords have been created
       
 block append scripts
-  //- script(src='/build/masonry-layout/dist/masonry.pkgd.min.js')
+  script(src='/app-server/js/stacks.js')

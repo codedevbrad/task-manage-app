@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 
     // combine files into a 1 production file ...
     concat: {
-      
+
       // server app
       css1: {
         src: [ 'app-server/css/layout.css', 'modules/modules.css', 'app-server/css/workspaces.css', 'app-server/css/workspace.css', 'app-server/css/stack.css', 'app-server/css/channels.css'],
@@ -23,11 +23,11 @@ module.exports = function(grunt) {
 
       // explore app
       css2: {
-        src: ['app-explore/css/index.css', 'app-explore/css/user-form.css', 'app-explore/css/pages.css'],
+        src: ['app-explore/css/index.css', 'modules/modules.css', 'app-explore/css/user-form.css', 'app-explore/css/pages.css'],
         dest: 'app-explore/build/client.css',
       },
       js2: {
-        src: [ 'app-explore/js/user-form.js'], dest: 'app-explore/build/client.js',
+        src: [ 'modules/modules.js' , 'app-explore/js/user-form.js'], dest: 'app-explore/build/client.js',
       },
     },
 

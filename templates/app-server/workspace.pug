@@ -8,7 +8,7 @@ block content
   
   div.workspace-grid-box#workspaces-left-grid-name
     h2 #{ stacks.length } stack(s)
-    h3#create-stack-btn(data-content-new='stack-new') create new stack
+    h3#create-stack-btn.btn-design(data-content-new='stack-new') create new stack
   
   div.workspace-grid-box#workspaces-left-grid-stacks 
     
@@ -17,7 +17,7 @@ block content
     
       div.stack(class='color-'+stack.color)
         div.stack-position
-          a(href='/0/workspace/stack/'+stack._id).stack-inner-center
+          a(href='/0/workspace/' + data_id + '/stack/'+stack._id).stack-inner-center
             h2=str.charAt(0)
             h3=stack.name
 

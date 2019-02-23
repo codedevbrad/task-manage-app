@@ -1,8 +1,14 @@
 
 const mongoose = require('mongoose');
 
+
 var stackSchema = mongoose.Schema ({
-    stackID: { type: String }
+    stackID:    { type: String },
+});
+
+var membersSchema = mongoose.Schema ({
+    space_role: { type: String },
+    userId:     { type: String }
 });
 
 // each users category schema
@@ -13,11 +19,10 @@ var workspaceSchema = mongoose.Schema ({
     desc:    { type: String },
 
     ownerId: { type: String },
-    members:  [ ],
+    members: [ ],
 
     stacks:   [ stackSchema ],
     channels: [ ]
-
 });
 
 var Workspaces = module.exports = mongoose.model('workspace', workspaceSchema );

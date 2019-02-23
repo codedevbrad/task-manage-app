@@ -36,7 +36,7 @@ form > .form-group > input.success-msg-input { border: 1px solid blue; }
 
 /* --- main app --- */
 
-body#main-app-body { background: #fdfeff;      }
+body#main-app-body { background: #fdfeff; border-top: 1px solid #eeee;     }
 #main-app          { width:100%; height: 100%; }
 
 
@@ -48,7 +48,7 @@ body#main-app-body { background: #fdfeff;      }
 /* === left === */
 section#app-header   { height: 100%; float: left; }
 /* == middle == */
-section#app-links    { height: 100%; overflow: hidden; display: flex; justify-content: flex-end; align-items: center; }
+section#app-links    { height: 100%; display: flex; justify-content: flex-end; align-items: center; }
 /*==  right === */
 section#auth-section { height: 100%; float: right; }
 
@@ -66,7 +66,10 @@ section#app-header > ul > li      { align-items: center; font-size: 1.4em; curso
 /* -- middle: links -- */
 
 section.header-place-2#app-links > ul      { margin-right: 30px; }
-section.header-place-2#app-links > ul > li { font-size: 0.78em; display: inline-block; margin: 0 10px; padding: 10px; cursor: pointer; }
+section.header-place-2#app-links > ul > li {
+      font-size: 0.78em; display: inline-block; margin: 0 10px;
+      padding: 10px; cursor: pointer; position: relative;
+}
 
 
 
@@ -86,6 +89,82 @@ section.header-place-3#auth-section > ul > li > a {
 li#auth-btn-blue  > a { background-color: #57a2ff; color: white; }
 
 
+/*  === dropdown ===  */
+
+.menu-target-ul { position: relative; }
+
+li.break-menu { height: 2px; background: #e2e2e2; margin: 10px 8px; }
+
+.menu-target  {
+  display: none; min-width: 240px; padding: 12px; z-index: 9999; background: white; right: 0;
+  border-radius: 7px;
+}
+
+li.menu-li   {
+  display: block; text-align: left;  font-weight: normal;  margin: 15px 0;
+  font-size: 0.8em; cursor: pointer; padding: 10px 8px;    border-radius: 3px;
+}
+
+li.menu-li:hover { background: #eaeaea; }
+
+li.menu-li > a   { color: black; font-weight: normal; font-size: 1em; display: block; }
+
+li.menu-li:last-child { margin-bottom: 20px; }
+
+
+
+.dropdown-open {
+  display: block; position: absolute; top: 80px; border: 1px solid #e8e8e8;
+  -webkit-box-shadow: 0px 3px 22px 0px rgba(242,242,242,1);
+  -moz-box-shadow: 0px 3px 22px 0px rgba(242,242,242,1);
+  box-shadow: 0px 1px 17px 7px rgba(242,242,242,1);
+  z-index: 9999; cursor: context-menu;
+ }
+
+.dropdown > svg {
+  pointer-events: none;
+}
+
+.dropdown-menu-highlight { background: #eaeaea;  }
+
+
+/* --- close new stack btn --- */
+
+div.close-new-content    { display: inline-block; position: absolute; top: 0; right: 20px; }
+
+div.new-contentclose-btn { padding: 5px; font-size: 1.5em; cursor: pointer; margin-top: 3px; }
+
+
+/* -- aside / stack / workspace popup -- */
+
+div.newcontent-new-popup { display: none; }
+
+div.newcontent-new-popup.newcontent-show {
+   display: block; background: white;  z-index: 9999; height: 100%; min-height: 100%; margin: 0 auto;
+   position: absolute; top: 0; left: 0; right: 0; display: flex; justify-content: center;
+}
+
+section.new-content-center-main  { margin-top: 30px; width: 100%; height: auto; position: relative }
+
+.new-content-form       { width: 60%; margin: 0 auto;  }
+
+.new-content-form  > h3 { font-size: 2.1em; letter-spacing: -0.035em; }
+.new-content-form  > p  { width: 80%; margin-top: 10px; font-weight: 400; font-size: 0.8em; line-height: 1.7em; word-spacing: 0.03em; }
+
+.form-group-stack       { margin-top: 20px; width: 100%; border-bottom: 1px solid #e6e6e6; }
+.form-group-stack > h2  { margin-bottom: 10px; font-weight: 400; }
+
+.stack-new-field { width: 70%; outline: none; border: none; font-size: 0.78em; padding: 15px 10px;
+                   margin-bottom: 30px; display: block; background: #fff5ae; font-weight: 400;
+                 }
+
+#new-content-submit {
+    outline: none; background: none; display: inline-block; padding: 8px; font-size: 0.9em;
+    color: #4d99f9;  letter-spacing: 0.03em; border: 1px solid #4d99f9;  border-radius: 3px;
+    cursor: pointer; font-weight: 400; margin-top: 30px;
+  }
+
+
 
 /* =========  signup styles ========= */
 
@@ -96,26 +175,31 @@ li#auth-btn-blue  > a { background-color: #57a2ff; color: white; }
 section#previous-auth-option { width: 100%; margin-bottom: 15px;  }
 
 .auth-signup-input-showcase {
-    padding: 15px; border: 1px solid #e2e2e2; background: #f9f9f9; color: #bfbdbd; font-weight: 400; cursor: pointer;
-    width: 65%;
+    padding: 15px;   border: 1px solid #e2e2e2; background: #f9f9f9; color: #bfbdbd; font-weight: 400;
+    cursor: pointer; width: 65%;
 }
 
 #auth-option-change {  height: 100%; background: #f1f1f1; margin-left: 20px;  display: inline-block; }
 
 /* ===== get started  ===== */
 
-#auth-flex-middle.signup  { width: 100%; height: 100%; display: flex;  justify-content: center;  }
+#auth-flex-middle.signup   { width: 100%; height: 100%; display: flex;  justify-content: center;  }
 
-#app-signup-center        { width: 60%; min-height: 100px; margin-top: 60px; }
+#app-signup-center         { width: 60%; min-height: 70px; margin-top: 30px; }
 
-#app-signup-center > h2   { padding: 10px 0; font-size: 2.2em; letter-spacing: 0; }
+#app-signup-center  > h2   { padding: 10px 0; font-size: 2em; letter-spacing: 0; }
 
-#app-signup-center > p    { font-weight: 400; }
+#app-signup-center > form > h2   { padding: 10px 0; font-size: 2.2em; letter-spacing: 0; }
+
+
+#app-signup-center  > p       { font-weight: 400; font-size: 0.75em; padding: 10px 0; line-height: 1.5em; }
+#app-signup-center > form > p { font-weight: 400; font-size: 0.75em; padding: 10px 0; line-height: 1.5em; }
+
 
 form.auth-signup-form     { width: 65%; }
 
 form.auth-signup-form  > .form-group > label, form.auth-signup-form  > .form-group > input {
-  display: block; width: 100%; font-weight: 400; margin-bottom: 10px;
+  display: block; width: 100%; font-weight: 400; margin-bottom: 10px; border-radius: 8px;
 }
 
  form > .form-group > label  { padding: 10px 10px 10px 0; }
@@ -208,4 +292,42 @@ section#app-home-section-welcome  h1 {  font-size: 2.3em; font-weight: 700; lett
 
 section#app-home-section-welcome  p  {  color: #4b4949; font-weight: 400; margin-top: 5px; }
 
-section#app-section-welcome-input      {  padding: 10px; margin-top: 10px;  } 
+section#app-section-welcome-input    {  padding: 10px; margin-top: 10px;  }
+
+section#app-home-section-banner      {
+
+  width: 88%; height: 330px; margin: 0 auto; border-radius: 9px; box-shadow: 4px 5px 17px 7px #dad9d9;
+  background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80');
+  background-position: center;
+  background-repeat: no-repeat; background-size: cover; position: relative;
+}
+
+div#app-banner-gradient {
+
+  border-radius: 9px; width: 100%; height: 100%; opacity: 0.6;
+  background: #ec008c;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #fc6767, #ec008c);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #fc6767, #ec008c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+div#app-banner-g-content {
+
+  padding: 15px; width: 330px; height: 145px; background: white; position: absolute;
+  top: 20%; right: -70px; border-radius: 9px; box-shadow: 4px 0px 15px 0px #e2dbdb;
+  padding-left: 40px;
+}
+div#app-banner-g-content > h2 { font-size: 1.3em; font-weight: 700; letter-spacing: 0; }
+div#app-banner-g-content > p  { font-size: 0.7em; font-weight: 400; margin: 10px 0; }
+section.app-fit-layout#app-banner-c-input {  margin-top: 20px; }
+
+
+
+
+
+
+
+
+
+
+
+
+/* -- */

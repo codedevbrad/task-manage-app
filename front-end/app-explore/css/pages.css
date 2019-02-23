@@ -12,4 +12,42 @@ section#app-home-section-welcome  h1 {  font-size: 2.3em; font-weight: 700; lett
 
 section#app-home-section-welcome  p  {  color: #4b4949; font-weight: 400; margin-top: 5px; }
 
-section#app-section-welcome-input      {  padding: 10px; margin-top: 10px;  } 
+section#app-section-welcome-input    {  padding: 10px; margin-top: 10px;  }
+
+section#app-home-section-banner      {
+
+  width: 88%; height: 330px; margin: 0 auto; border-radius: 9px; box-shadow: 4px 5px 17px 7px #dad9d9;
+  background-image: url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80');
+  background-position: center;
+  background-repeat: no-repeat; background-size: cover; position: relative;
+}
+
+div#app-banner-gradient {
+
+  border-radius: 9px; width: 100%; height: 100%; opacity: 0.6;
+  background: #ec008c;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #fc6767, #ec008c);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #fc6767, #ec008c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+div#app-banner-g-content {
+
+  padding: 15px; width: 330px; height: 145px; background: white; position: absolute;
+  top: 20%; right: -70px; border-radius: 9px; box-shadow: 4px 0px 15px 0px #e2dbdb;
+  padding-left: 40px;
+}
+div#app-banner-g-content > h2 { font-size: 1.3em; font-weight: 700; letter-spacing: 0; }
+div#app-banner-g-content > p  { font-size: 0.7em; font-weight: 400; margin: 10px 0; }
+section.app-fit-layout#app-banner-c-input {  margin-top: 20px; }
+
+
+
+
+
+
+
+
+
+
+
+
+/* -- */

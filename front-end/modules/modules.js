@@ -36,3 +36,5 @@ function CreatenewContent(el) {
       remove.classList.remove('newcontent-show');
     });
 }
+
+/* --- no content / sshow message ---- */

@@ -6,8 +6,8 @@ html
     link(rel='stylesheet' href='/main/normalise.css')
     link(rel='stylesheet' href='/app-server/build/client.css')
     link(rel='icon'       href='/main/favicon2.png')
-    
-  body(id='app-body', body_data_id=data_id)
+  
+  body(id='app-body', body_data_id=data_id space_id=space_id, stack_id=stack_id)
     
     div#app-wrap
       
@@ -49,10 +49,9 @@ html
                   
         if displaymainlayout         
           section.header-place-3#app-space-title
-            li.dropdown
-              | # #{space_title} 
+            a(href='/')#space-title-name  #{space_title} 
+            li.dropdown#space-title-drop
               i.fa.fa-angle-down.fa
-              
               ul.menu-target
                 li.menu-li add members to workspace
                 li.menu-li rename this workspace
@@ -69,6 +68,8 @@ html
             
             div.newcontent-new-popup#aside-member-new
               include new-content/new-members.pug  
+            div.newcontent-new-popup#aside-channel-new
+              include new-content/new-channels.pug  
             
             block content
             

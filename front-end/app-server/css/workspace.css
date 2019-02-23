@@ -4,7 +4,7 @@
 div#workspace-single { width: 100%; height: 100%;  }
 
 section.header-place-3#app-space-title > li > svg {
-  position: relative; top: 3px; font-size: 1.3em; width: 25px; cursor: pointer;
+  position: relative; top: 1px; font-size: 1.3em; width: 25px; cursor: pointer;
 }
 section.header-place-3#app-space-title > li { position: absolute; cursor: pointer; }
 
@@ -22,14 +22,13 @@ section.header-place-3#app-space-title > .dropdown > ul.dropdown-open {
  div#workspaces-left-grid-name > h2  { font-size: 1.5em; display: inline-block; }
 
 
- div#workspaces-left-grid-name > h3  { font-size: 0.77em;
-
+ div#workspaces-left-grid-name > h3  {
+    font-size: 0.77em;
     display: inline-block;
     float: right;
     margin-right: 20px;
     cursor: pointer;
-    padding: 13px 26px; border: 1px solid #d8d8d8; display: inline-block;
-    border-radius: 5px; color: #464646; font-weight: 400;
+    padding: 13px 26px;
   }
 
 

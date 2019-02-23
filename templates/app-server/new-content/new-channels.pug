@@ -1,0 +1,23 @@
+
+section.new-content-center-main
+
+  div.close-new-content
+    div.new-contentclose-btn
+      i.content-close-btn.far.fa-times-circle.fa-lg
+  
+  form.new-content-form(method="POST", action="/0/workspace/"+space_id+'/channel-new') 
+      h3 create a channel
+      p need to resolve an issue? or simply want to ask your team members a question? create a channel and unleash the greatness of slackr.
+
+      .form-group-stack
+        h2 give it a name
+        input.stack-new-field.form-control(name='channelName', placeholder='', required='true')
+
+      .form-group-stack
+        h2 describe what your channel's about
+        input.stack-new-field.form-control(name='channelTag', placeholder='', required='true')
+      
+        input(type='hidden', name='spaceID', value=data_id)
+      
+      input#new-content-submit( type='submit', value='get creating' )
+        

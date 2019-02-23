@@ -8,7 +8,6 @@ h1, h2, h3, h4, a, li, p, input, label, textarea {
 
 /*  border: 1px solid #efefef; */
 
-
 /* -- html content -- */
 
 html, body { padding: 0; margin: 0;  width: 100%;  color: black;   }
@@ -118,7 +117,7 @@ div#app-wrap > header     { height: 70px; margin: 0 auto; background: white; bor
 /* === left === */
 section#app-header        {  height: 100%; float: left; }
 /* == middle == */
-section#app-space-title   {  height: 100%; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+section#app-space-title   {  height: 100%; overflow: hidden; text-align: center; }
 /*==  right === */
 section#user-auth-section { height: 100%; float: right; }
 
@@ -132,6 +131,11 @@ section#app-header > ul > li      { align-items: center; font-size: 1.4em; curso
 #app-header > ul > li > img#title-img {
   width: 25px; height: 25px;  margin-right: 5px; position: relative;  top: 2px;
 }
+
+/* --- space title -- */
+
+#space-title-drop, #space-title-name { display: inline-block; margin: 0 auto; margin-top: 26.5px; }
+
 
 /* --- auth user  --- */
 
@@ -326,7 +330,7 @@ section.flex-each-workspace    { width: 100%; padding: 20px 0; border-bottom: 1p
 div.workspace-flex-main  > h1, div.workspace-flex-main  > p { font-weight: 400;    }
 
 div.workspace-flex-main > h1 { font-size: 0.92em;  }
-div.workspace-flex-main > p  { font-size:0.8em; padding: 10px 0;   }
+div.workspace-flex-main > p  { font-size:0.7em; padding: 10px 0;   }
 
 
 
@@ -361,7 +365,7 @@ section.flex-each-workspace.workspace-new.workspace-state {
 div#workspace-single { width: 100%; height: 100%;  }
 
 section.header-place-3#app-space-title > li > svg {
-  position: relative; top: 3px; font-size: 1.3em; width: 25px; cursor: pointer;
+  position: relative; top: 1px; font-size: 1.3em; width: 25px; cursor: pointer;
 }
 section.header-place-3#app-space-title > li { position: absolute; cursor: pointer; }
 
@@ -379,14 +383,13 @@ section.header-place-3#app-space-title > .dropdown > ul.dropdown-open {
  div#workspaces-left-grid-name > h2  { font-size: 1.5em; display: inline-block; }
 
 
- div#workspaces-left-grid-name > h3  { font-size: 0.77em;
-
+ div#workspaces-left-grid-name > h3  {
+    font-size: 0.77em;
     display: inline-block;
     float: right;
     margin-right: 20px;
     cursor: pointer;
-    padding: 13px 26px; border: 1px solid #d8d8d8; display: inline-block;
-    border-radius: 5px; color: #464646; font-weight: 400;
+    padding: 13px 26px;
   }
 
 
@@ -511,10 +514,11 @@ section.wc-messages  { width: 100%; margin: 0 auto;
 section.wc-messages > div     { padding: 10px 0; border-bottom: 1px solid #e6e6e6; }
 section.wc-messages > div > p { font-weight: 400; padding: 10px 0; }
 
-section > form#channel-message-form  { width: 100%; }
+section > form#channel-message-form  { width: 100%; padding: 10px;}
 
-form#channel-message-form > textarea { width: 100%; border: none; outline: none; padding: 10px;
-                                       background: #fff2f2; margin-top: 20px;
+form#channel-message-form > textarea { width: 100%; border: none; outline:  none; padding: 10px;
+                                       background: white; margin-top: 20px; border-radius: 9px;
+                                       box-shadow: 0px 0px 16px 3px #e0dddd;
                                      }
 
 input#channel-submit-msg-btn         {  background: yellow; outline: none; padding: 10px 30px;

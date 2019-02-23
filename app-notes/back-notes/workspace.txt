@@ -1,0 +1,4 @@
+
+get requests to all pages need to add an id of workspace
+
+space id - var space = document.querySelector('body').getAttribute('space_id');

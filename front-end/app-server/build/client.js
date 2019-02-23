@@ -37,12 +37,14 @@ function CreatenewContent(el) {
     });
 }
 
+/* --- no content / sshow message ---- */
+
 
 console.log('app-load');
 var load = document.getElementById('app-load');
 if (load) {
 
-  var phrases = [ 'fetching needed datas', 'generating workspace members', 'grabbing your channels', 'grab a coffee and get working'  ];
+  var phrases = [ 'generating workspace members', 'grabbing your channels', ' grabbing workspace reminders' , 'grab a coffee and get working'  ];
 
 
   (function () {
@@ -70,7 +72,9 @@ function addPhrasesToLoad( phrases, gettingdata ) {
 
 function getData( url ) {
 
-  return axios.get( url ).then(function (response) {
+  var spaceId = document.querySelector('body').getAttribute('space_id');
+
+  return axios.get( '/0/workspace/' + spaceId + url ).then(function (response) {
       return response;
   });
 }
@@ -86,13 +90,6 @@ function animation (currEl) {
      current.classList.add('load-in-view');
 }
 
-// function displayData( response, element, targets ) {
-//
-//   var appemdTo = document.getElementById( element );
-//   var data     = response.data;
-//
-//   console.log( response );
-// }
 
 var delay = 200;
 
@@ -103,9 +100,20 @@ function firstMethod () {
 
       var stage = 0;
       // ajax request
-      getData('/0/workspace/get/members').then(function (response) {
+      getData('/get/members').then(function ( response ) {
 
-          // displayData(response);
+          var users = response.data;
+
+          var membersParent = document.getElementById( 'aside-team' );
+          var appendTo = membersParent.querySelector( 'ul' );
+
+          users.forEach( function ( user , index ) {
+              var obj = document.createElement( 'li' );
+              obj.innerHTML = '<span class=member-icon> </span> <p> ' + user.username + '</p>' + '<span class=channel-loc>' + user.role + '</span>' + '</p>';
+
+              appendTo.appendChild(obj);
+          });
+
           setTimeout(function() {
             resolve(); animation(stage);
           }, delay);
@@ -124,9 +132,25 @@ function secondMethod (someStuff) {
 
      var stage = 1;
      // ajax request
-     getData('/0/workspace/get/channels').then(function (response) {
+     getData('/get/channels').then(function (response) {
 
-       // displayData(response);
+           var channels = response.data;
+           console.log( channels );
+
+           var spaceId = document.querySelector('body').getAttribute('space_id');
+           var membersParent = document.getElementById( 'aside-channels' );
+           var appendTo  = membersParent.querySelector( 'ul' );
+
+           channels.forEach( function ( channel , index ) {
+
+               var obj = document.createElement( 'li' );
+               obj.innerHTML =   '<a href=/0/workspace/' + spaceId + 'channel/' + channel.url + '/> # ' + channel.name + '</a>' +
+                                  '<span class=channel-loc>' + channel.tag  + '</span>';
+
+               console.log( appendTo , obj );
+
+               appendTo.appendChild(obj);
+           });
 
        setTimeout(function() {
          resolve(); animation(stage);
@@ -146,7 +170,7 @@ function thirdMethod (someStuff) {
 
      var stage = 2;
      // ajax request
-     getData('/0/workspace/get/reminders').then(function (response) {
+     getData('/get/reminders').then(function (response) {
 
      // displayData(response);
 
@@ -246,53 +270,13 @@ console.log('workspace and stack working ');
 
 var newstack = document.getElementById('create-stack-btn');
 if (newstack) { newstack.addEventListener('click', CreatenewContent); }
+ 
 
+/* --- team channel --- */
 
-// ------- stacks ------- //
-
-// add event listener to creating a new image upload ...
-
-var newImage = document.getElementById('create-stack-image');
-if (newImage) { newImage.addEventListener('click', CreatenewContent); }
-
-// get images
-
-(function () {
-
-    var space = document.querySelector('body').getAttribute('body_data_id');
-
-    console.log( space );
-
-    axios.get('/0/workspace/stack/images/'+space).then(function (res) {
-
-      var images = res.data;
-      // get content to append to ...
-      var parent = document.getElementById('stack-left-grid-content');
-
-      for (var i = 0; i < images.length; i++) {
-
-            var img = document.createElement( 'img' );
-            img.classList.add( 'stack-img' );
-            img.src ='/image/' + images[i].filename;
-            parent.appendChild( img );
-      }
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-})();
-
-
-// upload image ...
-
-var loadFile = function(event) {
-   var output = document.getElementById('image-names');
-   var li = document.createElement('li');
-   li.classList.add('image-preview-item');
-   li.innerHTML = event.target.files[0].name;
-   output.appendChild(li);
- };
-
+var newchannel = document.getElementById('aside-add-channel-btn');
+// expand new members popup
+newchannel.addEventListener('click', CreatenewContent );
 
 /* --- team members --- */
 
@@ -302,11 +286,14 @@ newstack.addEventListener('click', CreatenewContent );
 // get generated tokens when expanding new members popup
 newstack.addEventListener('click', GetAllTokens);
 
+var space = document.querySelector('body').getAttribute('space_id');
+
+
+
 // get all tokens generated by workspace
 function GetAllTokens() {
 
     var appendTo = document.getElementById('member-tokens-assigned');
-    var space = document.querySelector('body').getAttribute('body_data_id');
 
     axios.get('/0/workspace/'+ space + '/getAllTokens').then(function ( res ) {
 
@@ -329,8 +316,6 @@ function GetAllTokens() {
 
 // generate a single token on clicking generate token btn
 function generateToken( el ) {
-
-      var space = document.querySelector('body').getAttribute('body_data_id');
 
       axios.get('/0/workspace/'+ space + '/genToken').then(function ( res ) {
 
