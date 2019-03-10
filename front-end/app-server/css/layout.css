@@ -28,6 +28,33 @@ svg     { pointer-events: none; }
               outline: none; border: none;
 }
 
+.text-layout { width: 100%; padding: 10px 0; }
+
+.text-layout > .layout-title  , .layout-title        { padding: 10px 0; font-size: 2.2em; letter-spacing: 0;  border-bottom: 1px solid #efefef; }
+.text-layout > .layout-paragraph , .layout-paragraph { font-weight: 400; font-size: 0.75em; padding: 10px 0; line-height: 1.5em; }
+
+.layout-title-medium { font-size: 1.5em;  padding: 10px 0; letter-spacing: 0;  border-bottom: 1px solid #efefef; }
+.layout-title-small  { font-size: 0.85em; padding: 10px 0; letter-spacing: 0;  border-bottom: 1px solid #efefef; }
+
+
+/* popup title and button for hover dropdown ex: workspace and channel */
+
+div.content-area-popup-contain  { padding: 10px 0;  border-bottom: 1px solid #efefef; }
+
+div.content-area-popup-contain > .content-title {
+      display: inline-block; font-size: 0.72em; font-weight: 400;
+  }
+div.content-area-popup-contain > div.content-popup-btn {
+      display: inline-block; float: right; padding-right: 10px; font-size: 0.8em;
+      cursor: pointer; padding: 4px 14px;
+}
+
+
+
+
+
+
+
 
 /* --- main app widths --- */
 
@@ -78,6 +105,13 @@ div.load-right > h2 { font-size: 0.95em; font-weight: 400; padding-top: 13px; }
 @keyframes stroke {  100% { stroke-dashoffset: 0; } }
 @keyframes scale  {  0%, 100% { transform: none; }  50% { transform: scale3d(1.1, 1.1, 1);  } }
 @keyframes fill   { 100% {  box-shadow: inset 0px 0px 0px 30px #4d99f8; } }
+
+
+/* --- app messages -- */
+
+div#app-message { position: absolute; top: 80px; right: 30px; width: 55px; height: 45px; background: white;
+    box-shadow: 1px 2px 5px 2px #e8e1e1; border-radius: 6px;
+}
 
 
 /* --- main app  --- */
@@ -149,15 +183,23 @@ ul > li#icon-2 > i                  { margin-right: 16px; }
 
 li#auth-username > svg.auth-dropdown-icon   { position: relative; top: 2px; }
 
-div#profile-img  { width: 54px; height: 48px; margin-left: 5px; background: #6ab3f3; border-radius: 4px; }
-
-
+div#profile-img  { width: 54px; height: 48px; margin-left: 5px;
+                   background: #6ab3f3; border-radius: 4px;
+                 }
 
 section#user-auth-section > ul > #upgrade-acc {
     font-size: 0.77em; background: #4d99f9; padding: 11px 26px;
     border-radius: 5px; color: white;  font-weight: 400; position: relative;
     bottom: 2px; box-shadow: 3px 3px 20px 2px rgba(185, 185, 185, 0.49);
 }
+
+/* -- dropdown content -- */
+
+ul#workspace-notifications      { padding: 8px 0; }
+ul#workspace-notifications > li { font-size: 0.65em; font-weight: 400; margin: 15px 0;
+                                  padding: 4px 0px;
+                                }
+
 
 
 /* ---  app content --- */
@@ -178,14 +220,14 @@ div#aside-inner > div > section.aside-titlearea  > div { display: inline-block; 
                                                          font-size: 0.8em; cursor: pointer; padding: 5px 10px 0 5px;
                                                        }
 
-div#aside-inner > div  > ul > li     { font-size: 0.65em; font-weight: 400; margin: 18px 10px; }
+div#aside-inner > div  > ul > li     { font-size: 0.65em; font-weight: 400; margin: 22px 10px; }
 div#aside-inner > div  > ul > li > p { display: inline-block; }
 
 div > ul > li > .channel-loc {
     padding: 5px 10px; margin: 5px; background: #ffcece; border-radius: 3px;
 }
 
-div > ul > li > .member-icon     { margin: 5px;  background: #d2e6ff;  border-radius: 50%;  padding: 2px 8px;}
+div > ul > li > .member-icon     { margin: 5px;  background: #d2e6ff;  border-radius: 50%;  padding: 0.3px 7px;}
 
 div > ul > li > .member-islogged { background: #4d99f9; }
 

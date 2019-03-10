@@ -12,11 +12,13 @@ var Channel = require('../models/channel');
 
 
 // check logged / protect routes ...
-var checkAuth = function (req, res, next) {
 
-    if   ( req.isAuthenticated() && req.user.finished == true ) {  return next(); }
-    else { res.redirect('/'); }
-};
+var authChecks = require('./middleware/auth_checks');
+var checkAuth  = authChecks.logged();
+
+// socket route ...
+var socketIO = require('./middleware/pusherApi');
+
 
 // -----  aside loading animation get reqs ----- //
 
@@ -33,8 +35,8 @@ router.get('/0/workspace/:id/get/members', checkAuth, function( req, res ) {
         var memberIdsStrip = space.members;
 
         memberIdsStrip.forEach(function( user , index ) {
-            userIdsClean.push( user.userId );
-            usersArr.push( { role: user.space_role } );
+                userIdsClean.push( user.userId );
+                usersArr.push( { role: user.space_role } );
         });
 
         return userIdsClean;
@@ -46,15 +48,20 @@ router.get('/0/workspace/:id/get/members', checkAuth, function( req, res ) {
             users.forEach( function( user , index ) {
                 usersArr[ index ].username = user.username;
             });
-
             return usersArr;
-
         })
         .catch(function(err) { console.log(err) });
 
     })
     .then( users => {
-          res.send( users );
+
+        // initialise socket connection
+        var user  = req.user.username;
+        var space = req.params.id;
+        // add id to socket
+        
+
+        res.send( users );
     })
     .catch(function(err) { console.log( err ); });
 });
@@ -74,15 +81,11 @@ router.get('/0/workspace/:space/get/channels', checkAuth, function(req, res) {
           var ids = channels.map( function ( { id } ) {
               return id;
           });
-
-          console.log('channels' , ids );
           return ids;
      })
      .then( channelIds => {
 
           Channel.find( { _id: { $in: channelIds }} , function( err , channels ) {
-
-             console.log( channels );
 
              if ( !err && channels ) {
 
@@ -109,21 +112,27 @@ router.get('/0/workspace/:id/get/reminders', checkAuth, function(req, res) {
 
 router.get('/0/workspace/:space/channel/:cId', checkAuth, function(req, res) {
 
-    var spaceId = req.params.space;
-    var cId     = req.params.channel;
+    var spaceId   = req.params.space;
+    var channelId = req.params.cId;
 
-    // search and find chnnnel ...
-    res.render(dirname + 'channels', {
+    Channel.findById( { _id: channelId } , function( err , channel ) {
 
-      // id's
-      data_id:  spaceId,
-      space_id: spaceId,
+        if ( err ) { console.log( err ) };
 
-      channel:  'channel array',
+        if ( !err && channel ) {
+            // search and find chnnnel ...
+            res.render(dirname + 'channels', {
+                // id's
+                space_id: spaceId,
+                data_id:  spaceId,
 
-      title: 'channel: lunch ideas', // app title
-      space_title: 'house designs', // workspace title
-      displaymainlayout: true
+                channel:  channel,
+
+                title: 'test channel', // app title
+                space_title: 'test', // workspace title
+                displaymainlayout: true
+            });
+        }
     });
 });
 

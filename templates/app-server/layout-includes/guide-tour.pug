@@ -1,0 +1,23 @@
+extends ../layout
+
+block content 
+  
+  div#main-app-guide.video-guide(data-type=isLead)
+    section#guide-center-content.text-layout.video-guide-content
+     h3.layout-title Need a step by step guide ?
+     p.layout-paragraph I see you're new to slackr. You can learn more about it's features by watching our video guide.
+     
+    section#guide-box-video
+      div#box-video-middle
+        img(src='https://embedwistia-a.akamaihd.net/deliveries/b141ce3fcb9731008bfcb26ceae40678db23e5e8.jpg?image_play_button_size=2x&image_crop_resized=640x360&image_play_button=1&image_play_button_color=49505be0',)
+      div#box-video-right
+        div#video-sections
+          h3 need a guide?
+          ul
+             li workspace
+             li members
+             li stacks
+             li channels
+          div 
+           p awesome, you can now uneash the full potential of slackr and jump into designing cool things,
+           a(href='/0/auth/workspaces?completed=true') let's get creating 

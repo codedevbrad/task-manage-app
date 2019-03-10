@@ -1,12 +1,6 @@
 
 const mongoose = require('mongoose');
 
-// channel important
-
-var dataSchema = mongoose.Schema ({
-    channelName:   { type: String , required: true },
-    channelTag:    { type: String , requires: true },
-});
 
 // chat messages ...
 
@@ -20,8 +14,6 @@ var chatSchemma = mongoose.Schema ({
 // each users category schema ...
 
 var channelSchema = mongoose.Schema ({
-
-    channelData:   [ dataSchema ],
 
     channelName:   { type: String , required: true },
     channelTag:    { type: String , requires: true },

@@ -1,4 +1,43 @@
 
+
+/* --- workspace ? user new to slackr --- */
+
+div#main-app-guide            { width: 50%;  height: 100%; margin: 0 auto; margin-top: 30px; padding: 5px; }
+section#guide-center-content  { width: 100%; min-width: 300px;  }
+
+section#guide-box-choices > a { margin: 10px 0; }
+
+a#guide-choice-no { padding-top: 10px; text-decoration: underline; outline: none; color: #665d5d; display: inline-block; font-weight: 400; }
+
+/* --- workspace ? video guide tour --- */
+
+div#main-app-guide.video-guide { width: 90%; margin: 0 auto; }
+
+section#guide-center-content.video-guide-content { width: 60%; margin: 0 auto; }
+
+section#guide-box-video        { width: 100%; position: relative; }
+
+section#guide-box-video > div  { display: inline-block; height: 100%; overflow: hidden;  }
+
+ div#box-video-middle { width: 70%; }
+
+ div#box-video-middle > img { width: 100%; height: auto }
+
+ div#box-video-right  { width: 30%; position: absolute; top: 30px; right: 25px; }
+
+   div#video-sections { background: #ffff77; z-index: 9999; padding: 12px 18px; }
+
+    div#video-sections > h3      { padding: 9px 0; border-bottom: 1px solid #e5e362; }
+
+    div#video-sections > ul      { margin-top: 10px; }
+
+    div#video-sections > ul > li { padding: 3px; margin: 3px 0; font-size: 0.78em; }
+
+    div#video-sections > div > p { font-weight: 400; font-size: 0.7em; margin: 10px 0; line-height: 1.8; }
+
+    div#video-sections > div > a { position: relative; top: 10px; left: 20px; background: white; padding: 10px 20px; }
+
+
 /* --- single workspace ---- */
 
 div#workspace-single { width: 100%; height: 100%;  }
@@ -37,8 +76,6 @@ section.header-place-3#app-space-title > .dropdown > ul.dropdown-open {
 div#workspaces-left-grid-stacks {
     width: 100%;
     padding-bottom: 20px;
-    /* overflow-x: scroll;
-    white-space: nowrap;   */
     display: flex;
     flex-wrap: wrap;
   }
@@ -68,16 +105,14 @@ div.stack-position > a.stack-inner-center > h2 { font-size: 3.8em; }
 div.stack-position > a.stack-inner-center > h3 { font-size: 1em; }
 
 
-/* workspace stacks  */
+/* workspace progress */
 
-div#workspaces-left-grid-currentStack       { border-top: 1px solid #E0E0E1; margin-bottom: 110px; }
+div#workspaces-left-grid-progress       { border-top: 1px solid #E0E0E1; margin-bottom: 60px;  }
 
-div#workspaces-left-grid-currentStack > h2  { font-size: 1.5em; display: inline-block; padding: 10px 0; }
+div#workspaces-left-grid-progress > h2  { font-size: 1.5em; display: inline-block; padding: 15px 0; }
 
-div#workspaces-left-grid-currentStack > ul  { width: 50%;  }
 
-div#workspaces-left-grid-currentStack > ul > li {
-  margin: 10px 0; padding: 10px 0; font-weight: 400; font-size: 0.8em; border-bottom: 1px solid #d8d8d8;
-}
 
-/* */
+
+
+/* -- */

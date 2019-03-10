@@ -1,22 +1,35 @@
 extends layout
  
 block content
-  
-  div#workspace-channel
-    h1 # lunch ideas
-    section.wc-top-wrap-flow
-    section.wc-messages
-          div
-            h3 zach greyson
-            p i'm thinking of #five-guys. Anyone up for it ?
-          div
-            h3 seth landert
-            p sounds good. burgerhouse could be good. hear they do great chips.
-          div
-            h3 lauren goodhurd
-            p Shouldn't you guys be working on the api security ? :) pizza is always a good choice. more important question is who's coming and what sorta time ?  
-    section.wc-message-post
-      form#channel-message-form(method="POST", action="/")
-        .form-group 
-        textarea(rows='4', cols='50', name='message', form='channel-msg') your message to the channel ...
-        input#channel-submit-msg-btn.btn-primary(type="submit", value="post message")
+  div.special-contain-extra
+    div.special-contain
+      section.left-content-full#channel-messages
+          section.special-left-content
+             div.content-area-popup-contain
+                h2.content-title  #{channel.channelName } 
+                
+                div.content-popup-btn.btn-design(data-content-new='#') 
+                  h2 +
+             ul
+              li <span class='space-action'> zach cody </span> i'm thinking of #five-guys. Anyone up for it ?
+              li <span class='space-action'> devbeme </span> sounds good. burgerhouse could be good. hear they do great chips.
+              li <span class='space-action'> emma chang </span> Shouldn't you guys be working on the api security ? :) pizza is always a good choice. more important question is who's coming and what sorta time ?  
+                    
+      section.right-content-spaced#channel-members
+         div.content-area-popup-contain
+            h2.content-title members talking
+         ul
+           li 
+             span.space-action consultant
+             | zach cody
+           li
+             span.space-action team leader
+             | devbeme
+           li
+             span.space-action interior des
+             | emma chang   
+         section.wc-message-post
+           h3 post a message to the channel
+           form#channel-message-form(method="POST", action="/")
+             textarea(rows='6', cols='70', name='message', form='channel-msg') your message to the channel ...
+             input#channel-submit-msg-btn.btn-primary(type="submit", value="post message")

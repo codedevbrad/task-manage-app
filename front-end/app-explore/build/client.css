@@ -18,6 +18,9 @@ a:hover { text-decoration: none; }
 
 textarea, select, input, button { outline: none; }
 
+.dropdown > svg , .dropdown > i { position: relative; left: 5px; top: 1px; }
+
+
 /* ------ blue button ------ */
 
 .btn-blue {
@@ -37,7 +40,7 @@ form > .form-group > input.success-msg-input { border: 1px solid blue; }
 /* --- main app --- */
 
 body#main-app-body { background: #fdfeff; border-top: 1px solid #eeee;     }
-#main-app          { width:100%; height: 100%; }
+#main-app          { width:100%; height: 100%; overflow: auto; }
 
 
 /* --- header --- */
@@ -93,16 +96,16 @@ li#auth-btn-blue  > a { background-color: #57a2ff; color: white; }
 
 .menu-target-ul { position: relative; }
 
-li.break-menu { height: 2px; background: #e2e2e2; margin: 10px 8px; }
+li.break-menu { height: 1px; background: #e2e2e2; margin: 10px 0px; }
 
 .menu-target  {
-  display: none; min-width: 240px; padding: 12px; z-index: 9999; background: white; right: 0;
+  display: none; min-width: 240px; padding: 12px 25px; z-index: 9999; background: white; right: 0;
   border-radius: 7px;
 }
 
 li.menu-li   {
-  display: block; text-align: left;  font-weight: normal;  margin: 15px 0;
-  font-size: 0.8em; cursor: pointer; padding: 10px 8px;    border-radius: 3px;
+  display: block; text-align: left;  font-weight: normal;  margin: 5px 0;
+  font-size: 0.8em; cursor: pointer; padding: 10px 0px;    border-radius: 3px;
 }
 
 li.menu-li:hover { background: #eaeaea; }
@@ -112,13 +115,10 @@ li.menu-li > a   { color: black; font-weight: normal; font-size: 1em; display: b
 li.menu-li:last-child { margin-bottom: 20px; }
 
 
-
 .dropdown-open {
-  display: block; position: absolute; top: 80px; border: 1px solid #e8e8e8;
-  -webkit-box-shadow: 0px 3px 22px 0px rgba(242,242,242,1);
-  -moz-box-shadow: 0px 3px 22px 0px rgba(242,242,242,1);
-  box-shadow: 0px 1px 17px 7px rgba(242,242,242,1);
-  z-index: 9999; cursor: context-menu;
+    display: block; position: absolute; top: 80px; border: 1px solid #e8e8e8;
+    box-shadow: 5px 1px 18px 0px rgb(176, 176, 176);
+    z-index: 9999; cursor: context-menu;
  }
 
 .dropdown > svg {
@@ -163,6 +163,51 @@ section.new-content-center-main  { margin-top: 30px; width: 100%; height: auto; 
     color: #4d99f9;  letter-spacing: 0.03em; border: 1px solid #4d99f9;  border-radius: 3px;
     cursor: pointer; font-weight: 400; margin-top: 30px;
   }
+
+/* special page left / right design */
+
+
+/* --- special --- */
+
+.special-contain-extra { width: 100%; background: #f7f7ff; padding: 10px 0px; height: 100%; margin-top: 15px; }
+
+.special-contain {  width: 100%; background: #f7f7ff; position: relative; overflow: hidden; padding: 35px 20px;
+                    margin: 15px 0; padding-right: 15px; height: 100%;
+                  }
+
+.special-contain > section      { border-radius: 8px; padding: 10px 20px; box-shadow: 2px 1px 8px 4px #e7ebff; }
+
+.special-contain > section > h2 { padding-top: 5px; }
+
+
+/* --- left area --- */
+
+.special-contain > section.left-content-full {
+     width: 100%; background: white; display: inline-block;
+}
+
+section.special-left-content {
+                                width: 63%; background: white; display: inline-block; float: left;
+                                padding-right: 45px;
+                             }
+
+.special-contain section.special-left-content > ul > li { font-size: 0.6em; font-weight: 400; }
+
+
+/* --- right area --- */
+
+section.right-content-spaced   { width: 35%; position: absolute; right: 37px; top: 10px;
+                                 background: white;
+                               }
+section.right-content-spaces > ul > li span { font-size: 0.84em; }
+
+.special-contain section > ul      { margin-top: 15px; }
+
+.special-contain section > ul > li { font-size: 0.6em; margin: 12px 0px; padding: 2px 0; line-height: 2.1em; }
+
+span.space-action { background: #d2e6ff; padding: 5px 7px; margin-right: 6px;
+                    border-radius: 4px; font-weight: 600;
+                  }
 
 
 
@@ -279,7 +324,6 @@ div.messages > h2.alert {
 }
 
 
-
 /* --- homepage --- */
 
 .app-fit-layout { width: 100%; height: auto; }
@@ -290,7 +334,9 @@ section#app-home-section-welcome {
 
 section#app-home-section-welcome  h1 {  font-size: 2.3em; font-weight: 700; letter-spacing: 0.01em; }
 
-section#app-home-section-welcome  p  {  color: #4b4949; font-weight: 400; margin-top: 5px; }
+section#app-home-section-welcome  p  {  color: #4b4949;  font-weight: 400; margin-top: 5px;  text-align: right;
+    font-size: 0.63em;  line-height: 2.2;  width: 60%;  margin: 20px auto; 
+}
 
 section#app-section-welcome-input    {  padding: 10px; margin-top: 10px;  }
 
@@ -315,13 +361,37 @@ div#app-banner-g-content {
   top: 20%; right: -70px; border-radius: 9px; box-shadow: 4px 0px 15px 0px #e2dbdb;
   padding-left: 40px;
 }
+
 div#app-banner-g-content > h2 { font-size: 1.3em; font-weight: 700; letter-spacing: 0; }
+
 div#app-banner-g-content > p  { font-size: 0.7em; font-weight: 400; margin: 10px 0; }
+
 section.app-fit-layout#app-banner-c-input {  margin-top: 20px; }
 
+section.app-fit-layout#app-home-sections  {
+            margin-top: 80px; width: 100%;
+            height: auto;  overflow: hidden;
+}
+
+div.app-sections-main     { width: 100%; height: 100%; overflow: hidden; position: relative;
+                            margin-bottom: 20px;
+                          }
+
+section.section-left     { float: left; height: 100%; }
+
+section.section-right    { float: right; }
 
 
+div.home-sections-center { text-align: left; display: inline-block; width: 64%; margin-top: 60px; }
 
+div.home-sections-center > h3 { font-size: 1.4em; margin-bottom: 10px; letter-spacing: 0; }
+
+div.home-sections-center > p  { font-size: 0.72em; line-height: 1.7; font-weight: 400; }
+
+.s-image > img {  width: 90%; display: block; margin: 15px auto; }
+
+.s-image   { width: 45%; height: auto;      }
+.s-content { width: 55%; text-align: center }
 
 
 

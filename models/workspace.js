@@ -7,8 +7,9 @@ var stackSchema = mongoose.Schema ({
 });
 
 var membersSchema = mongoose.Schema ({
-    space_role: { type: String },
-    userId:     { type: String }
+    space_role: { type: String  },
+    userId:     { type: String  },
+    isLogged:   { type: Boolean }
 });
 
 // each users category schema

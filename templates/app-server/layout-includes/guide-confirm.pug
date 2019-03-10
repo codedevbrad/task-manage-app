@@ -1,0 +1,15 @@
+
+extends ../layout
+
+block content 
+  
+  div#main-app-guide(data-type=isLead)
+    section#guide-center-content.text-layout
+     h3.layout-title Are you new to slackr?
+     p.layout-paragraph You can learn more about slackr's features by watching our video guide. Find out how to create workspaces and stacks, add members to your space and create channels.
+     section#guide-box-choices
+       a(href='/0/workspaces/guide/video').btn-design Yes, i'd love a guide
+       <br />
+       a(href='/0/auth/workspaces?completed=true')#guide-choice-no No thanks. Take me to <br/> my workspaces.
+
+  

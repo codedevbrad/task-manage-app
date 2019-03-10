@@ -29,7 +29,7 @@ function checkuser(req, res, next) {
     }
 
     else if (!req.user) {
-        console.log('no user'); next();
+        next();
     };
 }
 

@@ -18,6 +18,9 @@ a:hover { text-decoration: none; }
 
 textarea, select, input, button { outline: none; }
 
+.dropdown > svg , .dropdown > i { position: relative; left: 5px; top: 1px; }
+
+
 /* ------ blue button ------ */
 
 .btn-blue {
@@ -37,7 +40,7 @@ form > .form-group > input.success-msg-input { border: 1px solid blue; }
 /* --- main app --- */
 
 body#main-app-body { background: #fdfeff; border-top: 1px solid #eeee;     }
-#main-app          { width:100%; height: 100%; }
+#main-app          { width:100%; height: 100%; overflow: auto; }
 
 
 /* --- header --- */

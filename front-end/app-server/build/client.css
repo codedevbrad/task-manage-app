@@ -28,6 +28,33 @@ svg     { pointer-events: none; }
               outline: none; border: none;
 }
 
+.text-layout { width: 100%; padding: 10px 0; }
+
+.text-layout > .layout-title  , .layout-title        { padding: 10px 0; font-size: 2.2em; letter-spacing: 0;  border-bottom: 1px solid #efefef; }
+.text-layout > .layout-paragraph , .layout-paragraph { font-weight: 400; font-size: 0.75em; padding: 10px 0; line-height: 1.5em; }
+
+.layout-title-medium { font-size: 1.5em;  padding: 10px 0; letter-spacing: 0;  border-bottom: 1px solid #efefef; }
+.layout-title-small  { font-size: 0.85em; padding: 10px 0; letter-spacing: 0;  border-bottom: 1px solid #efefef; }
+
+
+/* popup title and button for hover dropdown ex: workspace and channel */
+
+div.content-area-popup-contain  { padding: 10px 0;  border-bottom: 1px solid #efefef; }
+
+div.content-area-popup-contain > .content-title {
+      display: inline-block; font-size: 0.72em; font-weight: 400;
+  }
+div.content-area-popup-contain > div.content-popup-btn {
+      display: inline-block; float: right; padding-right: 10px; font-size: 0.8em;
+      cursor: pointer; padding: 4px 14px;
+}
+
+
+
+
+
+
+
 
 /* --- main app widths --- */
 
@@ -78,6 +105,13 @@ div.load-right > h2 { font-size: 0.95em; font-weight: 400; padding-top: 13px; }
 @keyframes stroke {  100% { stroke-dashoffset: 0; } }
 @keyframes scale  {  0%, 100% { transform: none; }  50% { transform: scale3d(1.1, 1.1, 1);  } }
 @keyframes fill   { 100% {  box-shadow: inset 0px 0px 0px 30px #4d99f8; } }
+
+
+/* --- app messages -- */
+
+div#app-message { position: absolute; top: 80px; right: 30px; width: 55px; height: 45px; background: white;
+    box-shadow: 1px 2px 5px 2px #e8e1e1; border-radius: 6px;
+}
 
 
 /* --- main app  --- */
@@ -149,15 +183,23 @@ ul > li#icon-2 > i                  { margin-right: 16px; }
 
 li#auth-username > svg.auth-dropdown-icon   { position: relative; top: 2px; }
 
-div#profile-img  { width: 54px; height: 48px; margin-left: 5px; background: #6ab3f3; border-radius: 4px; }
-
-
+div#profile-img  { width: 54px; height: 48px; margin-left: 5px;
+                   background: #6ab3f3; border-radius: 4px;
+                 }
 
 section#user-auth-section > ul > #upgrade-acc {
     font-size: 0.77em; background: #4d99f9; padding: 11px 26px;
     border-radius: 5px; color: white;  font-weight: 400; position: relative;
     bottom: 2px; box-shadow: 3px 3px 20px 2px rgba(185, 185, 185, 0.49);
 }
+
+/* -- dropdown content -- */
+
+ul#workspace-notifications      { padding: 8px 0; }
+ul#workspace-notifications > li { font-size: 0.65em; font-weight: 400; margin: 15px 0;
+                                  padding: 4px 0px;
+                                }
+
 
 
 /* ---  app content --- */
@@ -178,14 +220,14 @@ div#aside-inner > div > section.aside-titlearea  > div { display: inline-block; 
                                                          font-size: 0.8em; cursor: pointer; padding: 5px 10px 0 5px;
                                                        }
 
-div#aside-inner > div  > ul > li     { font-size: 0.65em; font-weight: 400; margin: 18px 10px; }
+div#aside-inner > div  > ul > li     { font-size: 0.65em; font-weight: 400; margin: 22px 10px; }
 div#aside-inner > div  > ul > li > p { display: inline-block; }
 
 div > ul > li > .channel-loc {
     padding: 5px 10px; margin: 5px; background: #ffcece; border-radius: 3px;
 }
 
-div > ul > li > .member-icon     { margin: 5px;  background: #d2e6ff;  border-radius: 50%;  padding: 2px 8px;}
+div > ul > li > .member-icon     { margin: 5px;  background: #d2e6ff;  border-radius: 50%;  padding: 0.3px 7px;}
 
 div > ul > li > .member-islogged { background: #4d99f9; }
 
@@ -230,16 +272,16 @@ div#workspace-channel  { width: 100%; height: 100%; }
 
 .menu-target-ul { position: relative; }
 
-li.break-menu { height: 2px; background: #e2e2e2; margin: 10px 8px; }
+li.break-menu { height: 1px; background: #e2e2e2; margin: 10px 0px; }
 
 .menu-target  {
-  display: none; min-width: 240px; padding: 12px; z-index: 9999; background: white; right: 0;
+  display: none; min-width: 240px; padding: 12px 25px; z-index: 9999; background: white; right: 0;
   border-radius: 7px;
 }
 
 li.menu-li   {
-  display: block; text-align: left;  font-weight: normal;  margin: 15px 0;
-  font-size: 0.8em; cursor: pointer; padding: 10px 8px;    border-radius: 3px;
+  display: block; text-align: left;  font-weight: normal;  margin: 5px 0;
+  font-size: 0.8em; cursor: pointer; padding: 10px 0px;    border-radius: 3px;
 }
 
 li.menu-li:hover { background: #eaeaea; }
@@ -249,13 +291,10 @@ li.menu-li > a   { color: black; font-weight: normal; font-size: 1em; display: b
 li.menu-li:last-child { margin-bottom: 20px; }
 
 
-
 .dropdown-open {
-  display: block; position: absolute; top: 80px; border: 1px solid #e8e8e8;
-  -webkit-box-shadow: 0px 3px 22px 0px rgba(242,242,242,1);
-  -moz-box-shadow: 0px 3px 22px 0px rgba(242,242,242,1);
-  box-shadow: 0px 1px 17px 7px rgba(242,242,242,1);
-  z-index: 9999; cursor: context-menu;
+    display: block; position: absolute; top: 80px; border: 1px solid #e8e8e8;
+    box-shadow: 5px 1px 18px 0px rgb(176, 176, 176);
+    z-index: 9999; cursor: context-menu;
  }
 
 .dropdown > svg {
@@ -300,6 +339,51 @@ section.new-content-center-main  { margin-top: 30px; width: 100%; height: auto; 
     color: #4d99f9;  letter-spacing: 0.03em; border: 1px solid #4d99f9;  border-radius: 3px;
     cursor: pointer; font-weight: 400; margin-top: 30px;
   }
+
+/* special page left / right design */
+
+
+/* --- special --- */
+
+.special-contain-extra { width: 100%; background: #f7f7ff; padding: 10px 0px; height: 100%; margin-top: 15px; }
+
+.special-contain {  width: 100%; background: #f7f7ff; position: relative; overflow: hidden; padding: 35px 20px;
+                    margin: 15px 0; padding-right: 15px; height: 100%;
+                  }
+
+.special-contain > section      { border-radius: 8px; padding: 10px 20px; box-shadow: 2px 1px 8px 4px #e7ebff; }
+
+.special-contain > section > h2 { padding-top: 5px; }
+
+
+/* --- left area --- */
+
+.special-contain > section.left-content-full {
+     width: 100%; background: white; display: inline-block;
+}
+
+section.special-left-content {
+                                width: 63%; background: white; display: inline-block; float: left;
+                                padding-right: 45px;
+                             }
+
+.special-contain section.special-left-content > ul > li { font-size: 0.6em; font-weight: 400; }
+
+
+/* --- right area --- */
+
+section.right-content-spaced   { width: 35%; position: absolute; right: 37px; top: 10px;
+                                 background: white;
+                               }
+section.right-content-spaces > ul > li span { font-size: 0.84em; }
+
+.special-contain section > ul      { margin-top: 15px; }
+
+.special-contain section > ul > li { font-size: 0.6em; margin: 12px 0px; padding: 2px 0; line-height: 2.1em; }
+
+span.space-action { background: #d2e6ff; padding: 5px 7px; margin-right: 6px;
+                    border-radius: 4px; font-weight: 600;
+                  }
 
 
 div#my-workspaces   { width: 100%; height: 100%; display: flex;  justify-content: center;   }
@@ -360,6 +444,45 @@ section.flex-each-workspace.workspace-new.workspace-state {
 /* === */
 
 
+
+/* --- workspace ? user new to slackr --- */
+
+div#main-app-guide            { width: 50%;  height: 100%; margin: 0 auto; margin-top: 30px; padding: 5px; }
+section#guide-center-content  { width: 100%; min-width: 300px;  }
+
+section#guide-box-choices > a { margin: 10px 0; }
+
+a#guide-choice-no { padding-top: 10px; text-decoration: underline; outline: none; color: #665d5d; display: inline-block; font-weight: 400; }
+
+/* --- workspace ? video guide tour --- */
+
+div#main-app-guide.video-guide { width: 90%; margin: 0 auto; }
+
+section#guide-center-content.video-guide-content { width: 60%; margin: 0 auto; }
+
+section#guide-box-video        { width: 100%; position: relative; }
+
+section#guide-box-video > div  { display: inline-block; height: 100%; overflow: hidden;  }
+
+ div#box-video-middle { width: 70%; }
+
+ div#box-video-middle > img { width: 100%; height: auto }
+
+ div#box-video-right  { width: 30%; position: absolute; top: 30px; right: 25px; }
+
+   div#video-sections { background: #ffff77; z-index: 9999; padding: 12px 18px; }
+
+    div#video-sections > h3      { padding: 9px 0; border-bottom: 1px solid #e5e362; }
+
+    div#video-sections > ul      { margin-top: 10px; }
+
+    div#video-sections > ul > li { padding: 3px; margin: 3px 0; font-size: 0.78em; }
+
+    div#video-sections > div > p { font-weight: 400; font-size: 0.7em; margin: 10px 0; line-height: 1.8; }
+
+    div#video-sections > div > a { position: relative; top: 10px; left: 20px; background: white; padding: 10px 20px; }
+
+
 /* --- single workspace ---- */
 
 div#workspace-single { width: 100%; height: 100%;  }
@@ -398,8 +521,6 @@ section.header-place-3#app-space-title > .dropdown > ul.dropdown-open {
 div#workspaces-left-grid-stacks {
     width: 100%;
     padding-bottom: 20px;
-    /* overflow-x: scroll;
-    white-space: nowrap;   */
     display: flex;
     flex-wrap: wrap;
   }
@@ -429,19 +550,17 @@ div.stack-position > a.stack-inner-center > h2 { font-size: 3.8em; }
 div.stack-position > a.stack-inner-center > h3 { font-size: 1em; }
 
 
-/* workspace stacks  */
+/* workspace progress */
 
-div#workspaces-left-grid-currentStack       { border-top: 1px solid #E0E0E1; margin-bottom: 110px; }
+div#workspaces-left-grid-progress       { border-top: 1px solid #E0E0E1; margin-bottom: 60px;  }
 
-div#workspaces-left-grid-currentStack > h2  { font-size: 1.5em; display: inline-block; padding: 10px 0; }
+div#workspaces-left-grid-progress > h2  { font-size: 1.5em; display: inline-block; padding: 15px 0; }
 
-div#workspaces-left-grid-currentStack > ul  { width: 50%;  }
 
-div#workspaces-left-grid-currentStack > ul > li {
-  margin: 10px 0; padding: 10px 0; font-weight: 400; font-size: 0.8em; border-bottom: 1px solid #d8d8d8;
-}
 
-/* */
+
+
+/* -- */
 
 
 
@@ -487,40 +606,17 @@ div#stack-left-grid-content > img  { width:350px; height: auto; display: inline-
                                    }
 
 
-/* --- workspace content --- */
+/* --- channels content --- */
+.wc-message-post      { border-top: 1px solid #eeee; margin-top: 15px; }
+.wc-message-post > h3 { font-size: 0.7em; padding: 15px 0px; font-weight: 400; }
 
-div#workspace-channel          { width: 90%; height: 400px; max-height: 400px; padding: 15px 0;
-                                 font-size: 0.85em;
-                               }
-
-div#workspace-channel > h1         { font-size: 1.7em;   }
-
-section.wc-top-wrap-flow           { display: flex; padding-bottom: 10px; }
-
-.wc-top-wrap-flow > .wc-grid-top   { margin-right: 10px;  flex: 1;
-                                     display: flex; justify-content: space-between;
-                                   }
-
-section.wc-members.wc-grid-top > ul > li { padding: 8px 25px; margin-bottom: 10px; background: #fff4f4; }
-
-section.wc-description.wc-grid-top { display: block; }
-
-.wc-description.wc-grid-top > p    { line-height: 1.5; display: block; padding: 20px 10px; font-style: italic; }
-
-
-section.wc-messages  { width: 100%; margin: 0 auto;
-                       display: block; border-top: 1px solid #e6e6e6;
-                     }
-section.wc-messages > div     { padding: 10px 0; border-bottom: 1px solid #e6e6e6; }
-section.wc-messages > div > p { font-weight: 400; padding: 10px 0; }
-
-section > form#channel-message-form  { width: 100%; padding: 10px;}
+section > form#channel-message-form  { width: 100%; padding: 2px; margin-top: 5px; }
 
 form#channel-message-form > textarea { width: 100%; border: none; outline:  none; padding: 10px;
-                                       background: white; margin-top: 20px; border-radius: 9px;
-                                       box-shadow: 0px 0px 16px 3px #e0dddd;
+                                       background: white;   border-radius: 9px;
+                                       box-shadow: 0px 0px 16px 3px #e0dddd; font-size: 0.6em;
                                      }
 
 input#channel-submit-msg-btn         {  background: yellow; outline: none; padding: 10px 30px;
-                                        border: none; margin-top: 10px;
+                                        border: none; margin-top: 10px; font-size: 0.6em;
                                      }

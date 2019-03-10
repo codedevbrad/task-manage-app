@@ -4,8 +4,9 @@ const express  = require('express');
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
 
-const path    = require('path');
+const path       = require('path');
 const bodyParser = require('body-parser');
+
 
 // image upload modules
 
@@ -15,7 +16,8 @@ const Grid = require('gridfs-stream');
 const methodOverride = require('method-override');
 const crypto = require('crypto');
 
-const router   = express.Router();
+const router = express.Router();
+
 
 const dirname = 'app-server/';
 
@@ -26,17 +28,32 @@ var Stack  = require('../models/stack');
 var Image  = require('../models/image');
 var Tokens = require('../models/token');
 
-
 router.use(methodOverride('_method'));
 
-// check logged / protect routes ...
-var checkAuth = function (req, res, next) {
+// authentication checks ...
+var authChecks = require('./middleware/auth_checks');
+var checkAuth  = authChecks.logged();
+var checkSpace = authChecks.spaceNew();
 
-    if   ( req.isAuthenticated() && req.user.finished == true ) {  return next(); }
-    else { res.redirect('/');     }
-};
 
-// mongoLabs connection
+// space check determine if guide or straight to space ...
+var spaceAuthArr = [ checkAuth , checkSpace ];
+
+// pusher connections
+var server   = require('../server.js').serverExport();
+
+var authUser = require('../server.js');
+var io       = require('socket.io') ( server );
+var socket   = require('./middleware/pusherApi');
+
+
+async function getSocket ( ) {
+    var getSocket = await socket.connect( io );
+}
+getSocket();
+
+
+// mongoLabs connection ...
 
 const mlabconfig   = require('../config/mlab-db');
 const conn = mongoose.createConnection(mlabconfig.database);
@@ -47,39 +64,169 @@ conn.on('error', function(err) { console.log(err); });
 // init gfs
 let gfs;
 
-conn.once('open', () => {
-  // Init stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
-});
+conn.once('open', () => { gfs = Grid(conn.db, mongoose.mongo); gfs.collection('uploads');  });
 
 
 // Create storage engine
 const storage = new GridFsStorage({
   url: mlabconfig.database,
   file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {  return reject(err);  }
-        const filename = buf.toString('hex') + path.extname(file.originalname);
-        const fileInfo = {  filename: filename,  bucketName: 'uploads'  };
-        resolve(fileInfo);
+      return new Promise((resolve, reject) => {
+          crypto.randomBytes(16, (err, buf) => {
+              if (err) {  return reject(err);  }
+
+              const filename = buf.toString('hex') + path.extname(file.originalname);
+              const fileInfo = {  filename: filename,  bucketName: 'uploads'  };
+              resolve(fileInfo);
+          });
       });
-    });
   }
 });
 
 const upload = multer({ storage });
 
 
+// show user a video guide on slackr
+router.get( '/0/workspaces/guide', checkAuth , function( req, res ) {
+    var Lead = req.user.teamIsLead;
+
+    res.render(dirname + '/layout-includes/guide-confirm', {
+        title: 'guide to slackr',
+        displaymainlayout: false,
+        isLead: Lead
+    });
+});
+
+// show user a video on slackr
+router.get( '/0/workspaces/guide/video', checkAuth , function( req, res ) {
+
+    var Lead = req.user.teamIsLead;
+
+    res.render(dirname + '/layout-includes/guide-tour', {
+        title: 'guide to slackr',
+        displaymainlayout: false,
+        isLead: Lead
+    });
+});
+
+var algorithm = 'aes-256-ctr';
+var password  = 'd6F3Efeq';
+
+function encrypt(text){
+  var cipher = crypto.createCipher(algorithm,password)
+  var crypted = cipher.update(text,'utf8','hex')
+  crypted += cipher.final('hex');
+  return crypted;
+}
+
+function decrypt(text){
+  var decipher = crypto.createDecipher(algorithm,password)
+  var dec = decipher.update(text,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
+}
+
+// attach userId to socket
+
+router.get('/socket/required', checkAuth , function( req, res ) {
+
+  var user_hash = encrypt(req.user.id);
+  res.send(user_hash);
+});
+
+
+// workspace route ...
+
+router.get('/0/auth/workspaces', spaceAuthArr , function(req, res) {
+
+      var finshedGuide = req.query.completed;
+
+      var promise = Space.find( { "members.userId": req.user.id } );
+
+      promise.then(function( spaces ) {
+
+          if ( finshedGuide ) {
+              console.log( 'user has completed guide' );
+              User.findByIdAndUpdate( { _id: req.user.id }, { userIsnew: false }, { new:true }, function( err , user) {
+                  console.log( 'user has completed his intro video' );
+              });
+          }
+          return spaces;
+      })
+      .then( spaces => {
+          res.render(dirname + 'my-workspaces', {
+              title: 'workspaces',
+              spaces: spaces,
+              displaymainlayout: false,
+              spaceIsLead: req.user.teamIsLead
+          });
+      })
+      .catch(function(err) {  console.log(err);  });
+});
+
+
+// get single workspace
+router.get('/0/workspace/:id/' , spaceAuthArr , function(req, res) {
+
+  var spacePeram = req.params.id;
+  var spaceId    = { _id: spacePeram };
+
+  // promise - search for workspace ...
+  var promise = Space.findOne( spaceId ).exec();
+
+  promise.then(function( workspace ) {
+
+    var stackIds = [];
+    var stackArr = workspace.stacks;
+
+    // get stack id's owned by user ...
+
+    stackArr.forEach(function( stack , index ) {
+      stackIds.push( stack.stackID );
+    });
+
+    Stack.find({ _id: {$in: stackIds }}, function (err, stacks) {
+
+        if (!err) {
+
+            res.render(dirname + 'workspace', {
+                // workspace
+                title: workspace.name,
+                displaymainlayout: true,
+
+                // ids's
+                space_id: spacePeram,
+                data_id:  workspace._id,
+                user_id: req.user._id,
+
+                // workspace data
+                desc:   workspace.desc,
+                stacks: stacks,
+
+                space_title: workspace.name,
+                space_list:  [
+                  { item: 'add members to stack',  link: 'space/add-members' },
+                  { item: 'rename this workspace', link: 'space/rename'},
+                  { item: 'remove from workspace', link: '/space/remove'}
+                ],
+            });
+        }
+        else { console.log( err ); }
+    });
+  })
+  .catch(function(err) { console.log(err); });
+
+});
+
+
 // get workspace tokens ...
 
 router.get('/0/workspace/:space/getAllTokens', checkAuth, function(req, res) {
 
-    var space = { space: req.params.space };
+    var query = { space: req.params.space , claimed: false };
 
     // promise based user search ...
-    var promise = Tokens.find( space ).exec();
+    var promise = Tokens.find( query ).exec();
 
     promise.then(function( tokens ) {
         console.log( tokens );
@@ -130,77 +277,6 @@ router.post('/0/auth/workspace-new', checkAuth, function(req, res) {
     });
 });
 
-// workspace route
-
-router.get('/0/auth/workspaces', checkAuth, function(req, res) {
-
-      var query = { userId: req.user.id };
-      
-      // search user id against ownerId / else search user id against member array
-      // var promise = Space.find( { members: { userId: req.user._id } } ).exec();
-      var promise = Space.find( { "members.userId": req.user.id } ).exec();
-
-      promise.then(function( spaces ) {
-
-          res.render(dirname + 'my-workspaces', {
-              title: 'workspaces',
-              spaces: spaces,
-              displaymainlayout: false,
-              spaceIsLead: req.user.teamIsLead
-          });
-      })
-      .catch(function(err) {  console.log(err);  });
-});
-
-
-// get single workspace
-
-router.get('/0/workspace/:id/', checkAuth, function(req, res) {
-
-  var spacePeram = req.params.id;
-  var spaceId    = { _id: spacePeram };
-
-  // promise - search for workspace ...
-  var promise = Space.findOne( spaceId ).exec();
-
-  promise.then(function( workspace ) {
-
-    var stackIds = [];
-    var stackArr = workspace.stacks;
-
-    // get stack id's owned by user ...
-
-    stackArr.forEach(function( stack , index ) {
-      stackIds.push( stack.stackID );
-    });
-
-    Stack.find({ _id: {$in: stackIds }}, function (err, stacks) {
-
-        if (!err) {
-            res.render(dirname + 'workspace', {
-                title: workspace.name,
-                displaymainlayout: true,
-
-                // ids's
-                space_id: spacePeram,
-                data_id:  workspace._id,
-
-                stacks: stacks,
-
-                space_title: workspace.name,
-                space_list:  [
-                  { item: 'add members to stack',  link: 'space/add-members' },
-                  { item: 'rename this workspace', link: 'space/rename'},
-                  { item: 'remove from workspace', link: '/space/remove'}
-                ],
-            });
-        }
-        else { console.log( err ); }
-    });
-  })
-  .catch(function(err) { console.log(err); });
-
-});
 
 // --- get requests for content --- //
 

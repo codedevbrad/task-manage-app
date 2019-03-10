@@ -10,9 +10,10 @@ const passport = require('passport');
 const router   = express.Router();
 
 // models
-var User  = require('../models/user');
-var Space = require('../models/workspace');
+var User   = require('../models/user');
+var Space  = require('../models/workspace');
 var Tokens = require('../models/token');
+
 
 // login route process
 router.post('/user/auth/login', passport.authenticate('local', {
@@ -24,10 +25,6 @@ router.post('/user/auth/login', passport.authenticate('local', {
 });
 
 
-function getUsername ( value ) {
-
-	  	return User.findOne( { username: value } );
-};
 
 // register - step 1 : initial register / creates account ...
 
@@ -87,7 +84,7 @@ router.post('/user/auth/register/', function(req, res, next) {
 
 				var newUser = new User();
 			  newUser.email    = email, newUser.username = username, newUser.password  = password,
-			  newUser.team     = [],    newUser.notifications = [],  newUser.workspace = []
+			  newUser.notifications = []
 
 			  // encypt the plaintext password
 			  bcrypt.genSalt(10, function(err, salt) {

@@ -19,6 +19,7 @@ const memberSchema = mongoose.Schema ({
 
   teamIsLead: { type: Boolean, default: false },
   finished:   { type: Boolean, default: false },
+  userIsnew:  { type: Boolean, default: true  },
 
   notifications: [ notificationSchema ],
 });

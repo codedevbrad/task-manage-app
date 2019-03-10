@@ -5,14 +5,49 @@ const path    = require('path');
 const bodyParser = require('body-parser');
 const mongoose   = require('mongoose');
 
-const expressValidator = require('express-validator');
-const flash   = require('connect-flash');
-
-const session = require('express-session');
 const passport = require('passport');
-
 const methodOverride = require('method-override');
 
+// initialiase app
+const app    = express();
+const server = require('http').createServer(app);
+
+var authUser;
+
+// export server file
+module.exports.serverExport = function () {
+  return server;
+}
+
+
+// initialize needed middleware
+var settings = require('./config/settings');
+settings.config(app);
+settings.paths(app, __dirname);
+
+
+
+// require flash messages for login
+app.use(require('connect-flash')());
+
+// image upload middleware
+app.use(methodOverride('_method'));
+
+// bring in pug
+app.set('views', path.join(__dirname, 'templates'));
+app.set('view engine', 'pug');
+
+// body parser middleware
+app.use(bodyParser.urlencoded({ extended: true }))
+// parse application/json
+app.use(bodyParser.json())
+// set public folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+// passport config
+require('./config/passport') (passport)
+app.use(passport.initialize()); app.use(passport.session());
 
 // db initialize
 const config   = require('./config/database');
@@ -28,75 +63,31 @@ db.once('openUri', function() { console.log('Connected to mongoDB ...');
 db.on('error', function(err) { console.log(err);
 });
 
-
-// initialiase app
-const app    = express();
-const server = require('http').createServer(app);
-
-// image upload
-app.use(methodOverride('_method'));
-
-app.use('/main',         express.static(path.join(__dirname, 'front-end/')));
-
-
-// initialize explore app
-app.use('/app-explore',  express.static(path.join(__dirname, 'front-end/app-explore/')));
-app.use('/build',        express.static(path.join(__dirname, 'front-end/node_modules/')));
-
-// initialize server app
-app.use('/app-server',  express.static(path.join(__dirname, 'front-end/app-server')));
-
-
-// bring in pug
-app.set('views', path.join(__dirname, 'templates'));
-app.set('view engine', 'pug');
-
-
-// body parser middleware
-app.use(bodyParser.urlencoded({ extended: true }))
-// parse application/json
-app.use(bodyParser.json())
-// set public folder
-app.use(express.static(path.join(__dirname, 'public')));
-
-
-// express session
-
-app.use(session ({
-  secret: 'keyboard cat',
-  cookie: { maxAge: 960000,  _expires : 500000 },
-  resave: true, saveUninitialized: true, rolling: true
-}));
-
-
-// express  messages middleware
-app.use(require('connect-flash')());
-
-app.use(function (req, res, next) {
-  res.locals.messages = require('express-messages') (req, res);
-  next();
-});
-
-
-// Express Validator Middleware
-app.use(expressValidator({
-  errorFormatter: function(param, msg, value) {
-    var namespace = param.split('.'), root    = namespace.shift(), formParam = root;
-    while(namespace.length) { formParam += '[' + namespace.shift() + ']';  }
-    return {  param : formParam, msg : msg,  value : value  };
-  }
-}));
-
-
-// passport config
-require('./config/passport')    (passport)
-app.use(passport.initialize()); app.use(passport.session());
-
-
 // pass user to all routes ...
 app.get('*', function (req, res, next) {
-  res.locals.user = req.user || null;  next();
+    res.locals.user = req.user || null;  next();
 });
+
+
+var testMiddleware = require('./routes/middleware/testMiddleware');
+// testMiddleware.startIo('test');
+
+// var push = testMiddleware.push();
+// push();
+
+// using middleware
+// app.use(testMiddleware.test());
+
+// exporting an object method
+// testMiddleware.getValue( app , __dirname );
+
+// exporting a self-invoked function
+// testMiddleware.startIo();
+
+// exporting a inner function .
+// var test = testMiddleware.push();
+// var push = test();
+// console.log( push );
 
 
 // app-explore routes
@@ -114,11 +105,12 @@ app.get('*', function (req, res, next) {
   // aside
   var sidebar = require('./routes/side-app'); app.use('/', sidebar);
 
+// tests
+
+  var test = require('./routes/tests/apiTests'); app.use('/', test);
+
 
 // start server ...
 server.listen(process.env.PORT || 3000, function(req, res) {
     console.log('server started');
 });
-
-
-//

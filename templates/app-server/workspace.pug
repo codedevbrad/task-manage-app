@@ -7,7 +7,7 @@ block content
       include new-content/new-stack.pug 
   
   div.workspace-grid-box#workspaces-left-grid-name
-    h2 #{ stacks.length } stack(s)
+    h2 #{ stacks.length } team stacks
     h3#create-stack-btn.btn-design(data-content-new='stack-new') create new stack
   
   div.workspace-grid-box#workspaces-left-grid-stacks 
@@ -21,5 +21,35 @@ block content
             h2=str.charAt(0)
             h3=stack.name
 
-  div.workspace-grid-box#workspaces-left-grid-currentStack
- 
+  div.workspace-grid-box#workspaces-left-grid-progress
+      h2 scrum progress 
+      div.special-contain-extra
+        div.special-contain
+          section.left-content-full#workspace-tasks
+              section.special-left-content
+              
+                 div.content-area-popup-contain
+                    h2.content-title tasks to complete
+                    div.content-popup-btn.btn-design(data-content-new='#')
+                      h3 new task
+                 ul
+                  li <span class='space-action'> team </span> client meeting taking place 07th march 2019
+                  li <span class='space-action'> team </span> Must complete team report by 05th march 2019
+                  li <span class='space-action'> emma chang </span> <span class='space-action'> zach cody </span> work on bookcase design for client 
+                  li <span class='space-action'> anna haspen </span> organise the team to develop a powerpoint on canvas wall designs 
+               
+          section.right-content-spaced#progress-files
+             div.content-area-popup-contain
+               h2.content-title important files
+               div.content-popup-btn.btn-design(data-content-new='#')
+                  h3 new file
+             ul
+               li 
+                 span.space-action google docs
+                 a(href='https://docs.google.com/document/d/1C3QafbzPbqiICNoIaYOsJctrJ2f8mxQTLeNPw-c2tNw/edit') client needs
+               li
+                 span.space-action google docs
+                 a(href='https://docs.google.com/document/d/1C3QafbzPbqiICNoIaYOsJctrJ2f8mxQTLeNPw-c2tNw/edit') project overview
+               li
+                 span.space-action google sheet
+                 a(href='https://docs.google.com/document/d/1C3QafbzPbqiICNoIaYOsJctrJ2f8mxQTLeNPw-c2tNw/edit') spreadsheets
