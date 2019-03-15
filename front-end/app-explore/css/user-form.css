@@ -13,33 +13,63 @@ section#previous-auth-option { width: 100%; margin-bottom: 15px;  }
     cursor: pointer; width: 65%;
 }
 
-#auth-option-change {  height: 100%; background: #f1f1f1; margin-left: 20px;  display: inline-block; }
+#auth-option-change        { height: 100%; background: #f1f1f1; margin-left: 20px;  display: inline-block; }
 
-/* ===== get started  ===== */
+/* ===== form with icon styles ====== */
 
-#auth-flex-middle.signup   { width: 100%; height: 100%; display: flex;  justify-content: center;  }
+.form-input-container { padding: 6px; display: flex; width: 100%;  box-shadow: 1px 0px 10px #c7d2e8;
+                        border-radius: 8px; margin-bottom: 15px;
+                      }
 
-#app-signup-center         { width: 60%; min-height: 70px; margin-top: 30px; }
-
-#app-signup-center  > h2   { padding: 10px 0; font-size: 2em; letter-spacing: 0; }
-
-#app-signup-center > form > h2   { padding: 10px 0; font-size: 2.2em; letter-spacing: 0; }
-
-
-#app-signup-center  > p       { font-weight: 400; font-size: 0.75em; padding: 10px 0; line-height: 1.5em; }
-#app-signup-center > form > p { font-weight: 400; font-size: 0.75em; padding: 10px 0; line-height: 1.5em; }
-
-
-form.auth-signup-form     { width: 65%; }
-
-form.auth-signup-form  > .form-group > label, form.auth-signup-form  > .form-group > input {
-  display: block; width: 100%; font-weight: 400; margin-bottom: 10px; border-radius: 8px;
+.form-input-container  > .form-icon-contain  {
+        margin: 0 9px; margin-top: 6px; border-radius: 7px; padding: 4px 6px;
+        height: fit-content; box-shadow: 1px 1px 10px 1px #c0cbd8;
 }
 
- form > .form-group > label  { padding: 10px 10px 10px 0; }
- form > .form-group > input  { padding: 15px; border: 1px solid #e2e2e2; }
+.form-input-container > .form-icon-contain > i , .form-input-container > .form-icon-contain  > svg
+                    {
+                         margin: 0;
+                         text-align: center; font-size: 1.28em;
+                    }
 
- form.auth-signup-form  > .form-group > input::placeholder { color: grey; }
+
+/* ===== login / get started  ===== */
+
+#auth-flex-middle.signup   { width: 85%; height: 100%; float: right; padding-top: 30px;  }
+
+/* ----- right side ----- */
+
+#app-signup-r-welcome      { width: 55%; float: right; height: 100%; }
+
+#app-signup-r-welcome > img { width: 100%; height: auto; display: block; }
+
+/* --- left side form --- */
+
+#app-signup-center             { width: 45%; min-height: 70px; float: left; height: 100%; padding: 0 5px; }
+
+#app-signup-center  > h2       { padding: 10px 0; font-size: 2em; letter-spacing: 0; }
+
+#app-signup-center > form > h2 { padding: 10px 0; font-size: 2.2em; letter-spacing: 0; }
+
+#app-signup-center  > p        { font-weight: 400; font-size: 0.75em; padding: 10px 0; line-height: 1.5em; }
+#app-signup-center > form > p  { font-weight: 400; font-size: 0.75em; padding: 10px 0; line-height: 1.5em; }
+
+#app-signup-center > form > input { margin-bottom: 10px; }
+
+
+form.auth-signup-form  { width: 100%; margin-top: 15px; }
+
+form.auth-signup-form  > .form-group > label, form.auth-signup-form  > .form-group > input {
+  display: block; width: 100%; font-weight: 400; border-radius: 8px;
+}
+
+form > .form-group > label  { padding: 10px 10px 10px 0; }
+form > .form-group > input  { padding: 15px; border: none; outline: none;
+                              font-size: 0.75em;
+                             }
+
+form.auth-signup-form  > .form-group > input::placeholder { color: grey; }
+
 
 .auth-signup-enter {
   background: none; outline: none;  margin-left: 5px;  box-shadow: 2px 1px 8px 0px rgba(185, 185, 185, 0.49);

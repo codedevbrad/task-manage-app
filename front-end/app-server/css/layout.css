@@ -20,13 +20,24 @@ a:hover { text-decoration: none; }
 
 svg     { pointer-events: none; }
 
-.btn-point {  cursor: pointer;  }
+.btn-point  {  cursor: pointer;  }
 
-.btn-design { text-align: center; padding: 10px 45px; font-weight: 400;
-              color: black; font-size: 0.75em; cursor: pointer;
-              background:#ffff70; display: inline-block;
-              outline: none; border: none;
+/* yellow button */
+
+.btn-design { text-align: center; padding: 10px 45px;    font-weight: 400; color: black; font-size: 0.75em; cursor: pointer;
+              background:#ffff70; display: inline-block; outline: none; border: none;
 }
+
+/* icons / aside buttons for member / channels */
+
+li.isLogged > span.member-icon { background: #679aff; }
+
+.circle-icon  { margin: 5px; background: #d2e6ff; border-radius: 50%; padding: 0.3px 7px; }
+.content-icon { padding: 5px 10px;  margin: 5px; background: #ffcece; border-radius: 3px; }
+
+
+
+/* layouts for title and text */
 
 .text-layout { width: 100%; padding: 10px 0; }
 
@@ -48,11 +59,6 @@ div.content-area-popup-contain > div.content-popup-btn {
       display: inline-block; float: right; padding-right: 10px; font-size: 0.8em;
       cursor: pointer; padding: 4px 14px;
 }
-
-
-
-
-
 
 
 

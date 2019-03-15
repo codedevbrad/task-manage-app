@@ -1,35 +1,29 @@
 extends layout
  
 block content
-  div.special-contain-extra
+  div.special-contain-extra#space-channel(channel-id=channel_id)
     div.special-contain
       section.left-content-full#channel-messages
           section.special-left-content
              div.content-area-popup-contain
                 h2.content-title  #{channel.channelName } 
-                
                 div.content-popup-btn.btn-design(data-content-new='#') 
                   h2 +
-             ul
-              li <span class='space-action'> zach cody </span> i'm thinking of #five-guys. Anyone up for it ?
-              li <span class='space-action'> devbeme </span> sounds good. burgerhouse could be good. hear they do great chips.
-              li <span class='space-action'> emma chang </span> Shouldn't you guys be working on the api security ? :) pizza is always a good choice. more important question is who's coming and what sorta time ?  
-                    
+             ul#channel-msg-list
+              each msg in channel.chatData
+                li <span class='space-action'> #{ msg.user } </span> #{ msg.msg }
+        
       section.right-content-spaced#channel-members
          div.content-area-popup-contain
-            h2.content-title members talking
+           h2.content-title members talking
          ul
-           li 
-             span.space-action consultant
-             | zach cody
-           li
-             span.space-action team leader
-             | devbeme
-           li
-             span.space-action interior des
-             | emma chang   
+           each user in channelUsers
+             li
+               span.space-action +
+               | #{ user.user }
+         
          section.wc-message-post
            h3 post a message to the channel
-           form#channel-message-form(method="POST", action="/")
-             textarea(rows='6', cols='70', name='message', form='channel-msg') your message to the channel ...
+           div#channel-message-form
+             textarea(rows='6', cols='70', name='message', form='channel-msg') talk to your team members ...
              input#channel-submit-msg-btn.btn-primary(type="submit", value="post message")

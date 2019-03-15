@@ -4,21 +4,27 @@ block content
     
   section#auth-flex-middle.signup
     section#app-signup-center
-      h2 Login to slackr
-      section#auth-signup-options
-      form.auth-signup-form(method="POST", action="/user/auth/login")
-        
-        .form-group  
-          label Username
-          input#user-login.form-control(name='username', placeholder='eg: tony stark', required='true')
+      h2 hello there
+      p Sign into your slackr account
+      section
+        form.auth-signup-form(method="POST", action="/user/auth/login")
           
-        .form-group  
-          label Password
-          input#pass-login.form-control(name='password', type='password', placeholder='eg: 12345', required='true')
+          .form-group.form-input-container
+            div.form-icon-contain
+              i.far.fa-user
+            input#user-login.form-control(name='username', placeholder='username', required='true')
             
+          .form-group.form-input-container
+            div.form-icon-contain
+              i.far.fa-eye
+            input#pass-login.form-control(name='password', type='password', placeholder='password', required='true')
+              
           div#auth-err-messages
            != messages('app-explore/auth/message', locals)
-                             
-        input.auth-signup-enter.btn.btn-primary(type="submit", value="login") 
-           
+                               
+          input.auth-signup-enter.btn.btn-primary(type="submit", value="login") 
+        
+    section#app-signup-r-welcome
+       img(src='https://luna1.co/7ddc6b.gif')
+         
  

@@ -35,10 +35,11 @@ router.get('/0/workspace/:id/get/members', checkAuth, function( req, res ) {
         var memberIdsStrip = space.members;
 
         memberIdsStrip.forEach(function( user , index ) {
-                userIdsClean.push( user.userId );
-                usersArr.push( { role: user.space_role } );
+        // if ( user.userId != req.user.id) {
+                 userIdsClean.push( user.userId );
+                 usersArr.push( { role: user.space_role } );
+        // }
         });
-
         return userIdsClean;
     })
     .then( array => {
@@ -54,13 +55,6 @@ router.get('/0/workspace/:id/get/members', checkAuth, function( req, res ) {
 
     })
     .then( users => {
-
-        // initialise socket connection
-        var user  = req.user.username;
-        var space = req.params.id;
-        // add id to socket
-        
-
         res.send( users );
     })
     .catch(function(err) { console.log( err ); });
@@ -115,25 +109,32 @@ router.get('/0/workspace/:space/channel/:cId', checkAuth, function(req, res) {
     var spaceId   = req.params.space;
     var channelId = req.params.cId;
 
-    Channel.findById( { _id: channelId } , function( err , channel ) {
+    var promise = Channel.findById( { _id: channelId });
 
-        if ( err ) { console.log( err ) };
+    promise.then( function ( channel ) {
 
-        if ( !err && channel ) {
-            // search and find chnnnel ...
-            res.render(dirname + 'channels', {
-                // id's
-                space_id: spaceId,
-                data_id:  spaceId,
+      function getUnique(arr, comp) {
+         const unique = arr.map(e => e[comp]).map((e, i, final) => final.indexOf(e) === i && i)
+        .filter(e => arr[e]).map(e => arr[e]);
+         return unique;
+      }
+      var uniqueNames = getUnique( channel.chatData , 'user');
+      
+      res.render(dirname + 'channels', {
+          // id's
+          space_id: spaceId,
+          data_id:  spaceId,
 
-                channel:  channel,
+          channel:  channel,
+          channelUsers: uniqueNames,
+          channel_id: channel._id,
 
-                title: 'test channel', // app title
-                space_title: 'test', // workspace title
-                displaymainlayout: true
-            });
-        }
-    });
+          title: 'test channel', // app title
+          space_title: 'test',   // workspace title
+          displaymainlayout: true
+      });
+    })
+    .catch(function(err) { console.log( err ); });
 });
 
 // workspace channel new
@@ -149,11 +150,8 @@ router.post('/0/workspace/:space/channel-new', checkAuth, function(req, res) {
       var channel = new Channel();
       channel.channelName = title;
       channel.channelTag  = tag;
-      channel.joinedMembers = [ ];
-      channel.chatData = [ ];
-
-      var channelLeader = String( req.user._id );
-      channel.joinedMembers.push( channelLeader );
+      channel.created_by  = req.user.username;
+      channel.chatData    = [ ];
 
       channel.save( function ( err , channel ) {
 

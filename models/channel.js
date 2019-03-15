@@ -1,14 +1,12 @@
 
 const mongoose = require('mongoose');
 
-
 // chat messages ...
 
 var chatSchemma = mongoose.Schema ({
 
     user:   { type: String  },
     msg:    { type: String  },
-    posted: { type: String  }
 });
 
 // each users category schema ...
@@ -16,9 +14,9 @@ var chatSchemma = mongoose.Schema ({
 var channelSchema = mongoose.Schema ({
 
     channelName:   { type: String , required: true },
-    channelTag:    { type: String , requires: true },
-    joinedMembers: [ ],
-    chatData:      [ chatSchemma ]
+    channelTag:    { type: String , required: true },
+    created_by:    { type: String , required: true },
+    chatData:      [ chatSchemma  ]
 });
 
 var Channel = module.exports = mongoose.model('channel', channelSchema );

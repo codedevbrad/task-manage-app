@@ -7,17 +7,15 @@ mongoose.Promise = require('bluebird');
 const path       = require('path');
 const bodyParser = require('body-parser');
 
-
 // image upload modules
 
-const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage');
-const Grid = require('gridfs-stream');
+const multer         = require('multer');
+const GridFsStorage  = require('multer-gridfs-storage');
+const Grid           = require('gridfs-stream');
 const methodOverride = require('method-override');
-const crypto = require('crypto');
+const crypto         = require('crypto');
 
 const router = express.Router();
-
 
 const dirname = 'app-server/';
 
@@ -39,18 +37,10 @@ var checkSpace = authChecks.spaceNew();
 // space check determine if guide or straight to space ...
 var spaceAuthArr = [ checkAuth , checkSpace ];
 
+
 // pusher connections
-var server   = require('../server.js').serverExport();
-
-var authUser = require('../server.js');
-var io       = require('socket.io') ( server );
-var socket   = require('./middleware/pusherApi');
-
-
-async function getSocket ( ) {
-    var getSocket = await socket.connect( io );
-}
-getSocket();
+var socket = require('./middleware/pusherApi');
+socket.connect();
 
 
 // mongoLabs connection ...
@@ -109,29 +99,12 @@ router.get( '/0/workspaces/guide/video', checkAuth , function( req, res ) {
     });
 });
 
-var algorithm = 'aes-256-ctr';
-var password  = 'd6F3Efeq';
-
-function encrypt(text){
-  var cipher = crypto.createCipher(algorithm,password)
-  var crypted = cipher.update(text,'utf8','hex')
-  crypted += cipher.final('hex');
-  return crypted;
-}
-
-function decrypt(text){
-  var decipher = crypto.createDecipher(algorithm,password)
-  var dec = decipher.update(text,'hex','utf8')
-  dec += decipher.final('utf8');
-  return dec;
-}
 
 // attach userId to socket
+var user_hash = require('./middleware/cryptoModule');
 
 router.get('/socket/required', checkAuth , function( req, res ) {
-
-  var user_hash = encrypt(req.user.id);
-  res.send(user_hash);
+    res.send( user_hash.encrypt( req.user.username ) );
 });
 
 
@@ -147,7 +120,7 @@ router.get('/0/auth/workspaces', spaceAuthArr , function(req, res) {
 
           if ( finshedGuide ) {
               console.log( 'user has completed guide' );
-              User.findByIdAndUpdate( { _id: req.user.id }, { userIsnew: false }, { new:true }, function( err , user) {
+              User.findByIdAndUpdate( { _id: req.user.id }, { userIsnew: false }, { new: true }, function( err , user) {
                   console.log( 'user has completed his intro video' );
               });
           }
@@ -273,7 +246,11 @@ router.post('/0/auth/workspace-new', checkAuth, function(req, res) {
     space.members.push( { userId: userId, space_role: 'leader'} );
 
     space.save(function( err, space ) {
+
+      var sockets = socket.sockets();
+      sockets[0].emit('testSocket',  { msg: 'i am cool' });
       res.send( { id: space._id } ).end();
+
     });
 });
 

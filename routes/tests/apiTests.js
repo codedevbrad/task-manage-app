@@ -8,10 +8,10 @@ const passport = require('passport');
 var User  = require('../../models/user');
 
 
-function getUsername ( value ) {
-	  	return User.find( { });
-};
 
+// practise export function
+
+function getUsername ( value ) { return User.find( { });   };
 
 router.get('/test/api/1', function( req, res) {
 

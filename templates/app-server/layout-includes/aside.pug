@@ -2,7 +2,7 @@ div#aside-inner
       
   div#aside-grid-manage-layout
     li 
-    li#toggle-content-aside(data-view=true)
+    li#toggle-content-aside(data-view='true')
       i.fas.fa-chevron-right 
       
   //- div#aside-user-quick-notify.success-notify
@@ -18,21 +18,11 @@ div#aside-inner
       h1 members
       div.aside-section-newbtn-push#aside-add-member-btn(data-content-new='aside-member-new')
         i.fas.fa-plus.aside-section-newbtn
-    ul
+    ul#team-list
         
   div#aside-channels
     section.aside-titlearea
       h1 channels
       div.aside-section-newbtn-push#aside-add-channel-btn(data-content-new='aside-channel-new')
         i.fas.fa-plus.aside-section-newbtn
-    ul
-  
-  
-  //- div#aside-reminders
-    section.aside-titlearea
-      h1 reminders          
-    ul
-      li send mark my newest git commit
-      li continue my collab app workspace
-      li add kara to the team workspace
-      
+    ul#channels-list

@@ -20,13 +20,24 @@ a:hover { text-decoration: none; }
 
 svg     { pointer-events: none; }
 
-.btn-point {  cursor: pointer;  }
+.btn-point  {  cursor: pointer;  }
 
-.btn-design { text-align: center; padding: 10px 45px; font-weight: 400;
-              color: black; font-size: 0.75em; cursor: pointer;
-              background:#ffff70; display: inline-block;
-              outline: none; border: none;
+/* yellow button */
+
+.btn-design { text-align: center; padding: 10px 45px;    font-weight: 400; color: black; font-size: 0.75em; cursor: pointer;
+              background:#ffff70; display: inline-block; outline: none; border: none;
 }
+
+/* icons / aside buttons for member / channels */
+
+li.isLogged > span.member-icon { background: #679aff; }
+
+.circle-icon  { margin: 5px; background: #d2e6ff; border-radius: 50%; padding: 0.3px 7px; }
+.content-icon { padding: 5px 10px;  margin: 5px; background: #ffcece; border-radius: 3px; }
+
+
+
+/* layouts for title and text */
 
 .text-layout { width: 100%; padding: 10px 0; }
 
@@ -48,11 +59,6 @@ div.content-area-popup-contain > div.content-popup-btn {
       display: inline-block; float: right; padding-right: 10px; font-size: 0.8em;
       cursor: pointer; padding: 4px 14px;
 }
-
-
-
-
-
 
 
 
@@ -610,9 +616,9 @@ div#stack-left-grid-content > img  { width:350px; height: auto; display: inline-
 .wc-message-post      { border-top: 1px solid #eeee; margin-top: 15px; }
 .wc-message-post > h3 { font-size: 0.7em; padding: 15px 0px; font-weight: 400; }
 
-section > form#channel-message-form  { width: 100%; padding: 2px; margin-top: 5px; }
+section > div#channel-message-form   { width: 100%; padding: 2px; margin-top: 5px; }
 
-form#channel-message-form > textarea { width: 100%; border: none; outline:  none; padding: 10px;
+div#channel-message-form > textarea  { width: 100%; border: none; outline:  none; padding: 10px;
                                        background: white;   border-radius: 9px;
                                        box-shadow: 0px 0px 16px 3px #e0dddd; font-size: 0.6em;
                                      }
@@ -620,3 +626,5 @@ form#channel-message-form > textarea { width: 100%; border: none; outline:  none
 input#channel-submit-msg-btn         {  background: yellow; outline: none; padding: 10px 30px;
                                         border: none; margin-top: 10px; font-size: 0.6em;
                                      }
+
+#channel-messages > section ul > li  {  border-radius: 8px; background: #f1f7ff; padding: 10px;  }

@@ -68,10 +68,10 @@ function firstMethod () {
 
           users.forEach( function ( user , index ) {
               var obj = document.createElement( 'li' );
-              obj.innerHTML = '<span class=member-icon> </span> <p data-member=' + user.username + '>' +  user.username + '</p>' +
+              obj.setAttribute( 'data-space-member', user.username );
+              obj.innerHTML = '<span class=member-icon> </span> <p>' +  user.username + '</p>' +
               '<span class=channel-loc>' + user.role + '</span>' +
               '</p>';
-
               appendTo.appendChild(obj);
           });
 

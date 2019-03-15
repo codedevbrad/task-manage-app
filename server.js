@@ -2,6 +2,8 @@
 // package inludes
 const express = require('express');
 const path    = require('path');
+const favicon = require('serve-favicon')
+
 const bodyParser = require('body-parser');
 const mongoose   = require('mongoose');
 
@@ -12,7 +14,6 @@ const methodOverride = require('method-override');
 const app    = express();
 const server = require('http').createServer(app);
 
-var authUser;
 
 // export server file
 module.exports.serverExport = function () {
@@ -24,7 +25,7 @@ module.exports.serverExport = function () {
 var settings = require('./config/settings');
 settings.config(app);
 settings.paths(app, __dirname);
-
+app.use(favicon(path.join(__dirname, 'front-end', 'favicon2.png')))
 
 
 // require flash messages for login
